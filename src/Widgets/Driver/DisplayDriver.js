@@ -1,6 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import "./stylequoteresults.css";
+import history from '../../utils/history'
 import Paper from "@material-ui/core/Paper";
 import SimpleCard from "../../SharedJSX/Inputs/VerticalCard/VerticalCard";
 const useStyles = {
@@ -16,6 +17,11 @@ const useStyles = {
 };
 
 class DisplayDriver extends React.Component {
+  
+  onAddDriverClick = () => {
+    history.push('/adddriver')
+  } 
+  
   render() {
     let showDeleteButton = true;
     let milteryStatus="Major"
@@ -56,6 +62,9 @@ class DisplayDriver extends React.Component {
             </span>
           );
         })}
+          <button className="addicon" onClick={this.onAddDriverClick}>
+            <img class="addimage" src={"http://porfesr.regione.campania.it/fe/img/community/add-thread.png"}/>
+          </button>
       </div>
     );
   }
