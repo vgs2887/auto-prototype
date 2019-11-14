@@ -1,10 +1,11 @@
- .success-checkmark {
+.success-checkmark {
     width: 80px;
     height: 80px;
     margin: 0 auto;
     position:absolute;
       top:25%;
       left: 43%;
+    visibility: hidden;
  }
     
     .check-icon {
@@ -95,7 +96,29 @@
             margin: 0px;
         }
     
+        .conf-box{
+            position:absolute;          
+            width:600px;
+            height:700px;
+            position: absolute;
+            top:10%;
+            left: 30%;
+            border-collapse: separate; 
+            
+        }
 
+        .id-details{
+            background-color: lightcyan;
+        }
+
+        .vehicle-expansion-panel{
+            position: absolute;
+            top:15%;
+        }
+
+        .MuiPaper-rounded {
+            border-radius: 30px !important;
+        }
 
 @keyframes rotate-circle {
     0% {
