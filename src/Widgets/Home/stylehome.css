@@ -1,0 +1,25 @@
+
+.App
+{
+  background-image: url('../../assets/HomePage1.png');
+    background-repeat: no-repeat; 
+      background-size: 100% 100%;
+    min-height: 100vh;
+    text-align: center;
+}
+#button1
+{
+  background-color:white;
+  color:#0e2e49;
+  text-decoration: none;
+  border-radius: 50px;
+  width: 170px;
+  margin-top: 5px;
+}
+#button2{
+  background-color: #0e2e49;
+    color: white;
+    border-radius: 50px;
+    width: 170px;
+    margin-bottom: 5px;
+}

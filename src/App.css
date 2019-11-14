@@ -1,0 +1,49 @@
+
+.App {
+height:100%;
+width:100%;
+
+  background-image:url('./assets/images.jpeg');
+ background-repeat:no-repeat;
+ background-size:cover;
+  
+}
+
+#button1
+{
+  background-color:white;
+  
+}
+#button2
+{
+  background-color:transparent;
+ border:1px solid black;
+ 
+}
+
+
+#block
+{
+  margin-left:85%;
+  text-align:center;
+  padding:10px;
+  position:absolute;
+  margin-top:15%
+}
+#block1{
+  position:absolute;
+ margin-top:10%;
+  margin-left:81%;
+  color : white;
+  font-size:140%
+}
+.App-header {
+  background-color:#f4f4f4;
+  text-align: center;
+  color: black;
+}
+
+img{
+  margin-left:85%;
+  margin-top:8%;
+}
