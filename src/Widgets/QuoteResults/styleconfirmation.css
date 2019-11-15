@@ -111,6 +111,16 @@
             background-color: lightcyan;
         }
 
+        .top-row{
+            display: grid;
+            grid-auto-flow: column;
+        }
+
+        .bottom-row{
+            display: grid;
+            grid-auto-flow: column;
+        }
+
         .vehicle-expansion-panel{
             position: absolute;
             top:15%;
@@ -118,6 +128,49 @@
 
         .MuiPaper-rounded {
             border-radius: 30px !important;
+        }
+
+        .item {
+            display: flex;
+            flex-direction: column;
+            margin-top: 0.1rem;
+            margin-bottom: 0.1rem;
+
+        }
+
+        .top-column{
+            text-align: left;
+            margin-left: 10%;
+            white-space: nowrap;
+        }
+
+        .bottom-column{
+            text-align: left;
+            margin-left: 10%;
+            margin-top: 3% !important;
+            white-space: nowrap;
+        }
+
+        .coverages-column{
+            text-align: left;
+            
+            margin-left: -10%;
+            white-space: nowrap;
+        }
+
+        .coverages-row{
+            display: grid;
+            grid-auto-flow: column;
+            margin-bottom: -5%;
+        }
+
+        .MuiCollapse-container MuiCollapse-entered div
+        {
+            margin-top: 0 !important;
+        }
+        .vehicle-pic{
+            border-radius: 50%;
+            padding-top: 0px;
         }
 
 @keyframes rotate-circle {

@@ -53,7 +53,7 @@ export default class ConfirmationPage extends React.Component {
         
         <div className="pol-issued">Thank you Major Alex, Your Auto policy has been processed. A confirmation and follow up steps are sent to your registered email address.</div>        
         <div style={useStyles.root}>
-            <Card className = "conf-box">
+            <Card className = "conf-box" style={{flex: 1, flexDirection: 'row'}}>
       
             <CardContent>
                 <div>
@@ -62,10 +62,26 @@ export default class ConfirmationPage extends React.Component {
                         </Typography>
                     </ul>
                     <Card className = "id-details" style={{flex: 1, flexDirection: 'row'}}>
-                    <ul className = "Policy Owner">Policy Owner</ul>
-                    <ul className = "Policy Owner">Policy Number</ul>
-                    <ul className = "Policy Owner">Policy Period</ul>
-                    <ul className = "Policy Owner">Total Premium</ul>
+                    <div className = "top-row">
+                    <div className = "item">
+                    <ul className = "top-column">Policy Number</ul>
+                    <ul className = "bottom-column">00000001</ul>
+                    </div>
+                    <div className = "item">
+                    <ul className = "top-column">Effective Date</ul>
+                    <ul className = "bottom-column">11/15/2019</ul>
+                    </div>
+                    <div className = "item">
+                    <ul className = "top-column">Expiration Date</ul>
+                    <ul className = "bottom-column">05/15/2020</ul>
+                    </div>
+                    
+                    </div>
+                    <div className = "bottom-row">
+                    <ul className = "Policy-Owner">Policy Owner</ul>
+                    </div>
+
+                                  
                     </Card>
 
                     
@@ -79,8 +95,22 @@ export default class ConfirmationPage extends React.Component {
                             </ExpansionPanelSummary>
                         <ExpansionPanelDetails>
                           <Typography>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex,
-                            sit amet blandit leo lobortis eget.
+                            <div className = "top-row">
+                            <img src = {require( "../../assets/carlogo.png")} width = "100px" className ="vehicle-pic"/>
+
+                              <div className = "item">
+                              <ul className = "top-column">Year</ul>
+                              <ul className = "bottom-column">2019</ul>
+                              </div>
+                              <div className = "item">
+                              <ul className = "top-column">Make</ul>
+                              <ul className = "bottom-column">Tesla</ul>
+                              </div>
+                              <div className = "item">
+                              <ul className = "top-column">Model</ul>
+                              <ul className = "bottom-column">3</ul>
+                              </div>
+                            </div>
                           </Typography>
                         </ExpansionPanelDetails>  
                         </ExpansionPanel>
@@ -95,8 +125,22 @@ export default class ConfirmationPage extends React.Component {
                             </ExpansionPanelSummary>
                         <ExpansionPanelDetails>
                           <Typography>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex,
-                            sit amet blandit leo lobortis eget.
+                          <div className = "top-row">
+                            <img src = "https://www.w3schools.com/howto/img_avatar.png" width = "75px" className ="vehicle-pic"/>
+
+                              <div className = "item">
+                              <ul className = "top-column">Name</ul>
+                              <ul className = "bottom-column">Major Alex</ul>
+                              </div>
+                              <div className = "item">
+                              <ul className = "top-column">Age</ul>
+                              <ul className = "bottom-column">34</ul>
+                              </div>
+                              <div className = "item">
+                              <ul className = "top-column">License Number</ul>
+                              <ul className = "bottom-column">OH0000002</ul>
+                              </div>
+                            </div>
                           </Typography>
                         </ExpansionPanelDetails>  
                         </ExpansionPanel>
@@ -111,8 +155,25 @@ export default class ConfirmationPage extends React.Component {
                             </ExpansionPanelSummary>
                         <ExpansionPanelDetails>
                           <Typography>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex,
-                            sit amet blandit leo lobortis eget.
+
+                            <div className = "coverages-column">
+                            <div className = "coverages-row">
+                            <ul>Bodily Injury Liability Coverage</ul>
+                            <ul>$1,000,000</ul>
+                            </div>
+                            <div className = "coverages-row">
+                            <ul>Property Damage Liability Coverage</ul>
+                            <ul>$10,000</ul>
+                            </div>
+                            <div className = "coverages-row">
+                            <ul>Comprehensive</ul>
+                            <ul>$100</ul>
+                            </div>
+                            <div className = "coverages-row">
+                            <ul>Collision</ul>
+                            <ul>$0</ul>
+                            </div>
+                            </div>
                           </Typography>
                         </ExpansionPanelDetails>  
                         </ExpansionPanel>
