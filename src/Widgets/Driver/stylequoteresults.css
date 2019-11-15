@@ -410,19 +410,18 @@ body {
       height: 0;
       transition: all 250ms linear; 
       }
-     
-     .addicon{
-    background-color: white;
-    border: none;
-    padding: 20px;
+
+
+.driverinfo .MuiFab-primary,
+.driverinfo .MuiFab-primary:hover,
+.Vehicalinfo .MuiFab-primary,
+.Vehicalinfo .MuiFab-primary:hover
+{
+  width: 80px;
+    height: 80px;
+    background-color: rgb(14, 46, 73);
+    opacity: 90%;
+    vertical-align: text-bottom;
+    bottom: 15px;
 }
 
-.addimage{
-    width: 140px;
-    border-radius: 200px;
-    height: 140px;
-    box-shadow: rgba(0, 0, 0, 0.2) 0px 2px 1px -1px, rgba(0, 0, 0, 0.14) 0px 1px 1px 0px, rgba(0, 0, 0, 0.12) 0px 1px 3px 2px;
-    background-color: white;
-    opacity: 50%;
-    vertical-align: unset;
-}
