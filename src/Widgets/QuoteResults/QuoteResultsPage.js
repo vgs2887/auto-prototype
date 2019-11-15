@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import history from "../../utils/history";
+// import history from "../../utils/history";
 import DriverDetails from '../QuoteResults/DriverDetails'
 import Header from "./Header";
 import CoveragePanel from './CoveragePanel';
@@ -10,6 +10,7 @@ import PropertyDetails from './PropertyDetails';
 import { Grid } from '@material-ui/core';
 import CircularDiv from './CircularDiv';
 import { setPageNameAction } from "../../actions";
+import { Link } from 'react-router-dom'
 
 const useStyles = {
     root: {
@@ -76,9 +77,9 @@ getComponent = () => {
     }
 }
 
-confirmPage = () => {
-    history.push("/confirm");
-  };
+// paymentPage = () => {
+//     history.push("/payment");
+//   };
 
 render() {
     return (
@@ -94,7 +95,7 @@ render() {
                 </Grid>
 
                 <Grid item xs={12}>
-                <button className="add-driver" onClick={this.confirmPage}> Proceed to Checkout </button>
+                <Link to={{pathname:'/payment', state:{ premium: this.state.premium }}}><button className="add-driver" > Proceed to Checkout </button></Link>
                 </Grid>
 
                 <Grid item xs={12} sm={12}>

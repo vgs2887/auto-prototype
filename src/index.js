@@ -19,6 +19,7 @@ import TxHeader from './Widgets/QuoteResults/TXHeader'
 
 import './index.css'
 import ConfirmationPage from './Widgets/QuoteResults/ConfirmationPage';
+import paymentPage from './Widgets/paymentPage/paymentPage';
 
 const enhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
 const store = createStore(reducers, enhancer(applyMiddleware(thunk)))
@@ -36,6 +37,7 @@ class App extends React.Component{
                      <Route path="/vehicledetails" exact component={VehicleDetails} />
                      <Route path="/addvehicle" component={AddVehicle} />
                      <Route path='/addproperty' component={AddProperty}/>
+                     <Route path='/payment' component={paymentPage}/>
                      <Route path='/confirm' component={ConfirmationPage}/>
                 </div>
             </Router>
