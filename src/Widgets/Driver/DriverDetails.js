@@ -60,8 +60,12 @@ class DriverDetails extends React.Component {
                 </div>
                 <Divider/>
                 <DisplayDriver />
-                <Grid item xs={4}>
-                    <button className="driveradd" onClick={this.goToNextPage}>Next>></button>
+                <Grid container>
+                    <Grid sm={2} />
+                    <Grid xs={12} sm={8}>
+                        <button className="add-driver" onClick={this.goToNextPage}>NEXT</button>
+                    </Grid>
+                    <Grid sm={2} />
                 </Grid>
             </Paper>
         )

@@ -1,8 +1,11 @@
 import React from "react";
 import { connect } from "react-redux";
 import "./stylequoteresults.css";
+import history from '../../utils/history'
 import SimpleCard from "../../SharedJSX/Inputs/VerticalCard/VerticalCard";
 import path from "../../assets/carlogo.png";
+import Fab from '@material-ui/core/Fab';
+import AddIcon from '@material-ui/icons/Add';
 
 const useStyles = {
   root: {
@@ -25,6 +28,9 @@ class DisplayVehicle extends React.Component {
     };
   }
 
+  onAddVehicalClick=()=>{
+    history.push('/addvehicle')
+  }
   componentDidMount() {
     setTimeout(() => {
       this.setState({ didMount: true });
@@ -62,6 +68,9 @@ class DisplayVehicle extends React.Component {
             </span>
           );
         })}
+        <Fab color="primary" aria-label="add">
+            <AddIcon onClick={this.onAddVehicalClick} />
+          </Fab>
       </div>
     );
   }

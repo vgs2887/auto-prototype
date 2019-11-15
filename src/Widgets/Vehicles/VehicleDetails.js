@@ -6,6 +6,7 @@ import {Divider,Paper,Grid} from '@material-ui/core';
 import path from '../../assets/car.png'
 import { connect } from 'react-redux';
 
+
 const useStyles = {
     root: {
         width: 'auto',
@@ -46,9 +47,13 @@ class VehicleDetails  extends React.Component {
                 </div>
                 <Divider/>
                 <DisplayVehicle />
-                <Grid item xs={4}>
-                    <button className="driveradd" onClick={this.goToNextPage}>Next>></button>
-                </Grid><br />
+                <Grid container>
+                    <Grid sm={2} />
+                    <Grid xs={12} sm={8}>
+                        <button className="add-driver" onClick={this.goToNextPage}>NEXT</button>
+                    </Grid>
+                    <Grid sm={2} />
+                </Grid>
             </Paper>
             
         )

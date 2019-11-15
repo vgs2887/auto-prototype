@@ -4,6 +4,8 @@ import "./stylequoteresults.css";
 import history from '../../utils/history'
 import Paper from "@material-ui/core/Paper";
 import SimpleCard from "../../SharedJSX/Inputs/VerticalCard/VerticalCard";
+import Fab from '@material-ui/core/Fab';
+import AddIcon from '@material-ui/icons/Add';
 const useStyles = {
   root: {
     width: "auto",
@@ -62,9 +64,9 @@ class DisplayDriver extends React.Component {
             </span>
           );
         })}
-          <button className="addicon" onClick={this.onAddDriverClick}>
-            <img class="addimage" src={"http://porfesr.regione.campania.it/fe/img/community/add-thread.png"}/>
-          </button>
+          <Fab color="primary" aria-label="add">
+            <AddIcon onClick={this.onAddDriverClick} />
+          </Fab>
       </div>
     );
   }
