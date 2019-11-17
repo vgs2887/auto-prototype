@@ -14,29 +14,29 @@ const useStyles = {
         align: 'left'
     }   
 };
-const policyHeader = ['Policy#','Location','premium'];
+const policyHeader = ['Policy#','Location','Premium'];
 const quoteHeader = ['Quote#','State','Premium'];
-const qotes =
-[
-    {
-        quoteNumber : 1,
-        baseLocation: 'TX',
-        effDate: '16 Nov 2019',
-        premium: '$48.98'
-    },
-    {
-        quoteNumber : 2,
-        baseLocation: 'TX',
-        effDate: '10 Nov 2019',
-        premium: '$48.98'
-    },
-    {
-        quoteNumber : 3,
-        baseLocation: 'TX',
-        effDate: '01 Nov 2019',
-        premium: '$48.98'
-    }
-];
+// const qotes =
+// [
+//     {
+//         quoteNumber : 1,
+//         baseLocation: 'TX',
+//         effDate: '16 Nov 2019',
+//         premium: '$48.98'
+//     },
+//     {
+//         quoteNumber : 2,
+//         baseLocation: 'TX',
+//         effDate: '10 Nov 2019',
+//         premium: '$48.98'
+//     },
+//     {
+//         quoteNumber : 3,
+//         baseLocation: 'TX',
+//         effDate: '01 Nov 2019',
+//         premium: '$48.98'
+//     }
+// ];
 
 class QuoteHistory extends React.Component 
 {
@@ -45,6 +45,10 @@ class QuoteHistory extends React.Component
     super(props)
     this.state= {
         quotes:[],
+        policies:[],
+        listToDisplay:[],
+        headerToDisplay:[],
+        textToDisplay: null,
         isLoaded : false
     }
   }  
@@ -55,13 +59,20 @@ class QuoteHistory extends React.Component
       .then(json => {
           this.setState({
               isLoaded: true,
-              quotes: json
+              quotes: json.filter(quote => quote.type === 'quote'),
+              policies: json.filter(quote => quote.type === 'policy')
           })
+          if(this.state.policies && this.state.policies.length > 0) {
+            this.setState({listToDisplay : this.state.policies,headerToDisplay:policyHeader,textToDisplay:"Policies"})
+          }
+          else{
+            this.setState({listToDisplay : this.state.quotes,headerToDisplay:quoteHeader,textToDisplay:"Quotes"})
+          }          
       })
   }
 
-render(){
-
+render(){    
+    
   return (      
         <div style={{backgroundColor:'#F5F5F5'}}>
             <AppBar position="static" style={{backgroundColor:'#041c3d',color:'white'}}>
@@ -76,22 +87,22 @@ render(){
             </AppBar>
             <br />
             <Typography variant="h6" align="left" style={{color:'#041c3d'}}>
-                Auto Insurance Quotes
+                Auto Insurance {this.state.textToDisplay}
             </Typography> 
             <br />  
-            { this.state.quotes.map((quote, index) => { return( quote.type)}) ?
+            { this.state.listToDisplay.map((quote, index) => { return( quote.type)}) ?
             <Grid style={useStyles.root}>
                 <Table size="small">
                     <TableHead>
                     <TableRow >
-                        {quoteHeader.map((header)=>{return(
+                        {this.state.headerToDisplay.map((header)=>{return(
                             <TableCell align='left' style={{color:'#041c3d'}}>{header}</TableCell>
                         )})}                        
                         <TableCell align='left'></TableCell>
                     </TableRow>
                     </TableHead>
                     <TableBody>
-                    {this.state.quotes.map((quote, index) => {
+                    {this.state.listToDisplay.map((quote, index) => {
 
                     return(
 
