@@ -1,6 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Home from './Widgets/Home/Home';
+import Hello from './Widgets/FirstPage/Hello';
+import New from './Widgets/FirstPage/New';
+import QuoteHistory from './Widgets/QuoteHistory/QuoteHistory';
 import Login from './Widgets/Login/Login';
 import * as serviceWorker from './serviceWorker';
 import QuoteResultsPage from './Widgets/QuoteResults/QuoteResultsPage'
@@ -30,7 +33,7 @@ class App extends React.Component{
         return(
             <Router history={history}>
                 <div>
-                     <Route exact path="/" component={Home} />
+                     <Route exact path="/" component={QuoteHistory} />
                      <Route path="/quoteresults" exact component={QuoteResultsPage} />
                      <Route path="/adddriver" exact component={AddDriver} />
                      <Route path="/driverdetails" exact component={DriverDetails} />
@@ -39,6 +42,7 @@ class App extends React.Component{
                      <Route path='/addproperty' component={AddProperty}/>
                      <Route path='/payment' component={paymentPage}/>
                      <Route path='/confirm' component={ConfirmationPage}/>
+                     <Route path='/getstarted' component={Home}/>
                 </div>
             </Router>
         )
