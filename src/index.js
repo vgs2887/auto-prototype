@@ -1,8 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Home from './Widgets/Home/Home';
-import Hello from './Widgets/FirstPage/Hello';
-import New from './Widgets/FirstPage/New';
 import QuoteHistory from './Widgets/QuoteHistory/QuoteHistory';
 import Login from './Widgets/Login/Login';
 import * as serviceWorker from './serviceWorker';
@@ -46,6 +44,7 @@ class App extends React.Component{
                 </div>
             </Router>
         )
+
     }
 }
 
