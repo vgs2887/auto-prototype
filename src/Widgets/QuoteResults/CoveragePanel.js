@@ -25,7 +25,27 @@ const useStyles = {
     {
         display: 'inline-block',
         padding: 10,
+    },
+    covgText:
+    {
+        padding: "0px",
+        paddingTop: "10px",
+        fontSize: "1.3rem",
+        fontWeight: "bold"
+    },
+    childCovgText:
+    {
+        padding: "0px",
+        paddingTop: "10px",
+        fontSize: "1.0rem",
+        fontWeight: "bold"
+    },
+
+    covgHelperText:
+    {
+        fontSize: "12px"
     }
+
 };
 const options = [
     { value: 'one', label: '25,000/30,000' },
@@ -37,217 +57,289 @@ const defaultOption = options[0]
 
 class CoveragePanel extends React.Component {
 
+    BICoverageAmntText = null;
+    PDCoverageAmntText = null;
+    compVehiCov = [];
+    collVehiCov = [];
+
+    BIcoverages = [        
+        {id: 0, covgValue: "$15,000/$30,000", amnt: 5},
+        {id: 1, covgValue: "$50,000/$100,000", amnt: 10},
+        {id: 2, covgValue: "$100,000/$250,000", amnt: 15},
+        {id: 3, covgValue: "$500,000/$1,000,000", amnt: 20}
+    ];
+
+    PDcoverages = [
+        {id: 0, covgValue: "$10,000", amnt: 5},
+        {id: 1, covgValue: "$25,000", amnt: 10},
+        {id: 2, covgValue: "$50,000", amnt: 15},
+        {id: 3, covgValue: "$100,000", amnt: 20}
+    ];    
+
+    compCoverages = [
+        {id: 0, covgValue: "$0", amnt: 20},
+        {id: 1, covgValue: "$250", amnt: 15},
+        {id: 2, covgValue: "$500", amnt: 10},
+        {id: 3, covgValue: "$1000", amnt: 5}
+    ];
+
+    collCoverages = [
+        {id: 0, covgValue: "$0", amnt: 20},
+        {id: 1, covgValue: "$250", amnt: 15},
+        {id: 2, covgValue: "$500", amnt: 10},
+        {id: 3, covgValue: "$1000", amnt: 5}
+    ];
+
+    vehicles_hardcoded = [
+        { vin: "123", year: "2016", make: "ABC", model: "BBC" },
+        { vin: "456", year: "2019", make: "XYZ", model: "420" }
+    ]
+
     constructor(props) {
         super(props)
+
+        this.BICoverageAmntText = "$" + 5; //Initial display text for the Coverage amount
+        this.PDCoverageAmntText = "$" + 5;
+
+        var vehicles = this.props.vehicles;
+        //var vehicles = this.vehicles_hardcoded;
+        var compVehicles = null;
+        var collVehicles = null;
+
+        for (var vehicle of vehicles) {            
+            compVehicles = {
+                vin: vehicle.vin,
+                year: vehicle.year,
+                make: vehicle.make,
+                model: vehicle.model,
+                coverAmnt: 20,
+                coverAmntText : "$"+20
+            };
+            collVehicles = {
+                vin: vehicle.vin,
+                year: vehicle.year,
+                make: vehicle.make,
+                model: vehicle.model,
+                coverAmnt: 20,
+                coverAmntText : "$"+20
+            };
+            this.compVehiCov.push(compVehicles);
+            this.collVehiCov.push(collVehicles);
+        }
+        //assuming base premium as $10 + inidividual coverage premium for first value of each coverage
+        //coverage coverge except comp/coll which are added based on number of vehicles
+        //2*20 = comp 20 + coll 20
+        var premiumConst = 30 + (vehicles.length * (2 * 20));
+        //alert('premiumConst = '+premiumConst );
+
         this.state = {
             didMount: false,
-            premium: 150,   //assuming first value of each coverage
-            selectedBI: 0,
-            selectedPD: 0,
-            selectedComp: 0,
-            selectedColl: 0,
-            coverage: "$500,000/$1000,000",
-            coverageamt: 150    //assuming first value of each coverage
-
+            premium: premiumConst,   
+            prevBICovAmnt: 5,
+            prevPDCovAmnt: 5,
+            coverage: "$500,000/$1000,000", //not used in this file
+            coverageamt: premiumConst    //not used in this file
         };
+        this.props.updatepremiumaction(premiumConst);
+
     }
     componentDidMount() {
         setTimeout(() => {
             this.setState({ didMount: true })
         }, 0)
     }
-    BIcoverages = [
-        "$1,000,000",
-        "$2,000,000",
-        "$3,000,000",
-        "$4,000,000"
-    ];
-
-    PDcoverages = [
-        "$10,000",
-        "$25,000",
-        "$50,000",
-        "$100,000"
-    ];
-
-    compCoverages = [
-        "$0",
-        "$50",
-        "$100",
-        "$150"
-    ];
-
-    collCoverages = [
-        "$50",
-        "$100",
-        "$150",
-        "$200"
-    ];
-
-    BICovPremium = [5, 10, 15, 20];
-    PDCovPremium = [5, 10, 15, 20];
-    CompCovPremium = [20, 15, 10, 0];
-    CollCovPremium = [20, 15, 10, 0];
-
     
-    onChangeCovForBI = (e) => {
-        console.log(e.target.value)
-        var index = 0;
-        if (e.target.value == "$1,000,000") {
-            index = 0;            
-        }
-        if (e.target.value == "$2,000,000") {
-            index = 1;            
-        }
-        if (e.target.value == "$3,000,000") {
-            index = 2;
-        }
-        if (e.target.value == "$4,000,000") {
-            index = 3;
-        }
 
+
+    onChangeCovForBI = (e) => {
+        
         var premium = this.state.premium;
-        var prevSel = this.state.selectedBI ;
+        var prevSel = this.state.prevBICovAmnt;
+        var BICoverageAmnt = parseInt(e.target.value);
         
         //State has previously selected value, remove the previously added amount and add the new amount for this coverage selection.
-        console.log('premium = '+premium+" "+prevSel+" "+index);
-        premium = premium - this.BICovPremium[prevSel] + this.BICovPremium[index] ;
-        console.log('premium = '+premium);        
         
-        this.setState({ coverageamt: premium, premium: premium, selectedBI: index })
-        this.props.updatepremiumaction("40.5")
-    }
+        premium = premium - prevSel + BICoverageAmnt;        
 
+        this.BICoverageAmntText = "$" + BICoverageAmnt;
+        this.setState({ premium: premium, prevBICovAmnt: BICoverageAmnt });
+        this.props.updatepremiumaction(premium);
+    }
 
 
     onChangeCovgForPD = (e) => {
-        console.log(e.target.value)
-        var index = 0;
-        if (e.target.value == "$10,000") {
-            index = 0;        
-        }
-        if (e.target.value == "$25,000") {
-            index = 1;
-        }
-        if (e.target.value == "$50,000") {
-            index = 2;
-        }
-        if (e.target.value == "$100,000") {
-            index = 3;
-        }
-
-        var premium = this.state.premium;
-        var prevSel = this.state.selectedPD ;
-                
-        console.log('premium = '+premium+" "+prevSel+" "+index);
-        premium = premium - this.PDCovPremium[prevSel] + this.PDCovPremium[index] ;
-        console.log('premium = '+premium);        
         
-        this.setState({ coverageamt: premium, premium: premium, selectedPD: index })
-        this.props.updatepremiumaction("40.5")
+        var premium = this.state.premium;
+        var prevSel = this.state.prevPDCovAmnt;
+        var pdCoverageAmnt = parseInt(e.target.value);        
+
+        //State has previously selected value, remove the previously added amount and add the new amount for this coverage selection.
+        
+        premium = premium - prevSel + pdCoverageAmnt;
+
+        this.PDCoverageAmntText = "$" + pdCoverageAmnt;
+        this.setState({ premium: premium, prevPDCovAmnt: pdCoverageAmnt });
+        this.props.updatepremiumaction(premium);
     }
 
     onChangeCovgForComp = (e) => {
-        console.log(e.target.value)
-        var index = 0;
-        if (e.target.value == "$0") {
-            index = 0;
-        }
-        if (e.target.value == "$50") {
-            index = 1;
-        }
-        if (e.target.value == "$100") {
-            index = 2;
-        }
-        if (e.target.value == "$150") {
-            index = 3;
-        }
-
-        var premium = this.state.premium;
-        var prevSel = this.state.selectedComp ;
-                
-        console.log('premium = '+premium+" "+prevSel+" "+index);
-        premium = premium - this.CompCovPremium[prevSel] + this.CompCovPremium[index] ;
-        console.log('premium = '+premium);        
+        //console.log(e.target.value );
         
-        this.setState({ coverageamt: premium, premium: premium, selectedComp: index })
-        this.props.updatepremiumaction("40.5")
+        var premium = this.state.premium;
+        var inputArr = e.target.value.split(":");
+        var CompCoverageAmnt = parseInt(inputArr[1]);
+        var vin = inputArr[0];
+        var prevCompCoverageAmnt = 0;        
+        
+
+        for(var obj of this.compVehiCov){            
+            //console.log('vin = '+obj.vin+', obj.coverAmnt ='+obj.coverAmnt );
+            if(obj.vin === vin){
+                prevCompCoverageAmnt = obj.coverAmnt ;
+                obj.coverAmnt = CompCoverageAmnt;
+                obj.coverAmntText = "$"+CompCoverageAmnt;
+            }            
+        }
+        
+        premium = premium - prevCompCoverageAmnt + CompCoverageAmnt;        
+
+        this.setState({ premium: premium});
+        this.props.updatepremiumaction(premium);
     }
 
-    onChangeCovgForColl = (e) => {
-        console.log(e.target.value);
-        var index = 0;
-        if (e.target.value == "$50") {
-            index = 0;
-        }
-        if (e.target.value == "$100") {
-            index = 1;
-        }
-        if (e.target.value == "$150") {
-            index = 2;
-        }
-        if (e.target.value == "$200") {
-            index = 3;
-        }
+    onChangeCovgForColl = (e) => {    
 
         var premium = this.state.premium;
-        var prevSel = this.state.selectedColl ;
-                
-        console.log('premium = '+premium+" "+prevSel+" "+index);
-        premium = premium - this.CollCovPremium[prevSel] + this.CollCovPremium[index] ;
-        console.log('premium = '+premium);        
+        var inputArr = e.target.value.split(":");
+        var collCoverageAmnt = parseInt(inputArr[1]);        
+        var vin = inputArr[0];
+        var prevCollCoverageAmnt = 0;        
+        var collCoverageAmntText = "$" + collCoverageAmnt ;
         
-        this.setState({ coverageamt: premium, premium: premium, selectedColl: index })
-        this.props.updatepremiumaction("40.5")
+
+        for(var obj1 of this.collVehiCov){            
+            console.log('Coll : vin = '+obj1.vin+', obj.coverAmnt ='+obj1.coverAmnt );
+            if(obj1.vin === vin){
+                prevCollCoverageAmnt = obj1.coverAmnt ;
+                obj1.coverAmnt = collCoverageAmnt;
+                obj1.coverAmntText = collCoverageAmntText;
+            }            
+        }        
+        
+        premium = premium - prevCollCoverageAmnt + collCoverageAmnt;        
+
+        this.setState({ premium: premium});
+        this.props.updatepremiumaction(premium);
+        
     }
 
 
 
     render() {
-        console.log(this.state)
-        const { didMount } = this.state
+        
+        const { didMount } = this.state;        
+        
+        var compVehiCovItems = this.compVehiCov.map((vehicle, key) =>        
+        <div key={vehicle.vin}>
+            <p style={ useStyles.childCovgText }>{vehicle.year} {vehicle.make} {vehicle.model} {vehicle.vin}</p>
+            <table>
+                <tr>
+                    <td style={{ width: "100%" }}>
+                        <select onChange={this.onChangeCovgForComp} multiple="" class="ui fluid dropdown">
+                            {this.compCoverages.map((coverage,key) => {                                
+                                var compCovKey = vehicle.vin + ":" + coverage.amnt ;
+                                var CompCoverageAmntText_ind = this.CompCoverageAmntText ;
+                                return <option key={coverage.id}
+                                    value={compCovKey}>
+                                    {coverage.covgValue}</option>
+                            })}
+                        </select>
+                        <p style={useStyles.covgHelperText}>per occurence</p>
+                    </td>
+                    <td >
+                        <div class="ui input" style={{ width: "100%", float: "right" }} >                            
+                            <input type="text" readOnly value={vehicle.coverAmntText} />
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </div>                         
+        );
+
+        var collVehiCovItems = this.collVehiCov.map((vehicle, key) =>        
+        <div key={vehicle.vin}>
+            <p style={ useStyles.childCovgText }>{vehicle.year} {vehicle.make} {vehicle.model} {vehicle.vin}</p>
+            <table>
+                <tr>
+                    <td style={{ width: "100%" }}>
+                        <select onChange={this.onChangeCovgForColl} multiple="" class="ui fluid dropdown">
+                            {this.compCoverages.map((coverage,key) => {                                
+                                var collCovKey = vehicle.vin + ":" + coverage.amnt ;                                
+                                return <option key={coverage.id}
+                                    value={collCovKey}>
+                                    {coverage.covgValue}</option>
+                            })}
+                        </select>
+                        <p style={useStyles.covgHelperText}>per occurence</p>
+                    </td>
+                    <td >
+                        <div class="ui input" style={{ width: "100%", float: "right" }} >                            
+                            <input type="text" readOnly value={vehicle.coverAmntText} />
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </div>                         
+        );
 
         return (
             <div>
-                <Paper >
-                    <Grid content>
+                <Paper >                    
+                    <Grid >
                         {/* Bodily Injury Section */}
-                        <div className="coveragetext" style={{ padding: "0px", paddingTop: "10px" }}><b>Bodily Injury Liability Coverage</b></div>
+                        <div className="coveragetext" style={useStyles.covgText}>Bodily Injury Liability Coverage</div>
                         <Divider />
                         <table>
                             <tr>
                                 <td style={{ width: "100%" }}>
                                     <select onChange={this.onChangeCovForBI} multiple="" class="ui fluid dropdown">
-                                        {this.BIcoverages.map(coverage => {
-                                            return <option value={coverage}>{coverage}</option>
+                                        {this.BIcoverages.map((coverage,key) => {
+                                            return <option key = {coverage.id}
+                                                value={coverage.amnt}>
+                                                {coverage.covgValue}
+                                                </option>
                                         })}
                                     </select>
+                                    <p style={useStyles.covgHelperText}>per person/per accident</p>
                                 </td>
                                 <td >
                                     <div class="ui input" style={{ width: "100%", float: "right" }} >
-                                        {/* <       input type="text" value={this.state.coverageamt} /> */}
-                                        <p>${Number.parseFloat(this.state.coverageamt).toFixed(2)}</p>
+                                        <input type="text" readOnly value={this.BICoverageAmntText} />                                        
                                     </div>
                                 </td>
                             </tr>
-                        </table>                        
+                        </table>
                         <Divider />
 
                         {/* Property Damage Section */}
-                        <div className="coveragetext" style={{ padding: "0px", paddingTop: "10px" }}><b>Property Damage Liability Coverage</b></div>
+                        <div className="coveragetext" style={useStyles.covgText}>Property Damage Liability Coverage</div>
                         <Divider />
                         <table>
                             <tr>
                                 <td style={{ width: "100%" }}>
                                     <select onChange={this.onChangeCovgForPD} multiple="" class="ui fluid dropdown">
-                                        {this.PDcoverages.map(coverage => {
-                                            return <option value={coverage}>{coverage}</option>
+                                        {this.PDcoverages.map((coverage,key) => {
+                                            return <option key = {coverage.id}
+                                                value={coverage.amnt}>
+                                                {coverage.covgValue}
+                                                </option>
                                         })}
                                     </select>
+                                    <p style={useStyles.covgHelperText}>per accident</p>
                                 </td>
                                 <td >
                                     <div class="ui input" style={{ width: "100%", float: "right" }} >
-                                        <       input type="text" value={this.state.coverageamt} />
+                                        <       input type="text" readOnly value={this.PDCoverageAmntText} />
                                     </div>
                                 </td>
                             </tr>
@@ -255,28 +347,22 @@ class CoveragePanel extends React.Component {
                         <Divider />
 
                         {/* Comp Section */}
-                        <div className="coveragetext" style={{ padding: "0px", paddingTop: "10px" }}><b>Comprehensive</b></div>
+                        <div>
+                            <div className="coveragetext" style={ useStyles.covgText }>Comprehensive</div>
+                            {compVehiCovItems}
+                        </div>
                         <Divider />
-                        <table>
-                            <tr>
-                                <td style={{ width: "100%" }}>
-                                    <select onChange={this.onChangeCovgForComp} multiple="" class="ui fluid dropdown">
-                                        {this.compCoverages.map(coverage => {
-                                            return <option value={coverage}>{coverage}</option>
-                                        })}
-                                    </select>
-                                </td>
-                                <td >
-                                    <div class="ui input" style={{ width: "100%", float: "right" }} >
-                                        <       input type="text" value={this.state.coverageamt} />
-                                    </div>
-                                </td>
-                            </tr>
-                        </table>
+                        
+                        {/* Coll Section */}
+                        <div>
+                            <div className="coveragetext" style={ useStyles.covgText }>Collision</div>
+                            {collVehiCovItems}
+                        </div>
                         <Divider />
+                        
 
                         {/* Coll Section */}
-                        <div className="coveragetext" style={{ padding: "0px", paddingTop: "10px" }}><b>Collision</b></div>
+                        {/* <div className="coveragetext" style={useStyles.covgText}><b>Collision</b></div>
                         <Divider />
                         <table>
                             <tr>
@@ -286,14 +372,15 @@ class CoveragePanel extends React.Component {
                                             return <option value={coverage}>{coverage}</option>
                                         })}
                                     </select>
+                                    <p style={useStyles.covgHelperText}>per occurence</p>
                                 </td>
                                 <td >
                                     <div class="ui input" style={{ width: "100%", float: "right" }} >
-                                        <       input type="text" value={this.state.coverageamt} />
+                                        <       input type="text" value={this.CollCoverageAmntText} />
                                     </div>
                                 </td>
                             </tr>
-                        </table>
+                        </table> */}
                         <Divider />
 
                     </Grid>
@@ -303,4 +390,11 @@ class CoveragePanel extends React.Component {
         )
     }
 }
-export default connect(null, { updatepremiumaction })(CoveragePanel)
+const mapStateToProps = state => {
+    return {
+        vehicles: state.vehicles,
+        vehicleNos: state.vehicles.length
+    };
+};
+
+export default connect(mapStateToProps, { updatepremiumaction })(CoveragePanel)
