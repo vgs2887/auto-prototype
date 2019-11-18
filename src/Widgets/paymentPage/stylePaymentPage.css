@@ -1,4 +1,9 @@
-ul
+#current
 {
-list-style-type: none;
+    color:green;
 }
+#future
+{
+    color:blue;
+}
+

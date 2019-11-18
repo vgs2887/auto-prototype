@@ -97,23 +97,42 @@
         }
     
         .conf-box{
-            position:absolute;          
-            width:600px;
-            height:700px;
+           
+            width: 40%;
+            height:100%;
             position: absolute;
-            top:10%;
+            
+            top:5%;
             left: 30%;
             border-collapse: separate; 
             
         }
 
+        @media only screen and (max-width: 768px) {
+            .conf-box{
+                width: 65%;
+                height: auto;
+            }
+            .top-row{
+                grid-auto-flow: row !important;
+            }
+            
+        }
         .id-details{
             background-color: lightcyan;
+        }
+
+        .printIcon{
+            position: relative;
+            bottom: 0;
+            right: 0;
         }
 
         .top-row{
             display: grid;
             grid-auto-flow: column;
+            
+            
         }
 
         .bottom-row{
@@ -121,32 +140,24 @@
             grid-auto-flow: column;
         }
 
-        .vehicle-expansion-panel{
-            position: absolute;
-            top:15%;
-        }
+        
 
         .MuiPaper-rounded {
             border-radius: 30px !important;
         }
 
-        .item {
-            display: flex;
-            flex-direction: column;
-            margin-top: 0.1rem;
-            margin-bottom: 0.1rem;
-
-        }
+        
 
         .top-column{
             text-align: left;
-            margin-left: 10%;
+            margin-left: -15%;
+            
             white-space: nowrap;
         }
 
         .bottom-column{
             text-align: left;
-            margin-left: 10%;
+            margin-left: -15%;
             margin-top: 3% !important;
             white-space: nowrap;
         }
@@ -164,14 +175,40 @@
             margin-bottom: -5%;
         }
 
+        .row {
+            display: flex;
+            flex-wrap: wrap;
+          }
+          
+          .details-container {
+            flex: 2;
+          }
+          
+          .avatar-container {
+            flex-basis: 250px;
+          }
+          
+
         .MuiCollapse-container MuiCollapse-entered div
         {
             margin-top: 0 !important;
         }
-        .vehicle-pic{
-            border-radius: 50%;
-            padding-top: 0px;
+
+        .item {
+            display: flex;
+            flex-direction: column;
+            flex:1;
+            flex-flow: column wrap;
+            margin-top: 0.1rem;
+            margin-bottom: 0.1rem;
+
         }
+
+        .vehicle-img{
+            border-radius: 10% !important;
+
+        }
+        
 
 @keyframes rotate-circle {
     0% {

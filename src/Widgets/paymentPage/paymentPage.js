@@ -5,9 +5,13 @@ import DebitCard from "./DebitCard";
 import Savings from "./Savings";
 import Cheque from "./Cheque";
 import CreditCard from "./CreditCard";
+import {ExpansionPanel,ExpansionPanelSummary,ExpansionPanelDetails,Grid,Table,TableBody,TableCell,TableHead,TableRow,Button,AppBar,Toolbar,Typography,IconButton, Container, Paper,Card, CardHeader,Avatar,CardContent} from '@material-ui/core';
+import MenuIcon from '@material-ui/icons/Menu';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import Boxy from './Boxy'
 
 
-export default class paymentPage extends React.Component {
+export default class PaymentPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {value: 'none',
@@ -36,50 +40,46 @@ export default class paymentPage extends React.Component {
       let h=this.props.location.state.premium;
       let k;
       h=parseFloat(h).toFixed(2);
-      k=parseFloat(h/6).toFixed(2);      
+      k=parseFloat(h*6).toFixed(2);      
     return (
-      <div>
+      <div style={{backgroundColor:'#F5F5F5'}}>
            <div>
                <div>
-                  <h1>Payment Page</h1>
+                  <AppBar position="static" style={{backgroundColor:'#041c3d',color:'white'}}>
+                    <Toolbar>
+                      <IconButton edge="start" color="inherit" aria-label="menu">
+                      <MenuIcon />
+                      </IconButton>
+                      <Typography variant="h6" align="center" display="inline">
+                          Payment Page
+                      </Typography>                    
+                    </Toolbar>
+                  </AppBar>
+               </div>
+               <div>
+                   <span>Your total Policy Premium is ${k}</span>
                </div>
                <div>
                  <form>
-                 <  input type='radio' value='full' required name='payment'onChange={this.handleChange2}></input><span>Pay Full Amount</span><br></br>
+                 <  input type='radio' value='full' required name='payment'onChange={this.handleChange2}></input><span>Pay Full Premium</span><br></br>
                  <  input type='radio' value='monthly' name='payment' onChange={this.handleChange2}></input><span>Pay Monthly Installments</span><br></br>
                  </form>
                </div>
                <div>
                  {
-                   this.state.pay === 'none' &&
-                   <span>The total amount owed is {h}</span>
-                 }
-               </div>
-               <div>
-                 {
                    this.state.pay === 'full' &&
-                   <span>The total amount owed is {h}</span>
+                   <span>The total Amount to be paid is ${k}</span>
                  }
                </div>
                <div>
                  {
                    this.state.pay === 'monthly' &&
                    <div>
-                   <div>The total amount owed is {k}</div>
+                   <div>The total Amount to be paid is ${h}</div>
                    <label> Installments </label>
-                   <ul>
-                    <li>{k} is owed for November</li>
-                    <li>{k} is owed for December</li>
-                    <li>{k} is owed for January</li>
-                    <li>{k} is owed for Febraury</li>
-                    <li>{k} is owed for March</li>
-                    <li>{k} is owed for April</li>
-                   </ul>
+                   < Boxy value={h} />
                    </div>
-
-                 
-                   
-                 }
+                  }
                </div>
 
                 <form>
@@ -120,7 +120,9 @@ export default class paymentPage extends React.Component {
             </div>
 
             <div>
-               <Link to="/confirm"><button>Submit Payment</button></Link>
+          <Link to="/quoteresults"><Button variant="contained" style={{backgroundColor:'grey',color:'white'}}>Back</Button></Link>{' '}
+              <Link to="/getstarted"><Button variant="contained" style={{backgroundColor:'#041c3d',color:'white'}}>Save</Button></Link>{' '}
+              <Link to="/confirm"><Button variant="contained" style={{backgroundColor:'#041c3d',color:'white'}}>Submit Payment</Button></Link>{' '}
            </div> 
       </div>
     );
