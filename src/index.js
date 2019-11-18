@@ -20,6 +20,7 @@ import PageTransition from 'react-router-page-transition';
 
 import './index.css'
 import ConfirmationPage from './Widgets/QuoteResults/ConfirmationPage';
+import QuoteHistory from './Widgets/QuoteHistory/QuoteHistory';
 import paymentPage from './Widgets/paymentPage/paymentPage';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 
@@ -40,7 +41,8 @@ class App extends React.Component{
                     classNames="fade"
                     >
                     <Switch location = {location} >
-                     <Route exact path="/" component={Home} />
+                    <Route exact path="/" component={QuoteHistory} />
+                     <Route exact path="/getstarted" component={Home} />
                      <Route path="/quoteresults" exact component={QuoteResultsPage} />
                      <Route path="/adddriver" exact component={AddDriver} />
                      <Route path="/driverdetails" exact component={DriverDetails} />

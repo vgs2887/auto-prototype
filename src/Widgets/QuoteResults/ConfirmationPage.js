@@ -112,7 +112,7 @@ export default class ConfirmationPage extends React.Component {
                 </div>
                 
             </CardContent>
-            <Link  to='/getstarted' ><Button variant="contained" style={{backgroundColor:'#041c3d',color:'white',flex: 1, flexDirection: 'row', flexWrap: 'Wrap'}}>
+            <Link to='/' ><Button variant="contained" style={{backgroundColor:'#041c3d',color:'white',flex: 1, flexDirection: 'row', flexWrap: 'Wrap'}}>
                                 View Your Policy
                 </Button></Link>
             
