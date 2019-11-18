@@ -138,12 +138,12 @@ render(){
                         aria-controls="panel1c-content"
                         id="panel1c-header"
                         > <Typography variant="caption" className={{
-                            color:"#041c3d",fontWeigh:"bold"
+                            color:"#041c3d",fontWeight:"bold"
                           }}>Drivers</Typography>
                           </ExpansionPanelSummary>    
                         <ExpansionPanelDetails>                                                   
                         <Grid container>
-                            <Grid item>
+                            <Grid>
                                 <SimpleCard
                                 type="driver"
                                 showDeleteButton={true}
@@ -155,7 +155,7 @@ render(){
                                 data={"Age 21"}
                                 />
                             </Grid>
-                            <Grid item >
+                            <Grid>
                                     <SimpleCard
                                     type="driver"
                                     showDeleteButton={true}
@@ -176,12 +176,12 @@ render(){
                         aria-controls="panel1c-content"
                         id="panel1c-header"
                         > <Typography variant="caption" className={{
-                            color:"#041c3d",fontWeigh:"bold"
+                            color:"#041c3d",fontWeight:"bold"
                           }}>Vehicles</Typography>
                           </ExpansionPanelSummary>    
                         <ExpansionPanelDetails>                                                   
                         <Grid container>
-                            <Grid item>
+                            <Grid>
                                 <SimpleCard
                                 key={"1"}
                                 type="vehicle"
@@ -191,10 +191,10 @@ render(){
                                 model={"10000 miles"}
                                 name={"dharma"}
                                 milteryStatus={"2016 Tesla 3"}
-                                data={"17DHFUE5678DHDBHD898"}
+                                data={"17DHFUE5678DHDBHD"}
                                 />
                             </Grid>
-                            <Grid item >
+                            <Grid>
                                     <SimpleCard
                                     key={"1"}
                                     type="vehicle"
@@ -204,7 +204,7 @@ render(){
                                     model={"10000 miles"}
                                     name={"dharma"}
                                     milteryStatus={"2016 Tesla 3"}
-                                    data={"17DHFUE5678DHDBHD898"}
+                                    data={"17DHFUE5678DHDBHD"}
                                     />
                             </Grid>
                         </Grid>
