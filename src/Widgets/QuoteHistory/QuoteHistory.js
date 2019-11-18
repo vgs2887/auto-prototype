@@ -1,8 +1,10 @@
 import React from 'react';
-import {Grid,Table,TableBody,TableCell,TableHead,TableRow,Button,AppBar,Toolbar,Typography,IconButton, Container} from '@material-ui/core';
+import {ExpansionPanel,ExpansionPanelSummary,ExpansionPanelDetails,Grid,Table,TableBody,TableCell,TableHead,TableRow,Button,AppBar,Toolbar,Typography,IconButton, Container, Paper,Card, CardHeader,Avatar,CardContent} from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import { Link } from 'react-router-dom';
-
+import SimpleCard from "../../SharedJSX/Inputs/VerticalCard/VerticalCard";
+import path from "../../assets/carlogo.png";
 const useStyles = {
     root: {
         width: 'auto',
@@ -49,6 +51,7 @@ class QuoteHistory extends React.Component
         listToDisplay:[],
         headerToDisplay:[],
         textToDisplay: null,
+        policyAvaialble: false,
         isLoaded : false
     }
   }  
@@ -63,10 +66,10 @@ class QuoteHistory extends React.Component
               policies: json.filter(quote => quote.type === 'policy')
           })
           if(this.state.policies && this.state.policies.length > 0) {
-            this.setState({listToDisplay : this.state.policies,headerToDisplay:policyHeader,textToDisplay:"Policies"})
+            this.setState({listToDisplay : this.state.policies,headerToDisplay:policyHeader,textToDisplay:"Policies",policyAvaialble:true})
           }
           else{
-            this.setState({listToDisplay : this.state.quotes,headerToDisplay:quoteHeader,textToDisplay:"Quotes"})
+            this.setState({listToDisplay : this.state.quotes,headerToDisplay:quoteHeader,textToDisplay:"Quotes",policyAvaialble:false})
           }          
       })
   }
@@ -90,7 +93,7 @@ render(){
                 Auto Insurance {this.state.textToDisplay}
             </Typography> 
             <br />  
-            { this.state.listToDisplay.map((quote, index) => { return( quote.type)}) ?
+            { this.state.listToDisplay && this.state.listToDisplay.length > 0 && !this.state.policyAvaialble ?
             <Grid style={useStyles.root}>
                 <Table size="small">
                     <TableHead>
@@ -118,7 +121,98 @@ render(){
                 </TableBody>
                 </Table>
             </Grid>  
-:<div></div>} 
+            :<div>{this.state.listToDisplay.map((quote, index) => {
+                    var a = "Your " +quote.location+" Policy"
+                return(
+                <Card square elevation={4}>  
+                    <CardHeader title={a}titleTypographyProps={{variant:"h6", align:"left", component:"p"}} subheader="Effective from November 11, 2018" subheaderTypographyProps={{variant:"subtitle1", align:"left",component:"p"}}
+                    avatar={
+                        <Avatar aria-label="location" style={{backgroundColor:"#041c3d"}}>
+                          {quote.location}
+                        </Avatar>
+                      }/>
+                    <CardContent>     
+                    <ExpansionPanel square>
+                        <ExpansionPanelSummary
+                        expandIcon={<ExpandMoreIcon />}
+                        aria-controls="panel1c-content"
+                        id="panel1c-header"
+                        > <Typography variant="caption" className={{
+                            color:"#041c3d",fontWeigh:"bold"
+                          }}>Drivers</Typography>
+                          </ExpansionPanelSummary>    
+                        <ExpansionPanelDetails>                                                   
+                        <Grid container>
+                            <Grid item>
+                                <SimpleCard
+                                type="driver"
+                                showDeleteButton={true}
+                                id={"2"}
+                                image={"https://www.w3schools.com/howto/img_avatar.png"}
+                                milteryStatus={"active"}
+                                name={"dharma"}
+                                model={"0H0002345"}
+                                data={"Age 21"}
+                                />
+                            </Grid>
+                            <Grid item >
+                                    <SimpleCard
+                                    type="driver"
+                                    showDeleteButton={true}
+                                    id={"2"}
+                                    image={"https://www.w3schools.com/howto/img_avatar.png"}
+                                    milteryStatus={"active"}
+                                    name={"dharma"}
+                                    model={"0H0002345"}
+                                    data={"Age 21"}
+                                    />
+                            </Grid>
+                        </Grid>
+                        </ExpansionPanelDetails>
+                        </ExpansionPanel >
+                        <ExpansionPanel square>
+                        <ExpansionPanelSummary
+                        expandIcon={<ExpandMoreIcon />}
+                        aria-controls="panel1c-content"
+                        id="panel1c-header"
+                        > <Typography variant="caption" className={{
+                            color:"#041c3d",fontWeigh:"bold"
+                          }}>Vehicles</Typography>
+                          </ExpansionPanelSummary>    
+                        <ExpansionPanelDetails>                                                   
+                        <Grid container>
+                            <Grid item>
+                                <SimpleCard
+                                key={"1"}
+                                type="vehicle"
+                                showDeleteButton={true}
+                                id={"djjhfkjhdjkfhk"}
+                                image={path}
+                                model={"10000 miles"}
+                                name={"dharma"}
+                                milteryStatus={"2016 Tesla 3"}
+                                data={"17DHFUE5678DHDBHD898"}
+                                />
+                            </Grid>
+                            <Grid item >
+                                    <SimpleCard
+                                    key={"1"}
+                                    type="vehicle"
+                                    showDeleteButton={true}
+                                    id={"djjhfkjhdjkfhk"}
+                                    image={path}
+                                    model={"10000 miles"}
+                                    name={"dharma"}
+                                    milteryStatus={"2016 Tesla 3"}
+                                    data={"17DHFUE5678DHDBHD898"}
+                                    />
+                            </Grid>
+                        </Grid>
+                        </ExpansionPanelDetails>
+                        </ExpansionPanel>                    
+                    </CardContent>
+                </Card>)})}
+            </div>} 
 <br />
 <br/>
 <Link align="left" to='/getstarted' ><Button variant="contained" style={{backgroundColor:'#041c3d',color:'white'}}>
