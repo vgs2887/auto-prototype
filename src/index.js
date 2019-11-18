@@ -20,7 +20,7 @@ import TxHeader from './Widgets/QuoteResults/TXHeader'
 
 import './index.css'
 import ConfirmationPage from './Widgets/QuoteResults/ConfirmationPage';
-import PaymentPage from './Widgets/PaymentPage/PaymentPage';
+import PaymentPage from './Widgets/paymentPage/paymentPage';
 
 const enhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
 const store = createStore(reducers, enhancer(applyMiddleware(thunk)))
