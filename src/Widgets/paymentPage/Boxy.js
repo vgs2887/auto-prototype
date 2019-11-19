@@ -21,7 +21,7 @@ const useStyles = makeStyles(theme => ({
 export default function Boxy(props) {
   // Change use state to change the spacing
 
-  const [spacing] = React.useState(3);
+  // const [spacing] = React.useState(3);
   const classes = useStyles();  
 
 
@@ -29,7 +29,7 @@ export default function Boxy(props) {
     <Grid container className={classes.root} spacing={2}>
  
       <Grid item xs={12}>
-        <Grid container justify="center" spacing={spacing}>
+        <Grid container justify="center" spacing={3}>
           <Grid item>
             <Paper id="current" className={classes.paper}>{props.value}$ is owed for November</Paper>
           </Grid>
@@ -44,6 +44,9 @@ export default function Boxy(props) {
           </Grid>
           <Grid item>
             <Paper id="future" className={classes.paper}>{props.value}$ is owed for March</Paper>
+          </Grid>
+          <Grid item>
+            <Paper id="future" className={classes.paper}>{props.value}$ is owed for April</Paper>
           </Grid>
         </Grid>
       </Grid>
