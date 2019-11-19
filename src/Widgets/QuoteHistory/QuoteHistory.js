@@ -5,6 +5,8 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import { Link } from 'react-router-dom';
 import SimpleCard from "../../SharedJSX/Inputs/VerticalCard/VerticalCard";
 import path from "../../assets/carlogo.png";
+import { connect } from "react-redux";
+import { setPolicyAgg } from "../../actions";
 const useStyles = {
     root: {
         width: 'auto',
@@ -45,41 +47,61 @@ class QuoteHistory extends React.Component
   constructor(props)
   {
     super(props)
-    this.state= {
-        quotes:[],
-        policies:[],
-        listToDisplay:[],
-        headerToDisplay:[],
-        textToDisplay: null,
-        policyAvaialble: false,
-        isLoaded : false
+    this.state = {
+        aggregate : []
     }
   }  
 
-  async componentDidMount() {
-   await   fetch('https://bkjapch3s9.execute-api.us-east-1.amazonaws.com/v1/pc/auto/policysummaryexpapi')
+  componentDidMount() {
+      fetch('https://bkjapch3s9.execute-api.us-east-1.amazonaws.com/v1/pc/auto/policysummaryexpapi')
       .then(res => res.json())
       .then(json => {
-          console.log(json)
-          this.setState({
-              isLoaded: true,
-              quotes: json.filter(quote => !quote.isQuote),
-              policies: json.filter(quote => quote.isQuote)
-          })
-          if(this.state.policies && this.state.policies.length > 0) {
-            this.setState({listToDisplay : this.state.policies,headerToDisplay:policyHeader,textToDisplay:"Policies",policyAvaialble:true})
-          }
-          else{
-            this.setState({listToDisplay : this.state.quotes,headerToDisplay:quoteHeader,textToDisplay:"Quotes",policyAvaialble:false})
-          }          
+          json.map(a =>{this.props.setPolicyAgg(a)})    
       })
+      .catch(error =>{console.log("ERROR"+error)})
   }
 
 render(){    
-    
+    var quotes = this.props.aggregate.filter(quote => quote.isQuote)
+    var policies = this.props.aggregate.filter(quote => !quote.isQuote)
+    var listToDisplay = []
+    var headerToDisplay = []
+    var textToDisplay = null    
+    var policyAvaialble = false
+    if(policies && policies.length > 0) {
+        listToDisplay = policies
+        headerToDisplay=policyHeader
+        if(policies.length > 1)
+        {
+            textToDisplay="Auto Insurance Policies"    
+        }
+        else{
+            textToDisplay="Auto Insurance Policy"
+        }
+        policyAvaialble=true
+      }
+      else{
+          if(quotes && quotes.length > 0 )
+          {
+            listToDisplay = quotes
+            headerToDisplay=quoteHeader
+            if(quotes.length > 1)
+            {
+                textToDisplay="Auto Insurance Quotes"    
+            }
+            else{
+                textToDisplay="Auto Insurance Quote"
+            }
+            policyAvaialble=false
+         } 
+        else{
+            textToDisplay="Click Get Started to get a Quote!"
+        }
+    }
+    console.log("display policy"+listToDisplay)
   return (      
         <div style={{backgroundColor:'#F5F5F5'}}>
-            <AppBar position="static" style={{backgroundColor:'#041c3d',color:'white'}}>
+             <AppBar position="static" style={{backgroundColor:'#041c3d',color:'white'}}>
                 <Toolbar>
                     <IconButton edge="start" color="inherit" aria-label="menu">
                         <MenuIcon />
@@ -91,22 +113,22 @@ render(){
             </AppBar>
             <br />
             <Typography variant="h6" align="left" style={{color:'#041c3d'}}>
-                Auto Insurance {this.state.textToDisplay}
+                {textToDisplay}
             </Typography> 
             <br />  
-            { this.state.listToDisplay && this.state.listToDisplay.length > 0 && !this.state.policyAvaialble ?
+            { listToDisplay && listToDisplay.length > 0 && !policyAvaialble ?
             <Grid style={useStyles.root}>
                 <Table size="small">
                     <TableHead>
                     <TableRow >
-                        {this.state.headerToDisplay.map((header)=>{return(
+                        {headerToDisplay.map((header)=>{return(
                             <TableCell align='left' style={{color:'#041c3d'}}>{header}</TableCell>
                         )})}                        
                         <TableCell align='left'></TableCell>
                     </TableRow>
                     </TableHead>
                     <TableBody>
-                    {this.state.listToDisplay.map((quote, index) => {
+                    {listToDisplay.map((quote, index) => {
 
                     return(
 
@@ -122,7 +144,7 @@ render(){
                 </TableBody>
                 </Table>
             </Grid>  
-            :<div>{this.state.listToDisplay.map((quote, index) => {
+            :<div>{listToDisplay.map((quote, index) => {
                     var a = "Your " +quote.baseLocation+" Policy"
                     var driverid = 0;
                     var vehicleid = 0;
@@ -196,7 +218,7 @@ render(){
                 </Card>)})}
             </div>} 
 <br />
-<br/>
+<br/> 
 <Link align="left" to='/getstarted' ><Button variant="contained" style={{backgroundColor:'#041c3d',color:'white'}}>
                                 Get A New Quote
                             </Button></Link>
@@ -204,4 +226,9 @@ render(){
   );
 }
 }
-export default QuoteHistory;
+const mapStateToProps = (state) => {
+    return {        
+        "aggregate": state.aggregate
+    }
+}
+export default connect(mapStateToProps,{setPolicyAgg})(QuoteHistory)

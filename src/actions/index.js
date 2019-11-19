@@ -51,8 +51,15 @@ export const deletepropertyaction=(propertyid)=>async dispatch =>{
 }
 
 export const setPageNameAction=(pageName) => async dispatch => {
+    console.log("setPageNameAction"+pageName)
     dispatch({
         type:"SETPAGENAME",
         payload:pageName
+    })
+}
+export const setPolicyAgg=(aggregate) => async dispatch => {
+    dispatch({
+        type:"ADDAGGREGATE",
+        payload:aggregate
     })
 }

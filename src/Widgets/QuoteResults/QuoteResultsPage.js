@@ -11,6 +11,7 @@ import { Grid } from '@material-ui/core';
 import CircularDiv from './CircularDiv';
 import { setPageNameAction } from "../../actions";
 import { Link } from 'react-router-dom'
+import axios from 'axios'
 
 const useStyles = {
     root: {
@@ -21,6 +22,65 @@ const useStyles = {
     },
 }
 
+const postData ={
+    "baseLocation": "KS", 
+    "premium": 990.99, 
+    "packageCode": "Expanded", 
+    "policyNr": "701", 
+    "isQuote": true, 
+    "policyEffDate": "2019-12-14", 
+    "policyExpDate": "2020-07-13", 
+    "coverages": {
+                    "bodilyInjury": 150.11, 
+                    "propertyDamage": 20.22, 
+                    "comprehensive": 200.0, 
+                    "collision": 500.99
+                }, 
+    "drivers": [
+                {
+                    "name": "Alexa Doe", 
+                    "age": 29, 
+                    "relationship": "SELF", 
+                    "gender": "female", 
+                    "license": "OH00000001"
+                }, 
+                {
+                    "name": "John Doe", 
+                    "age": 30, 
+                    "relationship": "PARTER", 
+                    "gender": "male", 
+                    "license": "OH00000001"
+                }
+               ],
+    "vehicles": [
+                    {
+                        "driverName": "Bing", 
+                        "year": 2018, 
+                        "make": "Honda", 
+                        "model": "Accord", 
+                        "vin": "HODHFOALASDOI", 
+                        "mileage": 130000, 
+                        "addressLineOne": "4980 usaa blvd", 
+                        "addressLineTwo": "apt9999", 
+                        "city": "San Antonio", 
+                        "state": "Texas", 
+                        "zip": "78240"
+                    }, 
+                    {
+                        "driverName": "John", 
+                        "year": 2017, 
+                        "make": "Honda", 
+                        "model": "Fit", 
+                        "vin": "HODHFOALASDOI", 
+                        "mileage": 18000, 
+                        "addressLineOne": "4980 usaa blvd", 
+                        "addressLineTwo": "home", 
+                        "city": "San Antonio", 
+                        "state": "Texas", 
+                        "zip": "99999"
+                    }
+                ]
+    };
 
 class QuoteResultsPage extends React.Component {
 
@@ -29,6 +89,13 @@ class QuoteResultsPage extends React.Component {
         this.state = { premium: 25, pageName : '' };
     }
     
+
+    submitHandler = e => {
+        console.log(postData)
+        axios.post('https://bkjapch3s9.execute-api.us-east-1.amazonaws.com/v1/pc/auto/policysummaryexpapi', postData)
+        .then(response => {console.log("Response"+response)})
+        .catch(error =>{console.log("ERROR"+error)})
+    }
 
 componentDidMount(){
     let premium = this.props.premium;
@@ -95,7 +162,7 @@ render() {
                 </Grid>
 
                 <Grid item xs={12}>
-                <Link to={{pathname:'/payment', state:{ premium: this.state.premium }}}><button className="add-driver" > Proceed to Checkout </button></Link>
+                <Link to={{pathname:'/payment', state:{ premium: this.state.premium }}}><button className="add-driver" onClick={this.submitHandler}> Proceed to Checkout </button></Link>
                 </Grid>
 
                 <Grid item xs={12} sm={12}>
@@ -126,6 +193,7 @@ render() {
 }
 }
 const mapStateToProps = (state) => {
+    console.log("premium"+state.premium)
     return {
         "premium": state.premium,
         "driverNo": state.drivers.length,
