@@ -57,13 +57,14 @@ class QuoteHistory extends React.Component
   }  
 
   async componentDidMount() {
-   await   fetch('https://umb-spring-datapi.herokuapp.com/myaccounts')
+   await   fetch('https://bkjapch3s9.execute-api.us-east-1.amazonaws.com/v1/pc/auto/policysummaryexpapi')
       .then(res => res.json())
       .then(json => {
+          console.log(json)
           this.setState({
               isLoaded: true,
-              quotes: json.filter(quote => quote.type === 'quote'),
-              policies: json.filter(quote => quote.type === 'policy')
+              quotes: json.filter(quote => !quote.isQuote),
+              policies: json.filter(quote => quote.isQuote)
           })
           if(this.state.policies && this.state.policies.length > 0) {
             this.setState({listToDisplay : this.state.policies,headerToDisplay:policyHeader,textToDisplay:"Policies",policyAvaialble:true})
@@ -110,9 +111,9 @@ render(){
                     return(
 
                     <TableRow>
-                        <TableCell align='left'>{quote.id}</TableCell>
-                        <TableCell align='left'>{quote.location}</TableCell>
-                        <TableCell align='left'>{quote.monthlyPremium}</TableCell>
+                        <TableCell align='left'>{quote.policyNr}</TableCell>
+                        <TableCell align='left'>{quote.baseLocation}</TableCell>
+                        <TableCell align='left'>{quote.premium}</TableCell>
                         <TableCell align="left">
                             <Link to='/quoteresults' ><Button variant="contained" style={{backgroundColor:'#041c3d',color:'white'}}>Continue</Button></Link>
                         </TableCell>
@@ -122,13 +123,15 @@ render(){
                 </Table>
             </Grid>  
             :<div>{this.state.listToDisplay.map((quote, index) => {
-                    var a = "Your " +quote.location+" Policy"
+                    var a = "Your " +quote.baseLocation+" Policy"
+                    var driverid = 0;
+                    var vehicleid = 0;
                 return(
                 <Card square elevation={4}>  
                     <CardHeader title={a}titleTypographyProps={{variant:"h6", align:"left", component:"p"}} subheader="Effective from November 11, 2018" subheaderTypographyProps={{variant:"subtitle1", align:"left",component:"p"}}
                     avatar={
                         <Avatar aria-label="location" style={{backgroundColor:"#041c3d"}}>
-                          {quote.location}
+                          {quote.baseLocation}
                         </Avatar>
                       }/>
                     <CardContent>     
@@ -143,30 +146,20 @@ render(){
                           </ExpansionPanelSummary>    
                         <ExpansionPanelDetails>                                                   
                         <Grid container>
-                            <Grid>
-                                <SimpleCard
-                                type="driver"
-                                showDeleteButton={true}
-                                id={"2"}
-                                image={"https://www.w3schools.com/howto/img_avatar.png"}
-                                milteryStatus={"active"}
-                                name={"dharma"}
-                                model={"0H0002345"}
-                                data={"Age 21"}
-                                />
-                            </Grid>
-                            <Grid>
+                            {quote.drivers.map((driver,index) =>{return(
+                                    <Grid>
                                     <SimpleCard
                                     type="driver"
                                     showDeleteButton={true}
-                                    id={"2"}
+                                    id={driverid+1}
                                     image={"https://www.w3schools.com/howto/img_avatar.png"}
                                     milteryStatus={"active"}
-                                    name={"dharma"}
-                                    model={"0H0002345"}
-                                    data={"Age 21"}
+                                    name={driver.name}
+                                    model={driver.license}
+                                    data={driver.age}
                                     />
-                            </Grid>
+                                </Grid>
+                            )})}
                         </Grid>
                         </ExpansionPanelDetails>
                         </ExpansionPanel >
@@ -181,32 +174,21 @@ render(){
                           </ExpansionPanelSummary>    
                         <ExpansionPanelDetails>                                                   
                         <Grid container>
-                            <Grid>
-                                <SimpleCard
-                                key={"1"}
-                                type="vehicle"
-                                showDeleteButton={true}
-                                id={"djjhfkjhdjkfhk"}
-                                image={path}
-                                model={"10000 miles"}
-                                name={"dharma"}
-                                milteryStatus={"2016 Tesla 3"}
-                                data={"17DHFUE5678DHDBHD"}
-                                />
-                            </Grid>
-                            <Grid>
-                                    <SimpleCard
-                                    key={"1"}
-                                    type="vehicle"
-                                    showDeleteButton={true}
-                                    id={"djjhfkjhdjkfhk"}
-                                    image={path}
-                                    model={"10000 miles"}
-                                    name={"dharma"}
-                                    milteryStatus={"2016 Tesla 3"}
-                                    data={"17DHFUE5678DHDBHD"}
-                                    />
-                            </Grid>
+                            {quote.vehicles.map((vehicle,index) =>{return(
+                                        <Grid>
+                                        <SimpleCard                                        
+                                        key={vehicleid+1}
+                                        type="vehicle"
+                                        showDeleteButton={true}
+                                        id={vehicleid+1}
+                                        image={path}
+                                        model={vehicle.mileage}
+                                        name={vehicle.driverName}
+                                        milteryStatus={vehicle.year+vehicle.make+vehicle.model}
+                                        data={vehicle.vin}
+                                        />
+                                    </Grid>
+                                )})}                            
                         </Grid>
                         </ExpansionPanelDetails>
                         </ExpansionPanel>                    
