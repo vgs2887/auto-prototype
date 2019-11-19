@@ -1,19 +1,86 @@
 import React from "react";
+import TextField from "@material-ui/core/TextField";
+import { makeStyles } from "@material-ui/core/styles";
+import Container from '@material-ui/core/Container';
+import "./stylePaymentPage.css";
 
+const useStyles = makeStyles(theme => ({
+  container: {
+    display: "flex",
+    flexWrap: "wrap"
+  },
+  textField: {
+    marginLeft: theme.spacing(1),
+    marginRight: theme.spacing(1),
+    width: 200
+  }
+}));
 
-export default function DebitCard () {
-    return (
+export default function UncontrolledTextField() {
+  const classes = useStyles();
+
+  return (
+    <Container maxWidth="lg">
+        <form className={classes.container} noValidate autoComplete="off">
         <div>
-            <h4>Debit Card</h4>
-            <form>
-            First Name: <input type='text'></input><br></br>
-            Last Name: <input type='text'></input><br></br>
-            Card Number: <input type='text'></input><br></br>
-            Expiry Date: <input type='text'></input><br></br>
-            PIN: <input type='text'></input><br></br>
-            CVV: <input type='text'></input><br></br>
-            Nick Name: <input type='text'></input><br></br>
-            </form>
+            <TextField
+            required
+            id="outlined-FirstName"
+            label="First Name"
+            className={classes.textField}
+            margin="normal"
+            variant="outlined"
+            />
+            <TextField
+            required
+            id="outlined-LastName"
+            label="Last Name"
+            className={classes.textField}
+            margin="normal"
+            variant="outlined"
+            />
+            <TextField
+            required
+            id="outlined-CardNumber"
+            label="Card Number"
+            className={classes.textField}
+            margin="normal"
+            variant="outlined"
+            />
+            <TextField
+            required
+            id="outlined-ExpiryDate"
+            label="Expiry Date"
+            className={classes.textField}
+            margin="normal"
+            variant="outlined"
+            />
+            <TextField
+            required
+            id="outlined-PIN"
+            label="PIN"
+            className={classes.textField}
+            margin="normal"
+            variant="outlined"
+            />
+            <TextField
+            required
+            id="outlined-CVV"
+            label="CVV"
+            className={classes.textField}
+            margin="normal"
+            variant="outlined"
+            />
+            <TextField
+            required
+            id="outlined-Nickame"
+            label="Nickame"
+            className={classes.textField}
+            margin="normal"
+            variant="outlined"
+            />
         </div>
-    );
+        </form>
+    </Container>  
+  );
 }
