@@ -11,6 +11,7 @@ import { Grid } from '@material-ui/core';
 import CircularDiv from './CircularDiv';
 import { setPageNameAction } from "../../actions";
 import { Link } from 'react-router-dom'
+import axios from 'axios'
 
 const useStyles = {
     root: {
@@ -21,6 +22,7 @@ const useStyles = {
     },
 }
 
+const postData ={"policyId": "7b4ba338-0b66-11ea-a983-060ef1aaca49", "baseLocation": "TX", "premium": 1000.99, "packageCode": "QUOTE", "policyNumber": "7001", "isQuote": false, "policyEffDate": "2019-11-19", "policyExpDate": "2020-06-13", "lastVisitedPage": "Complete", "coverages": {"bodilyInjury": 50.11, "propertyDamage": 10.22, "comprehensive": 100.0, "collision": 400.99}, "drivers": [{"name": "Monica Feloola Geller", "age": 29, "relationship": "SELF", "gender": "female", "license": "OH00000001"}, {"name": "Regina Phelange", "age": 30, "relationship": "ROOMIE", "gender": "female", "license": "OH00000001"}], "vehicles": [{"driverName": "Regina Phelange", "year": 2018, "make": "Honda", "model": "Civic", "vin": "HODHFOAHDLASDOI", "mileage": 130000, "addressLineOne": "4980 usaa blvd", "addressLineTwo": "apt9999", "city": "San Antonio", "state": "Texas", "zip": "78240"}, {"driverName": "Monica Feloola Geller", "year": 2017, "make": "Porshe", "model": "Civic", "vin": "HODHFOAHDLASDOI", "mileage": 120000, "addressLineOne": "4980 usaa blvd", "addressLineTwo": "home", "city": "San Antonio", "state": "Texas", "zip": "99999"}]};
 
 class QuoteResultsPage extends React.Component {
 
@@ -29,6 +31,13 @@ class QuoteResultsPage extends React.Component {
         this.state = { premium: 25, pageName : '' };
     }
     
+
+    submitHandler = e => {
+        console.log("postRequest:  "+JSON.stringify(postData))
+        axios.post('https://1nbs6supkj.execute-api.us-east-1.amazonaws.com/v1/pc/auto/policyexpapi', postData)
+        .then(response => {console.log("Response"+JSON.stringify(response))})
+        .catch(error =>{console.log("ERROR"+error)})
+    }
 
 componentDidMount(){
     let premium = this.props.premium;
@@ -95,7 +104,7 @@ render() {
                 </Grid>
 
                 <Grid item xs={12}>
-                <Link to={{pathname:'/payment', state:{ premium: this.state.premium }}}><button className="add-driver" > Proceed to Checkout </button></Link>
+                <Link to={{pathname:'/payment', state:{ premium: this.state.premium }}}><button className="add-driver" onClick={this.submitHandler}> Proceed to Checkout </button></Link>
                 </Grid>
 
                 <Grid item xs={12} sm={12}>
@@ -126,6 +135,7 @@ render() {
 }
 }
 const mapStateToProps = (state) => {
+    console.log("premium"+state.premium)
     return {
         "premium": state.premium,
         "driverNo": state.drivers.length,

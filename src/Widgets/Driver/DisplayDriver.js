@@ -73,6 +73,7 @@ class DisplayDriver extends React.Component {
 }
 
 const mapStateToProps = state => {
+  console.log(JSON.stringify(state.quote))
   return {
     drivers: Object.values(state.drivers)
   };

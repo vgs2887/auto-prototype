@@ -1,11 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Home from './Widgets/Home/Home';
-import QuoteHistory from './Widgets/QuoteHistory/QuoteHistory';
 import Login from './Widgets/Login/Login';
 import * as serviceWorker from './serviceWorker';
 import QuoteResultsPage from './Widgets/QuoteResults/QuoteResultsPage'
-import {Router,Route} from 'react-router-dom' 
+import {Router,Route, Switch} from 'react-router-dom' 
 import history from './utils/history'
 import { Provider } from 'react-redux'
 import {createStore, applyMiddleware, compose } from 'redux'
@@ -17,10 +16,13 @@ import VehicleDetails from './Widgets/Vehicles/VehicleDetails'
 import AddVehicle from './Widgets/AddVehicle/AddVehicle'
 import AddProperty from './Widgets/AddProperty/AddProperty'
 import TxHeader from './Widgets/QuoteResults/TXHeader'
+import PageTransition from 'react-router-page-transition';
 
 import './index.css'
 import ConfirmationPage from './Widgets/QuoteResults/ConfirmationPage';
+import QuoteHistory from './Widgets/QuoteHistory/QuoteHistory';
 import paymentPage from './Widgets/paymentPage/paymentPage';
+import { CSSTransition, TransitionGroup } from 'react-transition-group';
 
 const enhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
 const store = createStore(reducers, enhancer(applyMiddleware(thunk)))
@@ -31,7 +33,16 @@ class App extends React.Component{
         return(
             <Router history={history}>
                 <div>
-                     <Route exact path="/" component={QuoteHistory} />
+                <Route render={({location}) => (
+                    <TransitionGroup>
+                    <CSSTransition
+                    key={location.key}
+                    timeout={300}
+                    classNames="fade"
+                    >
+                    <Switch location = {location} >
+                    <Route exact path="/" component={QuoteHistory} />
+                     <Route exact path="/getstarted" component={Home} />
                      <Route path="/quoteresults" exact component={QuoteResultsPage} />
                      <Route path="/adddriver" exact component={AddDriver} />
                      <Route path="/driverdetails" exact component={DriverDetails} />
@@ -40,11 +51,13 @@ class App extends React.Component{
                      <Route path='/addproperty' component={AddProperty}/>
                      <Route path='/payment' component={paymentPage}/>
                      <Route path='/confirm' component={ConfirmationPage}/>
-                     <Route path='/getstarted' component={Home}/>
+                     </Switch>
+                        </CSSTransition>
+                </TransitionGroup> 
+        )} />
                 </div>
             </Router>
         )
-
     }
 }
 

@@ -51,8 +51,28 @@ export const deletepropertyaction=(propertyid)=>async dispatch =>{
 }
 
 export const setPageNameAction=(pageName) => async dispatch => {
+    console.log("setPageNameAction"+pageName)
     dispatch({
         type:"SETPAGENAME",
         payload:pageName
+    })
+}
+export const setPolicyAgg=(aggregate) => async dispatch => {
+    dispatch({
+        type:"ADDAGGREGATE",
+        payload:aggregate
+    })
+}
+export const setEmptyObject=(quote) => async dispatch => {
+    console.log("inside setEmptyObject quote"+quote)
+    dispatch({
+        type:"PUSHEMPTYOBJECT",
+        payload:quote
+    })
+}
+export const setQuoteObject=(quote) => async dispatch => {
+    dispatch({
+        type:"PUSHQUOTEOBJECT",
+        payload:quote
     })
 }
