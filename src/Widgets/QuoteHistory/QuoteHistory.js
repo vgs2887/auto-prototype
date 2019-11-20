@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 import SimpleCard from "../../SharedJSX/Inputs/VerticalCard/VerticalCard";
 import path from "../../assets/carlogo.png";
 import { connect } from "react-redux";
-import { setEmptyObject } from "../../actions";
+import { setQuoteObject,setEmptyObject } from "../../actions";
 const useStyles = {
     root: {
         width: 'auto',
@@ -123,43 +123,13 @@ class QuoteHistory extends React.Component
           })    
       .catch(error =>{console.log("ERROR"+error)})
   }
+  setQuoteDataInState = quote => {
+    console.log("dharma"+JSON.stringify(quote))
+    this.props.setQuoteObject(quote)
+  };
+
 render(){    
-    // var quotes = this.props.aggregate.filter(quote => quote.isQuote)
-    // var policies = this.props.aggregate.filter(quote => !quote.isQuote)
-    // var listToDisplay = []
-    // var headerToDisplay = []
-    // var textToDisplay = null    
-    // var policyAvaialble = false
-    // if(policies && policies.length > 0) {
-    //     listToDisplay = policies
-    //     headerToDisplay=policyHeader
-    //     if(policies.length > 1)
-    //     {
-    //         textToDisplay="Auto Insurance Policies"    
-    //     }
-    //     else{
-    //         textToDisplay="Auto Insurance Policy"
-    //     }
-    //     policyAvaialble=true
-    //   }
-    //   else{
-    //       if(quotes && quotes.length > 0 )
-    //       {
-    //         listToDisplay = quotes
-    //         headerToDisplay=quoteHeader
-    //         if(quotes.length > 1)
-    //         {
-    //             textToDisplay="Auto Insurance Quotes"    
-    //         }
-    //         else{
-    //             textToDisplay="Auto Insurance Quote"
-    //         }
-    //         policyAvaialble=false
-    //      } 
-    //     else{
-    //         textToDisplay="Click Get Started to get a Quote!"
-    //     }
-    // }    
+    var list = this.state.listToDisplay
   return (      
         <div style={{backgroundColor:'#F5F5F5'}}>
              <AppBar position="static" style={{backgroundColor:'#041c3d',color:'white'}}>
@@ -194,11 +164,11 @@ render(){
                     return(
 
                     <TableRow>
-                        <TableCell align='left'>{quote.policyNr}</TableCell>
+                        <TableCell align='left'>{quote.policyNumber}</TableCell>
                         <TableCell align='left'>{quote.baseLocation}</TableCell>
                         <TableCell align='left'>{quote.premium}</TableCell>
                         <TableCell align="left">
-                            <Link><Button variant="contained" style={{backgroundColor:'#041c3d',color:'white'}}>Continue</Button></Link>
+                            <Link key={quote.policyNumber} to='/quoteresults' onClick={()=> this.setQuoteDataInState(quote)}><Button variant="contained" style={{backgroundColor:'#041c3d',color:'white'}}>Continue</Button></Link>
                         </TableCell>
                     </TableRow>        
                     )})}
@@ -206,12 +176,13 @@ render(){
                 </Table>
             </Grid>  
             :<div>{this.state.listToDisplay.map((quote, index) => {
-                    var a = "Your " +quote.baseLocation+" Policy"
+                    var a = "Your " +quote.baseLocation+" Policy" + "   #" + quote.policyNumber
                     var driverid = 0;
                     var vehicleid = 0;
+                    var effectiveDatemsg = "Effective from "+new Date(quote.policyEffDate).toLocaleDateString([],{ year: 'numeric', month: 'long', day: 'numeric' })
                 return(
                 <Card square elevation={4}>  
-                    <CardHeader title={a}titleTypographyProps={{variant:"h6", align:"left", component:"p"}} subheader="Effective from November 11, 2018" subheaderTypographyProps={{variant:"subtitle1", align:"left",component:"p"}}
+                    <CardHeader title={a}titleTypographyProps={{variant:"h6", align:"left", component:"p"}} subheader={effectiveDatemsg} subheaderTypographyProps={{variant:"subtitle1", align:"left",component:"p"}}
                     avatar={
                         <Avatar aria-label="location" style={{backgroundColor:"#041c3d"}}>
                           {quote.baseLocation}
@@ -280,10 +251,10 @@ render(){
             </div>} 
 <br />
 <br/> 
-<Link align="left" to='/getstarted' onClick={()=>this.props.setEmptyObject(emptyObject)}><Button variant="contained" style={{backgroundColor:'#041c3d',color:'white'}}>
+<Link align="left" to='/getstarted' policyNumber={()=>this.props.setEmptyObject(emptyObject)}><Button variant="contained" style={{backgroundColor:'#041c3d',color:'white'}}>
                                 Get A New Quote
                             </Button></Link>
-</div>
+<br/><br/><br/><br/></div>
   );
 }
 }
@@ -293,4 +264,4 @@ const mapStateToProps = (state) => {
         "quote": state.quote
     }
 }
-export default connect(mapStateToProps,{setEmptyObject})(QuoteHistory)
+export default connect(mapStateToProps,{setEmptyObject,setQuoteObject})(QuoteHistory)
