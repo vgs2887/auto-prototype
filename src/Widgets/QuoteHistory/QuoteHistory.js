@@ -1,5 +1,5 @@
 import React from 'react';
-import {ExpansionPanel,ExpansionPanelSummary,ExpansionPanelDetails,Grid,Table,TableBody,TableCell,TableHead,TableRow,Button,AppBar,Toolbar,Typography,IconButton, Container, Paper,Card, CardHeader,Avatar,CardContent} from '@material-ui/core';
+import {Switch,ExpansionPanel,ExpansionPanelSummary,ExpansionPanelDetails,Grid,Table,TableBody,TableCell,TableHead,TableRow,Button,AppBar,Toolbar,Typography,IconButton, Container, Paper,Card, CardHeader,Avatar,CardContent} from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import { Link } from 'react-router-dom';
@@ -139,14 +139,15 @@ render(){
                     </IconButton>
                     <Typography variant="h6" align="center" display="inline">
                         My Accounts
-                    </Typography>                    
+                    </Typography>                                        
                 </Toolbar>
             </AppBar>
             <br />
             <Typography variant="h6" align="left" style={{color:'#041c3d'}}>
                 {this.state.isEmpty ? "Click Get Started to get a Quote!" : this.state.textToDisplay}
+                {this.state.isEmpty ? null : <div style={{float:'right',paddingRight:'40px',fontSize:'15px'}}><Grid component="label" container alignItems="center" spacing={1}><Grid item>Quotes</Grid><Grid item><Switch size="small" style={{color:'#041c3d'}} checked={this.state.policyAvaialble} onChange={()=>{this.setState({policyAvaialble:!this.state.policyAvaialble})}}/></Grid><Grid item>Policies</Grid></Grid></div>}
             </Typography> 
-            <br />  
+            <br />   
             { this.state.listToDisplay && this.state.listToDisplay.length > 0 && !this.state.policyAvaialble ?
             <Grid style={useStyles.root}>
                 <Table size="small">

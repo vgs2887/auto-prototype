@@ -22,65 +22,7 @@ const useStyles = {
     },
 }
 
-const postData ={
-    "baseLocation": "KS", 
-    "premium": 990.99, 
-    "packageCode": "Expanded", 
-    "policyNr": "701", 
-    "isQuote": true, 
-    "policyEffDate": "2019-12-14", 
-    "policyExpDate": "2020-07-13", 
-    "coverages": {
-                    "bodilyInjury": 150.11, 
-                    "propertyDamage": 20.22, 
-                    "comprehensive": 200.0, 
-                    "collision": 500.99
-                }, 
-    "drivers": [
-                {
-                    "name": "Alexa Doe", 
-                    "age": 29, 
-                    "relationship": "SELF", 
-                    "gender": "female", 
-                    "license": "OH00000001"
-                }, 
-                {
-                    "name": "John Doe", 
-                    "age": 30, 
-                    "relationship": "PARTER", 
-                    "gender": "male", 
-                    "license": "OH00000001"
-                }
-               ],
-    "vehicles": [
-                    {
-                        "driverName": "Bing", 
-                        "year": 2018, 
-                        "make": "Honda", 
-                        "model": "Accord", 
-                        "vin": "HODHFOALASDOI", 
-                        "mileage": 130000, 
-                        "addressLineOne": "4980 usaa blvd", 
-                        "addressLineTwo": "apt9999", 
-                        "city": "San Antonio", 
-                        "state": "Texas", 
-                        "zip": "78240"
-                    }, 
-                    {
-                        "driverName": "John", 
-                        "year": 2017, 
-                        "make": "Honda", 
-                        "model": "Fit", 
-                        "vin": "HODHFOALASDOI", 
-                        "mileage": 18000, 
-                        "addressLineOne": "4980 usaa blvd", 
-                        "addressLineTwo": "home", 
-                        "city": "San Antonio", 
-                        "state": "Texas", 
-                        "zip": "99999"
-                    }
-                ]
-    };
+const postData ={"policyId": "7b4ba338-0b66-11ea-a983-060ef1aaca49", "baseLocation": "TX", "premium": 1000.99, "packageCode": "QUOTE", "policyNumber": "7001", "isQuote": false, "policyEffDate": "2019-11-19", "policyExpDate": "2020-06-13", "lastVisitedPage": "Complete", "coverages": {"bodilyInjury": 50.11, "propertyDamage": 10.22, "comprehensive": 100.0, "collision": 400.99}, "drivers": [{"name": "Monica Feloola Geller", "age": 29, "relationship": "SELF", "gender": "female", "license": "OH00000001"}, {"name": "Regina Phelange", "age": 30, "relationship": "ROOMIE", "gender": "female", "license": "OH00000001"}], "vehicles": [{"driverName": "Regina Phelange", "year": 2018, "make": "Honda", "model": "Civic", "vin": "HODHFOAHDLASDOI", "mileage": 130000, "addressLineOne": "4980 usaa blvd", "addressLineTwo": "apt9999", "city": "San Antonio", "state": "Texas", "zip": "78240"}, {"driverName": "Monica Feloola Geller", "year": 2017, "make": "Porshe", "model": "Civic", "vin": "HODHFOAHDLASDOI", "mileage": 120000, "addressLineOne": "4980 usaa blvd", "addressLineTwo": "home", "city": "San Antonio", "state": "Texas", "zip": "99999"}]};
 
 class QuoteResultsPage extends React.Component {
 
@@ -91,9 +33,9 @@ class QuoteResultsPage extends React.Component {
     
 
     submitHandler = e => {
-        console.log(postData)
-        axios.post('https://bkjapch3s9.execute-api.us-east-1.amazonaws.com/v1/pc/auto/policyexpapi', postData)
-        .then(response => {console.log("Response"+response)})
+        console.log("postRequest:  "+JSON.stringify(postData))
+        axios.post('https://1nbs6supkj.execute-api.us-east-1.amazonaws.com/v1/pc/auto/policyexpapi', postData)
+        .then(response => {console.log("Response"+JSON.stringify(response))})
         .catch(error =>{console.log("ERROR"+error)})
     }
 
