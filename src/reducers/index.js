@@ -5,6 +5,7 @@ import premiumreducer from './premiumreducer';
 import propertyreducer from './propertyreducer'
 import pagenamereducer from './pagenamereducer'
 import policyaggreducer from './policyaggreducer'
+import quotereducer from './quotereducer'
 
 export default combineReducers({
     "drivers":driverreducer,
@@ -12,5 +13,6 @@ export default combineReducers({
     "premium": premiumreducer,
     "custproperties":propertyreducer,
     "pagename":pagenamereducer,
-    "aggregate":policyaggreducer
+    "aggregate":policyaggreducer,
+    "quote":quotereducer
 })

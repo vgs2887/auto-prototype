@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 import SimpleCard from "../../SharedJSX/Inputs/VerticalCard/VerticalCard";
 import path from "../../assets/carlogo.png";
 import { connect } from "react-redux";
-import { setPolicyAgg } from "../../actions";
+import { setEmptyObject } from "../../actions";
 const useStyles = {
     root: {
         width: 'auto',
@@ -18,6 +18,24 @@ const useStyles = {
         align: 'left'
     }   
 };
+const emptyObject ={
+    "quoteID": Math.round(Math.random()*(1000000 - 1) + 1),
+    "baseLocation": null, 
+    "premium": null, 
+    "packageCode": null, 
+    "policyNr": null, 
+    "isQuote": true, 
+    "policyEffDate": null, 
+    "policyExpDate": null, 
+    "coverages": {
+                    "bodilyInjury": null, 
+                    "propertyDamage": null, 
+                    "comprehensive": null, 
+                    "collision": null
+                }, 
+    "drivers": [],
+    "vehicles": []
+    };
 const policyHeader = ['Policy#','Location','Premium'];
 const quoteHeader = ['Quote#','State','Premium'];
 // const qotes =
@@ -48,57 +66,100 @@ class QuoteHistory extends React.Component
   {
     super(props)
     this.state = {
-        aggregate : []
+        aggregate:[],
+        quotes:[],
+        policies:[],
+        listToDisplay : [],
+        headerToDisplay: [],
+        textToDisplay: null,
+        policyAvaialble: false,
+        isEmpty: false        
     }
+
   }  
 
-  componentDidMount() {
-      fetch('https://bkjapch3s9.execute-api.us-east-1.amazonaws.com/v1/pc/auto/policysummaryexpapi')
+  async componentDidMount() {
+      await fetch('https://bkjapch3s9.execute-api.us-east-1.amazonaws.com/v1/pc/auto/policysummaryexpapi')
       .then(res => res.json())
-      .then(json => {
-          json.map(a =>{this.props.setPolicyAgg(a)})    
-      })
+      .then(json => {    
+          console.log(json)        
+            this.setState({
+            isLoaded: true,
+            aggregate:json,
+            quotes: json.filter(quote => quote.isQuote),
+            policies: json.filter(quote => !quote.isQuote)
+            })
+            if(this.state.policies && this.state.policies.length > 0) {
+                if(this.state.policies.length > 1)
+                {
+                    this.setState({textToDisplay:"Auto Insurance Policies"})
+                }
+                else{
+                    this.setState({textToDisplay:"Auto Insurance Policy"})
+                }
+                this.setState({listToDisplay:this.state.policies})
+                this.setState({policyAvaialble:true})
+                this.setState({headerToDisplay:policyHeader})
+              }
+              else{
+                  if(this.state.quotes && this.state.quotes.length > 0 )
+                  {
+                    if(this.state.quotes.length > 1)
+                    {
+                        this.setState({textToDisplay:"Auto Insurance Quotes"})   
+                    }
+                    else{
+                        this.setState({textToDisplay:"Auto Insurance Quote"})
+                    }
+                    this.setState({listToDisplay:this.state.quotes})
+                    this.setState({policyAvaialble:false})  
+                    this.setState({headerToDisplay:quoteHeader})                                      
+                 } 
+                else{
+                        this.setState({isEmpty : true})
+                        this.setState({textToDisplay:"Click Get Started to get a Quote!"})
+                }
+            }  
+          })    
       .catch(error =>{console.log("ERROR"+error)})
   }
-
 render(){    
-    var quotes = this.props.aggregate.filter(quote => quote.isQuote)
-    var policies = this.props.aggregate.filter(quote => !quote.isQuote)
-    var listToDisplay = []
-    var headerToDisplay = []
-    var textToDisplay = null    
-    var policyAvaialble = false
-    if(policies && policies.length > 0) {
-        listToDisplay = policies
-        headerToDisplay=policyHeader
-        if(policies.length > 1)
-        {
-            textToDisplay="Auto Insurance Policies"    
-        }
-        else{
-            textToDisplay="Auto Insurance Policy"
-        }
-        policyAvaialble=true
-      }
-      else{
-          if(quotes && quotes.length > 0 )
-          {
-            listToDisplay = quotes
-            headerToDisplay=quoteHeader
-            if(quotes.length > 1)
-            {
-                textToDisplay="Auto Insurance Quotes"    
-            }
-            else{
-                textToDisplay="Auto Insurance Quote"
-            }
-            policyAvaialble=false
-         } 
-        else{
-            textToDisplay="Click Get Started to get a Quote!"
-        }
-    }
-    console.log("display policy"+listToDisplay)
+    // var quotes = this.props.aggregate.filter(quote => quote.isQuote)
+    // var policies = this.props.aggregate.filter(quote => !quote.isQuote)
+    // var listToDisplay = []
+    // var headerToDisplay = []
+    // var textToDisplay = null    
+    // var policyAvaialble = false
+    // if(policies && policies.length > 0) {
+    //     listToDisplay = policies
+    //     headerToDisplay=policyHeader
+    //     if(policies.length > 1)
+    //     {
+    //         textToDisplay="Auto Insurance Policies"    
+    //     }
+    //     else{
+    //         textToDisplay="Auto Insurance Policy"
+    //     }
+    //     policyAvaialble=true
+    //   }
+    //   else{
+    //       if(quotes && quotes.length > 0 )
+    //       {
+    //         listToDisplay = quotes
+    //         headerToDisplay=quoteHeader
+    //         if(quotes.length > 1)
+    //         {
+    //             textToDisplay="Auto Insurance Quotes"    
+    //         }
+    //         else{
+    //             textToDisplay="Auto Insurance Quote"
+    //         }
+    //         policyAvaialble=false
+    //      } 
+    //     else{
+    //         textToDisplay="Click Get Started to get a Quote!"
+    //     }
+    // }    
   return (      
         <div style={{backgroundColor:'#F5F5F5'}}>
              <AppBar position="static" style={{backgroundColor:'#041c3d',color:'white'}}>
@@ -113,22 +174,22 @@ render(){
             </AppBar>
             <br />
             <Typography variant="h6" align="left" style={{color:'#041c3d'}}>
-                {textToDisplay}
+                {this.state.isEmpty ? "Click Get Started to get a Quote!" : this.state.textToDisplay}
             </Typography> 
             <br />  
-            { listToDisplay && listToDisplay.length > 0 && !policyAvaialble ?
+            { this.state.listToDisplay && this.state.listToDisplay.length > 0 && !this.state.policyAvaialble ?
             <Grid style={useStyles.root}>
                 <Table size="small">
                     <TableHead>
                     <TableRow >
-                        {headerToDisplay.map((header)=>{return(
+                        {this.state.headerToDisplay.map((header)=>{return(
                             <TableCell align='left' style={{color:'#041c3d'}}>{header}</TableCell>
                         )})}                        
                         <TableCell align='left'></TableCell>
                     </TableRow>
                     </TableHead>
                     <TableBody>
-                    {listToDisplay.map((quote, index) => {
+                    {this.state.listToDisplay.map((quote, index) => {
 
                     return(
 
@@ -137,14 +198,14 @@ render(){
                         <TableCell align='left'>{quote.baseLocation}</TableCell>
                         <TableCell align='left'>{quote.premium}</TableCell>
                         <TableCell align="left">
-                            <Link to='/quoteresults' ><Button variant="contained" style={{backgroundColor:'#041c3d',color:'white'}}>Continue</Button></Link>
+                            <Link><Button variant="contained" style={{backgroundColor:'#041c3d',color:'white'}}>Continue</Button></Link>
                         </TableCell>
                     </TableRow>        
                     )})}
                 </TableBody>
                 </Table>
             </Grid>  
-            :<div>{listToDisplay.map((quote, index) => {
+            :<div>{this.state.listToDisplay.map((quote, index) => {
                     var a = "Your " +quote.baseLocation+" Policy"
                     var driverid = 0;
                     var vehicleid = 0;
@@ -219,7 +280,7 @@ render(){
             </div>} 
 <br />
 <br/> 
-<Link align="left" to='/getstarted' ><Button variant="contained" style={{backgroundColor:'#041c3d',color:'white'}}>
+<Link align="left" to='/getstarted' onClick={()=>this.props.setEmptyObject(emptyObject)}><Button variant="contained" style={{backgroundColor:'#041c3d',color:'white'}}>
                                 Get A New Quote
                             </Button></Link>
 </div>
@@ -227,8 +288,9 @@ render(){
 }
 }
 const mapStateToProps = (state) => {
+    console.log("quote state on click"+state.quote)
     return {        
-        "aggregate": state.aggregate
+        "quote": state.quote
     }
 }
-export default connect(mapStateToProps,{setPolicyAgg})(QuoteHistory)
+export default connect(mapStateToProps,{setEmptyObject})(QuoteHistory)

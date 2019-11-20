@@ -92,7 +92,7 @@ class QuoteResultsPage extends React.Component {
 
     submitHandler = e => {
         console.log(postData)
-        axios.post('https://bkjapch3s9.execute-api.us-east-1.amazonaws.com/v1/pc/auto/policysummaryexpapi', postData)
+        axios.post('https://bkjapch3s9.execute-api.us-east-1.amazonaws.com/v1/pc/auto/policyexpapi', postData)
         .then(response => {console.log("Response"+response)})
         .catch(error =>{console.log("ERROR"+error)})
     }
