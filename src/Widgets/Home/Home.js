@@ -3,6 +3,10 @@ import { Link } from 'react-router-dom';
 import Grid from '@material-ui/core/Grid';
 import Btn from '../../SharedJSX/Inputs/Button/Buttons';
 import "./stylehome.css"
+import {Button} from '@material-ui/core';
+import { setQuoteObject } from "../../actions";
+import { connect } from "react-redux";
+import Header from '../../Widgets/Header/Header'
 //
 import { Card, CardContent, Typography } from "@material-ui/core";
 import ZipQueryHandler from "../ZipAdd/ZipQueryHandler";
@@ -42,12 +46,18 @@ width: '500px'
 class Home extends React.Component {
   constructor(props) {
     super(props)
-    
+    this.state = {
+      baseLocation: "TX"
+    }
   }
-
+  setDataOnState = () => {
+    this.props.quote.baseLocation = this.state.baseLocation
+    this.props.setQuoteObject(this.props.quote)
+  }
   render() {
 
     return (
+      <div style={{backgroundColor:'#F5F5F5'}}><Header headerText="Auto Insurance Quote"/>
       <Grid container spacing={1} className="App" styles={{textAlign:"center"}}>
       {/*   <Grid style={styles.logo} item xs={9} sm={9} direction="column-reverse" alignItems="flex-end">
           <img src="https://content.usaa.com/mcontent/static_assets/Media/globalHeader-usaaLogo-2016.svg" alt="Usaa logo"/><br />
@@ -80,13 +90,22 @@ class Home extends React.Component {
 
         <Grid style={styles.button} container direction="column" alignItems="center" alignContent="flex-start">
 
-          <Link style={{ textDecoration: 'none' }} to='/driverdetails'><Btn id="button2" variant="contained">Get Started</Btn></Link>
+        <Link align="left" to='/driverdetails' onClick={this.setDataOnState}><Button variant="contained" style={{backgroundColor:'#041c3d',color:'white'}}>
+                                Get Started
+                            </Button></Link>
         </Grid>
-
-      </Grid>
+      </Grid></div>
     );
   }
 }
 
+const mapStateToProps = state => {
+  return {
+      quote: state.quote,
+  };
+};
 
-export default Home;
+export default connect(
+  mapStateToProps,
+  { setQuoteObject }
+)(Home);

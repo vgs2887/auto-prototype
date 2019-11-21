@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 // import history from "../../utils/history";
 import DriverDetails from '../QuoteResults/DriverDetails'
-import Header from "./Header";
+import Header from '../../Widgets/Header/Header'
 import CoveragePanel from './CoveragePanel';
 import './stylequoteresults.css';
 import VehicleDetails from './VehicleDetails';
@@ -12,6 +12,7 @@ import CircularDiv from './CircularDiv';
 import { setPageNameAction } from "../../actions";
 import { Link } from 'react-router-dom'
 import axios from 'axios'
+import {Button} from '@material-ui/core';
 
 const useStyles = {
     root: {
@@ -92,19 +93,14 @@ getComponent = () => {
 
 render() {
     return (
-        <div style={useStyles.root}>
-            <Grid container spacing={3}>
-
-                <Grid item xs={12}>
-                    <Header title="Auto Insurance Quote" /><br />
-                </Grid>
-
+        <div style={useStyles.root}><Header headerText="Auto Insurance Quote"/> 
+            <Grid container spacing={3}>              
                 <Grid item xs={12}>
                   <CircularDiv premium={this.state.premium}/>
                 </Grid>
 
                 <Grid item xs={12}>
-                <Link to={{pathname:'/payment', state:{ premium: this.state.premium }}}><button className="add-driver" onClick={this.submitHandler}> Proceed to Checkout </button></Link>
+                <Link to={{pathname:'/payment', state:{ premium: this.state.premium }}}><Button variant="contained" style={{backgroundColor:'#041c3d',color:'white'}} onClick={this.submitHandler}> Proceed to Checkout </Button></Link>
                 </Grid>
 
                 <Grid item xs={12} sm={12}>
