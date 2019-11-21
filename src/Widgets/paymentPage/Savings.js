@@ -21,8 +21,9 @@ export default function UncontrolledTextField() {
   const classes = useStyles();
 
   return (
+    <div>  
     <Container maxWidth="md">
-        <Typography component="div" style={{ backgroundColor: 'white', height: '20vh' }}>
+        
             <form className={classes.container} noValidate autoComplete="off">
                 <div>
                     <TextField
@@ -67,7 +68,8 @@ export default function UncontrolledTextField() {
                     />
                 </div>
             </form>
-        </Typography>
+        
     </Container>
+    </div>
   );
 }

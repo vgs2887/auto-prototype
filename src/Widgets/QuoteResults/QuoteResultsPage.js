@@ -100,7 +100,7 @@ render() {
                 </Grid>
 
                 <Grid item xs={12}>
-                <Link to={{pathname:'/payment', state:{ premium: this.state.premium }}}><Button variant="contained" style={{backgroundColor:'#041c3d',color:'white'}} onClick={this.submitHandler}> Proceed to Checkout </Button></Link>
+                <Link to={{pathname:'/payment'}}><Button variant="contained" style={{backgroundColor:'#041c3d',color:'white'}} onClick={this.submitHandler}> Proceed to Checkout </Button></Link>
                 </Grid>
 
                 <Grid item xs={12} sm={12}>
