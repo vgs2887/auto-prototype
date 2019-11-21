@@ -163,7 +163,7 @@ class CoveragePanel extends React.Component {
         this.quote.coverages.propertyDamage = 5;
         this.quote.coverages.comprehensive = compCollInitialCovAmnt;
         this.quote.coverages.collision = compCollInitialCovAmnt;
-        this.premium = premiumConst;
+        this.quote.premium = premiumConst; 
 
         this.props.setQuoteObject(this.quote);
 
