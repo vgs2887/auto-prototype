@@ -5,7 +5,9 @@ import './stylequoteresults.css'
 import {Divider,Paper,Grid} from '@material-ui/core';
 import path from '../../assets/car-driver.png'
 import { connect } from 'react-redux';
-
+import Header from '../../Widgets/Header/Header'
+import {Button} from '@material-ui/core';
+import axios from 'axios'
 const useStyles = {
     root: {
         width: 'auto',
@@ -32,6 +34,7 @@ class DriverDetails extends React.Component {
         setTimeout(() => {
              this.setState({didMount: true})
          }, 0)
+         this.setupBeforeUnloadListener();
      }
 
 
@@ -41,10 +44,24 @@ class DriverDetails extends React.Component {
     goToNextPage = () => {
         history.push('/vehicledetails')
     }
-
+    doSomethingBeforeUnload = (ev) => {
+        console.log("SEE YOU SOON WITH A NEW quote")
+        axios.post('https://1nbs6supkj.execute-api.us-east-1.amazonaws.com/v1/pc/auto/policyexpapi', this.props.quote)
+        .then(response => {console.log("Response"+JSON.stringify(response))})
+        .catch(error =>{console.log("ERROR"+error)})
+        return ev.returnValue="Are you sure want to exit?"
+    }
+      setupBeforeUnloadListener = () => {
+        window.addEventListener("beforeunload", (ev) => {
+            ev.preventDefault();
+            console.log("GOOD BYE")
+            return this.doSomethingBeforeUnload(ev);
+        });
+    };
     render() {
         const {didMount} = this.state
         return (
+            <div style={{backgroundColor:'#F5F5F5'}}><Header headerText="Auto Insurance Quote"/>
             <Paper style={useStyles.root}>
                 <div className={`drivers fade-in ${didMount && 'visible'}`}>
                 <Grid container >
@@ -54,7 +71,7 @@ class DriverDetails extends React.Component {
                     </Grid>
                     <Grid item xs={4}/>
                     <Grid item xs={4}>
-                    <button className="driveradd" onClick={this.onAddDriverClick}>Add+</button>
+                    <Button variant="contained" style={{backgroundColor:'#041c3d',color:'white'}} onClick={this.onAddDriverClick}>Add+</Button>
                     </Grid>
                  </Grid>
                 </div>
@@ -63,17 +80,18 @@ class DriverDetails extends React.Component {
                 <Grid container>
                     <Grid sm={2} />
                     <Grid xs={12} sm={8}>
-                        <button className="add-driver" onClick={this.goToNextPage}>NEXT</button>
+                        <Button variant="contained" style={{backgroundColor:'#041c3d',color:'white'}} onClick={this.goToNextPage}>NEXT</Button>
                     </Grid>
                     <Grid sm={2} />
                 </Grid>
-            </Paper>
+            </Paper></div>
         )
     }
 }
 const mapStateToProps = (state) => {
     return {
-        "drivers": state.drivers
+        "drivers": state.drivers,
+        "quote":state.quote
     }
 }
 export default connect(mapStateToProps,null)(DriverDetails)

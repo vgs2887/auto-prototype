@@ -14,7 +14,7 @@ import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormControl from '@material-ui/core/FormControl';
-
+import Header from '../../Widgets/Header/Header'
 
 
 
@@ -62,18 +62,7 @@ export default class PaymentPage extends React.Component {
     return (
       <div style={{backgroundColor:'#F5F5F5'}}>
            <div>
-               <div>
-                  <AppBar position="static" style={{backgroundColor:'#041c3d',color:'white'}}>
-                    <Toolbar>
-                      <IconButton edge="start" color="inherit" aria-label="menu">
-                      <MenuIcon />
-                      </IconButton>
-                      <Typography variant="h6" align="center" display="inline">
-                          Payment Page
-                      </Typography>                    
-                    </Toolbar>
-                  </AppBar>
-               </div>
+           <Header headerText="Auto Insurance Quote"/>
 
                 <br></br>
                 <div>

@@ -5,7 +5,8 @@ import './stylequoteresults.css'
 import {Divider,Paper,Grid} from '@material-ui/core';
 import path from '../../assets/car.png'
 import { connect } from 'react-redux';
-
+import Header from '../../Widgets/Header/Header'
+import {Button} from '@material-ui/core';
 
 const useStyles = {
     root: {
@@ -32,7 +33,7 @@ class VehicleDetails  extends React.Component {
 
     render() {
         return (
-            <Paper style={useStyles.root}>
+            <div style={{backgroundColor:'#F5F5F5'}}><Header headerText="Auto Insurance Quote"/>   <Paper style={useStyles.root}>
                 <div className="drivers">
                 <Grid container >
                 <Grid item xs={1}><img  style={useStyles.img} src={path} alt="icon"/></Grid>
@@ -41,7 +42,7 @@ class VehicleDetails  extends React.Component {
                     </Grid>
                     <Grid item xs={4}/>
                     <Grid item xs={4}>
-                    <button className="vehicleadd" onClick={this.onAddVehicalClick}>Add+</button>
+                    <Button variant="contained" style={{backgroundColor:'#041c3d',color:'white'}} onClick={this.onAddVehicalClick}>Add+</Button>
                     </Grid>
                  </Grid>
                 </div>
@@ -50,11 +51,11 @@ class VehicleDetails  extends React.Component {
                 <Grid container>
                     <Grid sm={2} />
                     <Grid xs={12} sm={8}>
-                        <button className="add-driver" onClick={this.goToNextPage}>NEXT</button>
+                        <Button variant="contained" style={{backgroundColor:'#041c3d',color:'white'}} onClick={this.goToNextPage}>NEXT</Button>
                     </Grid>
                     <Grid sm={2} />
                 </Grid>
-            </Paper>
+            </Paper></div>
             
         )
     }

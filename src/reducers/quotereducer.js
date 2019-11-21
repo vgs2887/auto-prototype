@@ -1,9 +1,8 @@
 import _ from 'lodash'
 
 export default (state=null, action)=>{
-    console.log("inside setEmptyObject reducer quote"+action)
+    console.log("dharma inside setEmptyObject reducer ---- "+JSON.stringify(action.type)+JSON.stringify(action.payload) )
     switch(action.type){        
-        case "PUSHEMPTYOBJECT":  return action.payload
         case "PUSHQUOTEOBJECT" : return action.payload
         default:return state
     }

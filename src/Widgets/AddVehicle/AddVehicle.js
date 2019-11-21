@@ -11,6 +11,8 @@ import Box from "@material-ui/core/Box";
 import AddHeader from "../QuoteResults/AddHeader";
 import AddPrimaryOwnerDD from '../AddPrimaryOwnerDD'
 import AddressAutoComplete from "../Vehicles/AddressAutoComplete";
+import Header from '../../Widgets/Header/Header'
+import {Button} from '@material-ui/core';
 
 const useStyles = {
   content: {
@@ -154,7 +156,7 @@ class AddVehical extends React.Component {
     
 console.log(this.state)
     return (
-      <form onSubmit={this.onAddVehicalSubmit}>
+      <div style={{backgroundColor:'#F5F5F5'}}><Header headerText="Auto Insurance Quote"/><form onSubmit={this.onAddVehicalSubmit}>
         <AddHeader />
         <Grid container>
           <Grid sm={2} />
@@ -284,15 +286,15 @@ console.log(this.state)
         <Grid container>
           <Grid sm={2} />
           <Grid xs={12} sm={8}>
-            <button className="add-driver" type="submit">
+            <Button variant="contained" style={{backgroundColor:'#041c3d',color:'white'}} type="submit">
               Add
-            </button>
+            </Button>
             {/* // </div>
         //</div> */}
           </Grid>
           <Grid sm={2} />
         </Grid>
-      </form>
+      </form></div>
     );
   }
 }
