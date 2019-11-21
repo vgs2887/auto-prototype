@@ -5,7 +5,7 @@ import './stylequoteresults.css'
 import {Divider,Paper,Grid} from '@material-ui/core';
 import path from '../../assets/car.png'
 import { connect } from 'react-redux';
-
+import Header from '../../Widgets/Header/Header'
 
 const useStyles = {
     root: {
@@ -32,7 +32,7 @@ class VehicleDetails  extends React.Component {
 
     render() {
         return (
-            <Paper style={useStyles.root}>
+            <div style={{backgroundColor:'#F5F5F5'}}><Header headerText="Auto Insurance Quote"/>   <Paper style={useStyles.root}>
                 <div className="drivers">
                 <Grid container >
                 <Grid item xs={1}><img  style={useStyles.img} src={path} alt="icon"/></Grid>
@@ -54,7 +54,7 @@ class VehicleDetails  extends React.Component {
                     </Grid>
                     <Grid sm={2} />
                 </Grid>
-            </Paper>
+            </Paper></div>
             
         )
     }

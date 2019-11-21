@@ -1,12 +1,13 @@
 import React from 'react';
 import {Switch,ExpansionPanel,ExpansionPanelSummary,ExpansionPanelDetails,Grid,Table,TableBody,TableCell,TableHead,TableRow,Button,AppBar,Toolbar,Typography,IconButton, Container, Paper,Card, CardHeader,Avatar,CardContent} from '@material-ui/core';
-import MenuIcon from '@material-ui/icons/Menu';
+import Header from '../../Widgets/Header/Header'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import { Link } from 'react-router-dom';
 import SimpleCard from "../../SharedJSX/Inputs/VerticalCard/VerticalCard";
 import path from "../../assets/carlogo.png";
 import { connect } from "react-redux";
-import { setQuoteObject,setEmptyObject } from "../../actions";
+import axios from 'axios'
+import { setQuoteObject } from "../../actions";
 const useStyles = {
     root: {
         width: 'auto', 
@@ -38,28 +39,6 @@ const emptyObject ={
     };
 const policyHeader = ['Policy#','Location','Premium'];
 const quoteHeader = ['Quote#','State','Premium'];
-// const qotes =
-// [
-//     {
-//         quoteNumber : 1,
-//         baseLocation: 'TX',
-//         effDate: '16 Nov 2019',
-//         premium: '$48.98'
-//     },
-//     {
-//         quoteNumber : 2,
-//         baseLocation: 'TX',
-//         effDate: '10 Nov 2019',
-//         premium: '$48.98'
-//     },
-//     {
-//         quoteNumber : 3,
-//         baseLocation: 'TX',
-//         effDate: '01 Nov 2019',
-//         premium: '$48.98'
-//     }
-// ];
-
 class QuoteHistory extends React.Component 
 {
   constructor(props)
@@ -78,16 +57,15 @@ class QuoteHistory extends React.Component
 
   }  
 
-  async componentDidMount() {
-      await fetch('https://bkjapch3s9.execute-api.us-east-1.amazonaws.com/v1/pc/auto/policysummaryexpapi')
-      .then(res => res.json())
-      .then(json => {    
-          console.log(json)        
+  componentDidMount() {
+    axios.get('https://bkjapch3s9.execute-api.us-east-1.amazonaws.com/v1/pc/auto/policysummaryexpapi')
+    .then(response => {    
+        console.log(response.data)        
             this.setState({
             isLoaded: true,
-            aggregate:json,
-            quotes: json.filter(quote => quote.isQuote),
-            policies: json.filter(quote => !quote.isQuote)
+            aggregate:response.data,
+            quotes: response.data.filter(quote => quote.isQuote),
+            policies: response.data.filter(quote => !quote.isQuote)
             })
             if(this.state.policies && this.state.policies.length > 0) {
                 if(this.state.policies.length > 1)
@@ -132,7 +110,7 @@ render(){
     var list = this.state.listToDisplay
   return (      
         <div style={{backgroundColor:'#F5F5F5'}}>
-             <AppBar position="static" style={{backgroundColor:'#041c3d',color:'white'}}>
+             {/* <AppBar position="static" style={{backgroundColor:'#041c3d',color:'white'}}>
                 <Toolbar>
                     <IconButton edge="start" color="inherit" aria-label="menu">
                         <MenuIcon />
@@ -142,10 +120,11 @@ render(){
                     </Typography>                                        
                 </Toolbar>
             </AppBar>
-            <br />
+            <br /> */}
+            <Header headerText="My Accounts"/>
             <Typography variant="h6" align="left" style={{color:'#041c3d'}}>
                 {this.state.isEmpty ? "Click Get Started to get a Quote!" : this.state.textToDisplay}
-                {this.state.isEmpty ? null : <div style={{float:'right',paddingRight:'40px',fontSize:'15px'}}><Grid component="label" container alignItems="center" spacing={1}><Grid item>Quotes</Grid><Grid item><Switch size="small" style={{color:'#041c3d'}} checked={this.state.policyAvaialble} onChange={()=>{this.setState({policyAvaialble:!this.state.policyAvaialble})}}/></Grid><Grid item>Policies</Grid></Grid></div>}
+                {this.state.isEmpty ? null : <div style={{float:'right',paddingRight:'20px',fontSize:'10px',fontWeight:'bold'}}><Grid component="label" container alignItems="center" spacing={1}><Grid item xs>Quotes</Grid><Grid item xs><Switch size="small" style={{color:'#041c3d'}} checked={this.state.policyAvaialble} onChange={()=>{this.setState({policyAvaialble:!this.state.policyAvaialble})}}/></Grid><Grid item>Policies</Grid></Grid></div>}
             </Typography> 
             <br />   
             { this.state.listToDisplay && this.state.listToDisplay.length > 0 && !this.state.policyAvaialble ?
@@ -252,7 +231,7 @@ render(){
             </div>} 
 <br />
 <br/> 
-<Link align="left" to='/getstarted' onClick={()=>this.props.setEmptyObject(emptyObject)}><Button variant="contained" style={{backgroundColor:'#041c3d',color:'white'}}>
+<Link align="left" to='/getstarted' onClick={()=>this.props.setQuoteObject(emptyObject)}><Button variant="contained" style={{backgroundColor:'#041c3d',color:'white'}}>
                                 Get A New Quote
                             </Button></Link> 
 <br/><br/><br/><br/></div>
@@ -265,4 +244,4 @@ const mapStateToProps = (state) => {
         "quote": state.quote
     }
 }
-export default connect(mapStateToProps,{setEmptyObject,setQuoteObject})(QuoteHistory)
+export default connect(mapStateToProps,{ setQuoteObject })(QuoteHistory)
