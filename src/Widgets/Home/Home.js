@@ -87,14 +87,13 @@ class Home extends React.Component {
       )}
     />   
         </Grid>
-
-        <Grid style={styles.button} container direction="column" alignItems="center" alignContent="flex-start">
-
-        <Link align="left" to='/driverdetails' onClick={this.setDataOnState}><Button variant="contained" style={{backgroundColor:'#041c3d',color:'white'}}>
-                                Get Started
-                            </Button></Link>
-        </Grid>
-      </Grid></div>
+      </Grid>
+      <Link align="left" to='/driverdetails' onClick={this.setDataOnState}>
+        <Button variant="contained" style={{backgroundColor:'#041c3d',color:'white'}}>
+            Get Started
+        </Button>
+        </Link>
+      </div>
     );
   }
 }

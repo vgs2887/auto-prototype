@@ -114,7 +114,7 @@ render(){
             <Header headerText="My Accounts"/>
             <Typography variant="h6" align="left" style={{color:'#041c3d'}}>
                 {this.state.isEmpty ? "Click Get Started to get a Quote!" : this.state.textToDisplay}
-                {this.state.isEmpty ? null : <div style={{float:'right',fontSize:'10px',fontWeight:'bold'}}><Grid component="label" container alignItems="center" spacing={1}><Grid item xs>Quotes</Grid><Grid item xs><Switch size="small" style={{color:'#041c3d'}} color="primary" checked={this.state.policyAvaialble} onChange={()=>{this.setState({policyAvaialble:!this.state.policyAvaialble})}}/></Grid><Grid item>Policies</Grid></Grid></div>}
+                {this.state.isEmpty ? null : <div style={{float:'right',fontSize:'10px',fontWeight:'bold'}}>Quotes<Switch size="small" style={{color:'#041c3d'}} color="primary" checked={this.state.policyAvaialble} onChange={()=>{this.setState({policyAvaialble:!this.state.policyAvaialble})}}/>Policies</div>}
             </Typography> 
             <br />   
             { this.state.listToDisplay && this.state.listToDisplay.length > 0 && !this.state.policyAvaialble ?
