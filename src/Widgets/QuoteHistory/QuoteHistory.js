@@ -9,7 +9,7 @@ import { connect } from "react-redux";
 import { setQuoteObject,setEmptyObject } from "../../actions";
 const useStyles = {
     root: {
-        width: 'auto',
+        width: 'auto', 
         height: 'auto',
         backgroundColor: 'white',
         boxShadow: '0px 2px 1px 2px rgba(0,0,0,0.2), 0px 1px 1px 0px rgba(0,0,0,0.14), 0px 1px 3px 3px rgba(0,0,0,0.12)'
@@ -252,7 +252,7 @@ render(){
             </div>} 
 <br />
 <br/> 
-<Link align="left" to='/getstarted' policyNumber={()=>this.props.setEmptyObject(emptyObject)}><Button variant="contained" style={{backgroundColor:'#041c3d',color:'white'}}>
+<Link align="left" to='/getstarted' onClick={()=>this.props.setEmptyObject(emptyObject)}><Button variant="contained" style={{backgroundColor:'#041c3d',color:'white'}}>
                                 Get A New Quote
                             </Button></Link>
 <br/><br/><br/><br/></div>
