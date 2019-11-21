@@ -12,6 +12,8 @@ import AddHeader from "../QuoteResults/AddHeader";
 import AddPrimaryOwnerDD from '../AddPrimaryOwnerDD'
 import AddressAutoComplete from "../Vehicles/AddressAutoComplete";
 import Header from '../../Widgets/Header/Header'
+import {Button} from '@material-ui/core';
+
 const useStyles = {
   content: {
     width: 140,
@@ -284,9 +286,9 @@ console.log(this.state)
         <Grid container>
           <Grid sm={2} />
           <Grid xs={12} sm={8}>
-            <button className="add-driver" type="submit">
+            <Button variant="contained" style={{backgroundColor:'#041c3d',color:'white'}} type="submit">
               Add
-            </button>
+            </Button>
             {/* // </div>
         //</div> */}
           </Grid>

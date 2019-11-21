@@ -6,7 +6,7 @@ import {Divider,Paper,Grid} from '@material-ui/core';
 import path from '../../assets/car-driver.png'
 import { connect } from 'react-redux';
 import Header from '../../Widgets/Header/Header'
-
+import {Button} from '@material-ui/core';
 const useStyles = {
     root: {
         width: 'auto',
@@ -56,7 +56,7 @@ class DriverDetails extends React.Component {
                     </Grid>
                     <Grid item xs={4}/>
                     <Grid item xs={4}>
-                    <button className="driveradd" onClick={this.onAddDriverClick}>Add+</button>
+                    <Button variant="contained" style={{backgroundColor:'#041c3d',color:'white'}} onClick={this.onAddDriverClick}>Add+</Button>
                     </Grid>
                  </Grid>
                 </div>
@@ -65,7 +65,7 @@ class DriverDetails extends React.Component {
                 <Grid container>
                     <Grid sm={2} />
                     <Grid xs={12} sm={8}>
-                        <button className="add-driver" onClick={this.goToNextPage}>NEXT</button>
+                        <Button variant="contained" style={{backgroundColor:'#041c3d',color:'white'}} onClick={this.goToNextPage}>NEXT</Button>
                     </Grid>
                     <Grid sm={2} />
                 </Grid>

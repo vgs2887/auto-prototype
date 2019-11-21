@@ -109,18 +109,7 @@ class QuoteHistory extends React.Component
 render(){    
     var list = this.state.listToDisplay
   return (      
-        <div style={{backgroundColor:'#F5F5F5'}}>
-             {/* <AppBar position="static" style={{backgroundColor:'#041c3d',color:'white'}}>
-                <Toolbar>
-                    <IconButton edge="start" color="inherit" aria-label="menu">
-                        <MenuIcon />
-                    </IconButton>
-                    <Typography variant="h6" align="center" display="inline">
-                        My Accounts
-                    </Typography>                                        
-                </Toolbar>
-            </AppBar>
-            <br /> */}
+        <div style={{backgroundColor:'#F5F5F5'}}>            
             <Header headerText="My Accounts"/>
             <Typography variant="h6" align="left" style={{color:'#041c3d'}}>
                 {this.state.isEmpty ? "Click Get Started to get a Quote!" : this.state.textToDisplay}
