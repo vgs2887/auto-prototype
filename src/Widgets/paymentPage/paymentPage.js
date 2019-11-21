@@ -6,8 +6,6 @@ import Savings from "./Savings";
 import Cheque from "./Cheque";
 import CreditCard from "./CreditCard";
 import Boxy from './Boxy'
-import { connect } from 'react-redux'
-import { setQuoteObject } from "../../actions";
 
 import "./stylePaymentPage.css";
 import {Button,AppBar,Toolbar,Typography,IconButton,CssBaseline,Container, Grid,makeStyles} from '@material-ui/core';
@@ -21,21 +19,19 @@ import Header from '../../Widgets/Header/Header'
 
 
 
-class PaymentPage extends React.Component {
-  quote={};
+export default class PaymentPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {value: 'none',
-                  pay: 'full',
-                  
+                  pay: 'full'
                   };
 
     this.handleChange = this.handleChange.bind(this);
     // this.handleChange2 = this.handleChange2.bind(this);  
     this.handleChange3 = this.handleChange3.bind(this);   
-    this.quote=this.props.quote;              
 
-    // this.props.setQuoteObject(this.quote);
+
+    
   }
 
 
@@ -44,7 +40,7 @@ class PaymentPage extends React.Component {
   handleChange(event) {
     // console.log("before",this.state.value);
     this.setState({value: event.target.value});
-    console.log("disp",this.quote);
+    // console.log(this.state.value);
   }
   // handleChange2(event) {
   //   // console.log("before",this.state.pay);
@@ -59,7 +55,7 @@ class PaymentPage extends React.Component {
 
 
   render() {
-      let h= this.quote.premium;
+      let h=this.props.location.state.premium;
       let k;
       h=parseFloat(h).toFixed(2);
       k=parseFloat(h*6).toFixed(2);      
@@ -152,12 +148,3 @@ class PaymentPage extends React.Component {
     );
   }
 }
-
-const mapStateToProps = state => {
-  console.log("AAAAAAAAAAAAAAAAA quote state on click"+JSON.stringify(state.quote))
-  return {
-    "quote": state.quote,
-      };
-};
-
-export default connect(mapStateToProps)(PaymentPage)

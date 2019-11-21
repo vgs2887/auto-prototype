@@ -420,7 +420,6 @@ class CoveragePanel extends React.Component {
     }
 }
 const mapStateToProps = state => {
-    console.log("coverage panel",state.quote);
     return {
         vehicles: state.vehicles,
         quote: state.quote,

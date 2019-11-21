@@ -103,7 +103,7 @@ class QuoteHistory extends React.Component
       .catch(error =>{console.log("ERROR"+error)})
   }
   setQuoteDataInState = quote => {
-    console.log("dharma doing"+JSON.stringify(quote))    
+    console.log("dharma"+JSON.stringify(quote))    
     this.props.setQuoteObject(quote)    
   };
 
