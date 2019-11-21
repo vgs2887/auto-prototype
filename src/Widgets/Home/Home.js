@@ -3,6 +3,12 @@ import { Link } from 'react-router-dom';
 import Grid from '@material-ui/core/Grid';
 import Btn from '../../SharedJSX/Inputs/Button/Buttons';
 import "./stylehome.css"
+//
+import { Card, CardContent, Typography } from "@material-ui/core";
+import ZipQueryHandler from "../ZipAdd/ZipQueryHandler";
+import ZipPlace from "../ZipAdd/ZipPlace";
+import GoogleMap from "../ZipAdd/GoogleMap";
+//
 
 const styles = {
   logo:
@@ -19,9 +25,18 @@ const styles = {
     marginTop: '135px',
     width: '250px'
   },
+  tag2:
+  {
+color:'Navy',
+textAlign: 'center',
+marginLeft: '180px',
+marginTop: '135px',
+width: '500px'
+},
   button:
   {
-    marginLeft: '30px'
+    marginLeft: '620px',
+    marginTop: '-80px'
   }
 };
 class Home extends React.Component {
@@ -45,6 +60,22 @@ class Home extends React.Component {
             
             </p>
             <p >Enhance your protection with an Auto Insurance for greater peace of mind. Go ahead, click on get started to create a quote.</p>
+        </Grid>
+
+         <Grid  style={styles.tag2}>      
+    <ZipQueryHandler
+      render={data => (
+           <card>
+          <CardContent>
+            <Typography gutterBottom variant="h5" component="h2">
+             Please enter your zip code to get started
+            </Typography>
+            <ZipPlace data={data} /> 
+            {data.city && <GoogleMap lat={data.lat} lon={data.lon} />}     
+          </CardContent>
+          </card>
+      )}
+    />   
         </Grid>
 
         <Grid style={styles.button} container direction="column" alignItems="center" alignContent="flex-start">
