@@ -84,7 +84,8 @@ class DriverDetails extends React.Component {
                     </Grid>
                     <Grid sm={2} />
                 </Grid>
-            </Paper></div>
+            </Paper>
+<br/><br/><br/><br/></div>
         )
     }
 }

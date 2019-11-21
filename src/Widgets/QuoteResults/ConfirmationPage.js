@@ -118,7 +118,8 @@ export default class ConfirmationPage extends React.Component {
             
             </Card>
         </div>
-        
+  
+<br/><br/><br/><br/>      
 
 </div>
 
