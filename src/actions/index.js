@@ -63,7 +63,13 @@ export const setPolicyAgg=(aggregate) => async dispatch => {
         payload:aggregate
     })
 }
-
+export const setEmptyObject=(quote) => async dispatch => {
+    console.log("inside setEmptyObject quote"+quote)
+    dispatch({
+        type:"PUSHEMPTYOBJECT",
+        payload:quote
+    })
+}
 export const setQuoteObject=(quote) => async dispatch => {
     dispatch({
         type:"PUSHQUOTEOBJECT",

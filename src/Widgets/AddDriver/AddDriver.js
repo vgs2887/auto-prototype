@@ -3,7 +3,7 @@ import Input from "@material-ui/core/Input";
 import ImageUploader from "react-images-upload";
 import shortid from 'shortid';
 import { connect } from "react-redux";
-import { adddriveraction,setQuoteObject } from "../../actions";
+import { adddriveraction } from "../../actions";
 import history from "../../utils/history";
 import "./styleadddriver.css";
 import path from "../../assets/car-driver.png";
@@ -11,8 +11,6 @@ import Grid from "@material-ui/core/Grid";
 import "./styleadddriver.css";
 import Box from "@material-ui/core/Box";
 import AddHeader from '../QuoteResults/AddHeader'
-import Header from '../../Widgets/Header/Header'
-import {Button} from '@material-ui/core';
 
 const useStyles = {
   content: {
@@ -55,9 +53,8 @@ const defaultProps = {
     opacity: "100%"
   }
 };
-const  driver = {"name": "Monica Feloola Geller", "age": 29, "relationship": "SELF", "gender": "female", "license": "OH00000001"};
-class AddDriver extends React.Component {
 
+class AddDriver extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -73,19 +70,10 @@ class AddDriver extends React.Component {
     };
     this.goBack = this.goBack.bind(this);
   }
-  doSomethingBeforeUnload = () => {
-    console.log("SEE YOU SOON WITH A NEW COLOR")
-}
-  setupBeforeUnloadListener = () => {
-    window.addEventListener("beforeunload", (ev) => {
-        ev.preventDefault();
-        console.log("GOOD BYE")
-        return this.doSomethingBeforeUnload();
-    });
-};
+
+
   componentDidMount(){
     this.setState({ id: shortid.generate() });
-    this.setupBeforeUnloadListener();
   }
   changeHandler = e => {
     if (e.target.name === "username") {
@@ -141,10 +129,7 @@ class AddDriver extends React.Component {
     event.preventDefault();
     const isValid = this.validate();
     if (isValid) {
-      this.props.quote.drivers.push(driver)
-      console.log("dharma updated drivers" +JSON.stringify(driver) +JSON.stringify(this.props.quote.drivers))
       this.props.adddriveraction(this.state);
-      this.props.setQuoteObject(this.props.quote);
       history.push("/driverdetails");
     }
   };
@@ -155,7 +140,7 @@ class AddDriver extends React.Component {
 
   render() {
     return (
-      <div style={{backgroundColor:'#F5F5F5'}}><Header headerText="Auto Insurance Quote"/><form onSubmit={this.onAddDriverSubmit}>
+      <form onSubmit={this.onAddDriverSubmit}>
         <AddHeader/>
         <Grid container>
           <Grid sm={2} />
@@ -273,26 +258,20 @@ class AddDriver extends React.Component {
         <Grid container>
           <Grid sm={2} />
           <Grid xs={12} sm={8}>
-            <Button variant="contained" style={{backgroundColor:'#041c3d',color:'white'}} type="submit">
+            <button className="add-driver" type="submit">
               Add
-            </Button>
+            </button>
             {/* // </div>
         //</div> */}
           </Grid>
           <Grid sm={2} />
         </Grid>
-      </form></div>
+      </form>
     );
   }
 }
 
-const mapStateToProps = state => {
-  return {
-      quote: state.quote,
-  };
-};
-
 export default connect(
-  mapStateToProps,
-  { adddriveraction,setQuoteObject }
+  null,
+  { adddriveraction }
 )(AddDriver);

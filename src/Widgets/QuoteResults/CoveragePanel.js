@@ -4,6 +4,7 @@ import { updatepremiumaction } from '../../actions'
 //import { updateCoveragesAction } from '../../actions'
 import { setQuoteObject } from "../../actions";
 import { Divider, Paper, Grid } from '@material-ui/core';
+import Select from 'react-select';
 
 
 import { makeStyles } from '@material-ui/core/styles';
