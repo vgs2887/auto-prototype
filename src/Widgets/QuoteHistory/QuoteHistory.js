@@ -254,7 +254,7 @@ render(){
 <br/> 
 <Link align="left" to='/getstarted' onClick={()=>this.props.setEmptyObject(emptyObject)}><Button variant="contained" style={{backgroundColor:'#041c3d',color:'white'}}>
                                 Get A New Quote
-                            </Button></Link>
+                            </Button></Link> 
 <br/><br/><br/><br/></div>
   );
 }
