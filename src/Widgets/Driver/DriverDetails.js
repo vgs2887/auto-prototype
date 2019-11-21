@@ -7,6 +7,7 @@ import path from '../../assets/car-driver.png'
 import { connect } from 'react-redux';
 import Header from '../../Widgets/Header/Header'
 import {Button} from '@material-ui/core';
+import axios from 'axios'
 const useStyles = {
     root: {
         width: 'auto',
@@ -33,6 +34,7 @@ class DriverDetails extends React.Component {
         setTimeout(() => {
              this.setState({didMount: true})
          }, 0)
+         this.setupBeforeUnloadListener();
      }
 
 
@@ -42,7 +44,20 @@ class DriverDetails extends React.Component {
     goToNextPage = () => {
         history.push('/vehicledetails')
     }
-
+    doSomethingBeforeUnload = (ev) => {
+        console.log("SEE YOU SOON WITH A NEW quote")
+        axios.post('https://1nbs6supkj.execute-api.us-east-1.amazonaws.com/v1/pc/auto/policyexpapi', this.props.quote)
+        .then(response => {console.log("Response"+JSON.stringify(response))})
+        .catch(error =>{console.log("ERROR"+error)})
+        return ev.returnValue="Are you sure want to exit?"
+    }
+      setupBeforeUnloadListener = () => {
+        window.addEventListener("beforeunload", (ev) => {
+            ev.preventDefault();
+            console.log("GOOD BYE")
+            return this.doSomethingBeforeUnload(ev);
+        });
+    };
     render() {
         const {didMount} = this.state
         return (
@@ -75,7 +90,8 @@ class DriverDetails extends React.Component {
 }
 const mapStateToProps = (state) => {
     return {
-        "drivers": state.drivers
+        "drivers": state.drivers,
+        "quote":state.quote
     }
 }
 export default connect(mapStateToProps,null)(DriverDetails)

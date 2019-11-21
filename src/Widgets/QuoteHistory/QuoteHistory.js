@@ -8,6 +8,7 @@ import path from "../../assets/carlogo.png";
 import { connect } from "react-redux";
 import axios from 'axios'
 import { setQuoteObject } from "../../actions";
+import history from "../../utils/history";
 const useStyles = {
     root: {
         width: 'auto', 
@@ -66,7 +67,7 @@ class QuoteHistory extends React.Component
             aggregate:response.data,
             quotes: response.data.filter(quote => quote.isQuote),
             policies: response.data.filter(quote => !quote.isQuote)
-            })
+            })            
             if(this.state.policies && this.state.policies.length > 0) {
                 if(this.state.policies.length > 1)
                 {
@@ -102,8 +103,8 @@ class QuoteHistory extends React.Component
       .catch(error =>{console.log("ERROR"+error)})
   }
   setQuoteDataInState = quote => {
-    console.log("dharma"+JSON.stringify(quote))
-    this.props.setQuoteObject(quote)
+    console.log("dharma"+JSON.stringify(quote))    
+    this.props.setQuoteObject(quote)    
   };
 
 render(){    
@@ -136,8 +137,8 @@ render(){
                         <TableCell align='left'>{quote.policyNumber}</TableCell>
                         <TableCell align='left'>{quote.baseLocation}</TableCell>
                         <TableCell align='left'>{quote.premium}</TableCell>
-                        <TableCell align="left">
-                            <Link key={quote.policyNumber} to='/quoteresults' onClick={()=> this.setQuoteDataInState(quote)}><Button variant="contained" style={{backgroundColor:'#041c3d',color:'white'}}>Continue</Button></Link>
+                        <TableCell align="left">                    
+                            <Link key={quote.policyNumber} to={"/"+quote.lastVisitedPage} onClick={()=> this.setQuoteDataInState(quote)}><Button variant="contained" style={{backgroundColor:'#041c3d',color:'white'}}>Continue</Button></Link>
                         </TableCell>
                     </TableRow>        
                     )})}
