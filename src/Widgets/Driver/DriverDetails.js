@@ -37,10 +37,6 @@ class DriverDetails extends React.Component {
          this.setupBeforeUnloadListener();
      }
 
-
-    onAddDriverClick = () => {
-        history.push('/adddriver')
-    }
     goToNextPage = () => {
         history.push('/vehicledetails')
     }
@@ -70,9 +66,7 @@ class DriverDetails extends React.Component {
                     <span className="drivertext"><b>Drivers</b></span>
                     </Grid>
                     <Grid item xs={4}/>
-                    <Grid item xs={4}>
-                    <Button variant="contained" style={{backgroundColor:'#041c3d',color:'white'}} onClick={this.onAddDriverClick}>Add+</Button>
-                    </Grid>
+                    <Grid item xs={4}/>
                  </Grid>
                 </div>
                 <Divider/>

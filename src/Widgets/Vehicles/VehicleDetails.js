@@ -23,10 +23,6 @@ const useStyles = {
 };
 
 class VehicleDetails  extends React.Component {
-
-    onAddVehicalClick=()=>{
-        history.push('/addvehicle')
-    }
     goToNextPage = () => {
         history.push('/quoteresults')
     }
@@ -41,9 +37,7 @@ class VehicleDetails  extends React.Component {
                     <span className="drivertext"><b>Vehicles</b></span>
                     </Grid>
                     <Grid item xs={4}/>
-                    <Grid item xs={4}>
-                    <Button variant="contained" style={{backgroundColor:'#041c3d',color:'white'}} onClick={this.onAddVehicalClick}>Add+</Button>
-                    </Grid>
+                    <Grid item xs={4}/>
                  </Grid>
                 </div>
                 <Divider/>
