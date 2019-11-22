@@ -329,7 +329,7 @@ class CoveragePanel extends React.Component {
                         </td>
                         <td style={{ width: "20%" }}>
                             <div class="ui input" style={{ width: "100%", float: "right" }} >
-                                <input type="text" readOnly value={vehicle.coverAmntText} />
+                                <input type="text" style={{ width: "100%"}} readOnly value={vehicle.coverAmntText} />
                             </div>
                         </td>
                     </tr>
@@ -360,7 +360,7 @@ class CoveragePanel extends React.Component {
                         </td>
                         <td style={{ width: "20%" }}>
                             <div class="ui input" style={{ width: "100%", float: "right" }} >
-                                <input type="text" readOnly value={vehicle.coverAmntText} />
+                                <input type="text" style={{ width: "100%"}} readOnly value={vehicle.coverAmntText} />
                             </div>
                         </td>
                     </tr>
@@ -424,7 +424,7 @@ class CoveragePanel extends React.Component {
                                 </td>
                                 <td style={{ width: "20%" }}>
                                     <div class="ui input" style={{ width: "100%", float: "right" }} >
-                                        <       input type="text" readOnly value={this.PDCoverageAmntText} />
+                                        <input type="text" style={{ width: "100%"}} readOnly value={this.PDCoverageAmntText} />
                                     </div>
                                 </td>
                             </tr>
