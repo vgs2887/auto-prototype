@@ -8,6 +8,7 @@ import { connect } from 'react-redux';
 import Header from '../../Widgets/Header/Header'
 import {Button} from '@material-ui/core';
 import axios from 'axios'
+import { setQuoteObject } from "../../actions";
 const useStyles = {
     root: {
         width: 'auto',
@@ -38,12 +39,12 @@ class DriverDetails extends React.Component {
      }
 
     goToNextPage = () => {
-        this.props.quote.lastVisited ="vehicledetails"
+        this.props.quote.lastVisitedPage ="vehicledetails"
         console.log("on clicko f next on driver page "+ JSON.stringify(this.props.quote))        
         axios.post("https://1nbs6supkj.execute-api.us-east-1.amazonaws.com/v1/pc/auto/policyexpapi/"+this.props.quote.policyId, this.props.quote)
         .then(response => {console.log("Response on click of next on driver page"+JSON.stringify(response.data))})
         .catch(error =>{console.log("ERROR"+error)})
-        
+        this.props.setQuoteObject(this.props.quote);
         history.push('/vehicledetails')
     }
     doSomethingBeforeUnload = (ev) => {
@@ -92,8 +93,7 @@ class DriverDetails extends React.Component {
 const mapStateToProps = (state) => {
     console.log("Updated state for quote " + JSON.stringify(state.quote))
     return {
-        "drivers": state.drivers,
         "quote":state.quote
     }
 }
-export default connect(mapStateToProps,null)(DriverDetails)
+export default connect(mapStateToProps,{ setQuoteObject })(DriverDetails)

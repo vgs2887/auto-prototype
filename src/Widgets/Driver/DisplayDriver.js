@@ -30,7 +30,7 @@ class DisplayDriver extends React.Component {
     console.log(milteryStatus)
     return (
       <div className="driverinfo">
-        {this.props.drivers.map((driver, index) => {
+        {this.props.quote.drivers.map((driver, index) => {
             if (index === 0) {
                 showDeleteButton = true;
             } else {
@@ -55,12 +55,12 @@ class DisplayDriver extends React.Component {
                   id={driver.id}
                   image={image}
                   milteryStatus={milteryStatus}
-                  name={driver.username}
-                  model={driver.reg ? driver.reg : "0H0002345"}
+                  name={driver.name}
+                  model={driver.license ? driver.license : "0H0002345"}
                   data={driver.age ? driver.age : "Age 21"}
                 />
               </div>
-              {driver.name}
+              
             </span>
           );
         })}
@@ -73,9 +73,10 @@ class DisplayDriver extends React.Component {
 }
 
 const mapStateToProps = state => {
-  console.log(JSON.stringify(state.quote))
+  console.log("Display Driver",JSON.stringify(state.quote))
   return {
-    drivers: Object.values(state.drivers)
+ 
+    "quote": state.quote,
   };
 };
 export default connect(mapStateToProps,  null)(DisplayDriver);

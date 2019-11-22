@@ -141,6 +141,11 @@ class AddDriver extends React.Component {
     event.preventDefault();
     const isValid = this.validate();
     if (isValid) {
+      driver.name=this.state.username;
+      driver.age=this.state.age;
+
+      driver.relationship=this.state.relationship;
+      driver.gender=this.state.gender;
       this.props.quote.drivers.push(driver)
       console.log("dharma updated drivers" +JSON.stringify(driver) +JSON.stringify(this.props.quote.drivers))
       this.props.adddriveraction(this.state);
