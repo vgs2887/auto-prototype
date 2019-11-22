@@ -2,7 +2,11 @@ import React from "react";
 import Input from "@material-ui/core/Input";
 import shortid from "shortid";
 import { connect } from "react-redux";
-import { addvehicleaction } from "../../actions";
+import { Link } from 'react-router-dom'
+import { setQuoteObject } from "../../actions";
+import axios from 'axios'
+
+
 import history from "../../utils/history";
 import "./styleaddvehicle.css";
 import path from "../../assets/car.png";
@@ -56,10 +60,25 @@ const defaultProps = {
     opacity: "100%"
   }
 };
-
-class AddVehical extends React.Component {
+const postData =
+                  {
+                    "driverName": "Regina Phelange", 
+                    "year": 2018, 
+                    "make": "Honda", 
+                    "model": "Civic", 
+                    "vin": "HODHFOAHDLASDOI", 
+                    "mileage": 130000, 
+                    "addressLineOne": "4980 usaa blvd", 
+                    "addressLineTwo": "apt9999", 
+                    "city": "San Antonio", 
+                    "state": "Texas", 
+                    "zip": "78240"
+                   };
+     var k;             
+class AddVehicle extends React.Component {
   constructor(props) {
     super(props);
+    k={...this.props.quote};
     this.state = {
       id: "",
       vin: "",
@@ -128,12 +147,35 @@ class AddVehical extends React.Component {
     } else return true;
   };
 
-  onAddVehicalSubmit = event => {
-    event.preventDefault();
+  submitHandler = event => {
+    // event.preventDefault();
     const isValid = this.validate();
     if (isValid) {
-      this.props.addvehicleaction(this.state);
-      history.push("/vehicledetails");
+      // console.log("shit",postData);
+      postData.driverName="sa";
+      postData.vin=this.state.vin;
+      postData.make=this.state.make;
+      postData.model=this.state.model;
+      postData.year=this.state.year;
+      
+      // let v=this.props.quote.vehicles
+
+      // console.log("test1",postData);
+      // console.log("test2",k.vehicles);
+
+      k.vehicles=k.vehicles.concat(postData);
+      // console.log("test3",k.vehicles);
+      // console.log("test",k);
+      this.props.setQuoteObject(k); 
+      console.log("ADD Vehicle postRequest:  "+JSON.stringify(k))
+        axios.post('https://1nbs6supkj.execute-api.us-east-1.amazonaws.com/v1/pc/auto/policyexpapi', k)
+        .then(response => {console.log("ADD Vehicle Response"+JSON.stringify(response))})
+        .catch(error =>{console.log("ADD Vehicle  ERROR"+error)})
+      
+
+      // console.log('shit3',k.vehicles);
+      // this.props.addvehicleaction(this.state);
+      // history.push("/vehicledetails");
     }
   };
  
@@ -143,7 +185,7 @@ class AddVehical extends React.Component {
   };
 
  handleClick = event => {
-   console.log(event.target)
+  //  console.log(event.target)
    this.setState({menu:event.target})
     
   };
@@ -154,10 +196,12 @@ class AddVehical extends React.Component {
 
   render() {
     
-console.log(this.state)
+// console.log(this.state)
     return (
-      <div style={{backgroundColor:'#F5F5F5'}}><Header headerText="Auto Insurance Quote"/><form onSubmit={this.onAddVehicalSubmit}>
-        <AddHeader />
+      <div style={{backgroundColor:'#F5F5F5'}}>
+        <Header headerText="Auto Insurance Quote"/>
+        <form>
+       {/* <AddHeader /> */}
         <Grid container>
           <Grid sm={2} />
           <Grid xs={12} sm={8}>
@@ -166,7 +210,7 @@ console.log(this.state)
                 onClick={this.goBack}
                 style={{ border: "none", float: "left" }}
               >
-                <i class="fa fa-angle-left"></i>
+                <i class="fa fa-angle-left"><h1>back butom</h1></i>
               </span>
               <span>Add New Vehicle</span>
             </div>
@@ -213,14 +257,15 @@ console.log(this.state)
         <Grid container style={useStyles.grid}>
           <Grid sm={2} />
           <Grid xs={12} sm={8}>
-              <AddPrimaryOwnerDD drivers={this.props.drivers} primarydriver={this.primarydriver}/>
+            {/* {JSON.stringify(this.props.quote.drivers)} */}
+              <AddPrimaryOwnerDD drivers={this.props.quote.drivers} primarydriver={this.primarydriver}/> 
           </Grid>
           <Grid sm={2} />
           <Grid xs={12} sm={8}>
               <AddressAutoComplete></AddressAutoComplete>
           </Grid>
           <Grid sm={2} />
-        </Grid>
+        </Grid> 
 
         <Grid container style={useStyles.grid}>
           <Grid sm={2} />
@@ -286,9 +331,9 @@ console.log(this.state)
         <Grid container>
           <Grid sm={2} />
           <Grid xs={12} sm={8}>
-            <Button variant="contained" style={{backgroundColor:'#041c3d',color:'white'}} type="submit">
+          <Link to="/vehicledetails"><Button variant="contained" style={{backgroundColor:'#041c3d',color:'white'}} onClick={this.submitHandler}>
               Add
-            </Button>
+            </Button></Link>
             {/* // </div>
         //</div> */}
           </Grid>
@@ -301,13 +346,15 @@ console.log(this.state)
 }
 
 
-const mapStateToProps = state => {
+const mapStateToProps = state => state => {
+  console.log("Add Vehicles quote state on click"+JSON.stringify(state.quote.drivers))
   return {
-    drivers: Object.values(state.drivers)
-  };
+    "quote": state.quote,
+      };
 };
 
 export default connect(
   mapStateToProps,
-  { addvehicleaction }
-)(AddVehical);
+  { setQuoteObject }
+)(AddVehicle);
+

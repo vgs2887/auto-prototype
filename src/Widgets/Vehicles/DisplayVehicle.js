@@ -29,7 +29,7 @@ class DisplayVehicle extends React.Component {
   }
 
   onAddVehicalClick=()=>{
-    history.push('/addvehicle')
+    history.push('/Addvehicle')
   }
   componentDidMount() {
     setTimeout(() => {
@@ -39,13 +39,13 @@ class DisplayVehicle extends React.Component {
 
   render() {
     const { didMount } = this.state;
-    console.log(this.props)
+    // console.log(this.props)
     return (
       <div className={`Vehicalinfo fade-in ${didMount && "visible"}`}>
-        {this.props.vehicles.map((vehicle, index) => {
-          console.log('ss'+vehicle.primaryowner);
+        {this.props.quote.vehicles.map((vehicle, index) => {
+          // console.log('Arun typing '+vehicle.driverName);
             let vehName = "" + vehicle.year + " " + vehicle.make +  " " +vehicle.model; 
-            console.log('ss'+vehName);
+            // console.log('ss'+vehName);
             vehName = vehName.substring(0,12);
             let vehVin = vehicle.vin ;
             vehVin = (vehVin.length > 10)?  vehVin.substring(0,10) + "...": vehVin;
@@ -60,7 +60,7 @@ class DisplayVehicle extends React.Component {
                   id={vehicle.id}
                   image={path}
                   model={vehicle.miles ? vehicle.miles : "1000 miles"}
-                  name={vehicle.primaryowner}
+                  name={vehicle.driverName}
                   milteryStatus={vehName}
                   data={vehVin}
                 ></SimpleCard>
@@ -70,16 +70,17 @@ class DisplayVehicle extends React.Component {
         })}
         <Fab color="primary" aria-label="add">
             <AddIcon onClick={this.onAddVehicalClick} />
-          </Fab>
+      </Fab>
       </div>
     );
   }
 }
 
 const mapStateToProps = state => {
+  // console.log("Display Vehicle quote state on click"+JSON.stringify(state.quote))
   return {
-    vehicles: state.vehicles
-  };
+    "quote": state.quote,
+      };
 };
 export default connect(
   mapStateToProps,

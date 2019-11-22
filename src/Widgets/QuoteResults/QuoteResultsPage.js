@@ -132,7 +132,7 @@ render() {
 }
 }
 const mapStateToProps = (state) => {
-    console.log("premium"+state.premium)
+    console.log("QRRRRR premium", state.quote)
     return {
         "premium": state.premium,
         "driverNo": state.drivers.length,

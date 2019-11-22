@@ -23,26 +23,9 @@ import Header from '../../Widgets/Header/Header'
 
 const postData ={"policyId": "7b4ba338-0b66-11ea-a983-060ef1aaca49", "baseLocation": "TX", "premium": 1000.99, "packageCode": "QUOTE", "policyNumber": "7001", "isQuote": false, "policyEffDate": "2019-11-19", "policyExpDate": "2020-06-13", "lastVisitedPage": "Complete", "coverages": {"bodilyInjury": 50.11, "propertyDamage": 10.22, "comprehensive": 100.0, "collision": 400.99}, "drivers": [{"name": "Monica Feloola Geller", "age": 29, "relationship": "SELF", "gender": "female", "license": "OH00000001"}, {"name": "Regina Phelange", "age": 30, "relationship": "ROOMIE", "gender": "female", "license": "OH00000001"}], "vehicles": [{"driverName": "Regina Phelange", "year": 2018, "make": "Honda", "model": "Civic", "vin": "HODHFOAHDLASDOI", "mileage": 130000, "addressLineOne": "4980 usaa blvd", "addressLineTwo": "apt9999", "city": "San Antonio", "state": "Texas", "zip": "78240"}, {"driverName": "Monica Feloola Geller", "year": 2017, "make": "Porshe", "model": "Civic", "vin": "HODHFOAHDLASDOI", "mileage": 120000, "addressLineOne": "4980 usaa blvd", "addressLineTwo": "home", "city": "San Antonio", "state": "Texas", "zip": "99999"}]};
 
-
+var quote;
 class PaymentPage extends React.Component {
-  quote={
-    "quoteID": Math.round(Math.random()*(1000000 - 1) + 1),
-    "baseLocation": null, 
-    "premium": null, 
-    "packageCode": null, 
-    "policyNr": null, 
-    "isQuote": true, 
-    "policyEffDate": null, 
-    "policyExpDate": null, 
-    "coverages": {
-                    "bodilyInjury": null, 
-                    "propertyDamage": null, 
-                    "comprehensive": null, 
-                    "collision": null
-                }, 
-    "drivers": [],
-    "vehicles": []
-  };
+  
  
   constructor(props) {
     super(props);
@@ -55,7 +38,7 @@ class PaymentPage extends React.Component {
     // this.handleChange2 = this.handleChange2.bind(this);  
     this.handleChange3 = this.handleChange3.bind(this);   
     this.submitHandler = this.submitHandler.bind(this);
-    this.quote=this.props.quote;              
+    quote={...this.props.quote};              
 
     // this.props.setQuoteObject(this.quote);
   }
@@ -80,15 +63,18 @@ class PaymentPage extends React.Component {
   }
 
   submitHandler = e => {
-    console.log("Payment Page postRequest:  "+JSON.stringify(postData))
-    axios.post('https://1nbs6supkj.execute-api.us-east-1.amazonaws.com/v1/pc/auto/policyexpapi', postData)
+    quote.lastVisitedPage="confirm";
+    console.log("arun testing ", quote);
+    this.props.setQuoteObject(quote);
+    console.log("Payment Page postRequest:  "+JSON.stringify(quote));
+    axios.post('https://1nbs6supkj.execute-api.us-east-1.amazonaws.com/v1/pc/auto/policyexpapi', quote)
     .then(response => {console.log("Payment Page Response"+JSON.stringify(response))})
     .catch(error =>{console.log("Payment Page ERROR"+error)})
 }
 
 
   render() {
-      let h= this.quote.premium;
+      let h= quote.premium;
       let k;
       h=parseFloat(h).toFixed(2);
       k=parseFloat(h*6).toFixed(2);      
@@ -191,4 +177,4 @@ const mapStateToProps = state => {
       };
 };
 
-export default connect(mapStateToProps)(PaymentPage)
+export default connect(mapStateToProps,{ setQuoteObject })(PaymentPage)

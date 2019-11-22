@@ -33,7 +33,7 @@ export default function AddPrimaryOwnerDD(drivers) {
   const handleOpen = () => {
     setOpen(true);
   };
-  console.log(drivers)
+  // console.log(drivers)
   return (
     
     <div>
@@ -51,7 +51,7 @@ export default function AddPrimaryOwnerDD(drivers) {
           onChange={handleChange}
         >
            {drivers.drivers.map(driver=>{
-               return <MenuItem value={driver.username}>{driver.username}</MenuItem>
+               return <MenuItem value={driver.name}>{driver.name}</MenuItem>
            })}
           
         </Select>

@@ -31,6 +31,7 @@ const emptyObject ={
     "isQuote": true, 
     "policyEffDate": date.getFullYear()+"-"+date.getMonth()+"-"+date.getDate(), 
     "policyExpDate": null, 
+    "lastVisitedPage": null,
     "coverages": {
                     "bodilyInjury": null, 
                     "propertyDamage": null, 
@@ -46,7 +47,21 @@ const emptyObject ={
                     "license": "OH00000001"
                 }
     ],
-    "vehicles": []
+    "vehicles": [
+        {
+            "driverName": "Regina Phelange",
+            "year": 2018,
+            "make": "Honda",
+            "model": "Civic",
+            "vin": "HODHFOAHDLASDOI",
+            "mileage": 130000,
+            "addressLineOne": "4980 usaa blvd",
+            "addressLineTwo": "apt9999",
+            "city": "San Antonio",
+            "state": "Texas",
+            "zip": "78240"
+          },
+    ]
     };
 const policyHeader = ['Policy#','Location','Premium'];
 const quoteHeader = ['Quote#','State','Premium'];
