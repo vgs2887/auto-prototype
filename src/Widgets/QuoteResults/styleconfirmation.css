@@ -112,6 +112,7 @@
             .conf-box{
                 width: 65%;
                 height: auto;
+                left:15%;
             }
             .top-row{
                 grid-auto-flow: row !important;

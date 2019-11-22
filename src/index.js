@@ -36,9 +36,11 @@ class App extends React.Component{
                 <Route render={({location}) => (
                     <TransitionGroup>
                     <CSSTransition
+                    in={true}
+                    appear={false}
                     key={location.key}
-                    timeout={300}
-                    classNames="fade"
+                    timeout={500}
+                    classNames="slide"
                     >
                     <Switch location = {location} >
                     <Route exact path="/" component={QuoteHistory} />

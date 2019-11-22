@@ -20,22 +20,35 @@ code {
     monospace;
 }
 
-.fade-appear,
-.fade-enter {
+.slide-enter {
+    transform: translateX(100vw);
     opacity: 0;
-    z-index: 1;
-}
-.fade-appear-active,
-.fade-enter.fade-enter-active {
-    opacity: 1;
-    transition: opacity 300ms linear 350ms;
+    position: absolute;
+    
 }
 
-.fade-exit {
+/* Declare transition properties */
+.slide-enter.slide-enter-active {
+    transform: translateX(100vw);
     opacity: 1;
+    transition: all 500ms  
 }
 
-.fade-exit.fade-exit-active {
+/* EXIT TRANSITION */
+.slide-exit {
+    transform: translateX(-100);
+    opacity: 1;
+    
+}
+
+.slide-exit.slide-exit-active {
+    transform: translateX(-100vw);
     opacity: 0;
-    transition: opacity 150ms linear;
+    transition: all 500ms  ;
+}
+
+
+.slide-leave.slide-leave-active.left {
+    transform: translateX(100vw);
+    transition: transform 300ms linear;
 }
