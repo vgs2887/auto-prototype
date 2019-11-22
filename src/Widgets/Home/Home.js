@@ -12,6 +12,7 @@ import { Card, CardContent, Typography } from "@material-ui/core";
 import ZipQueryHandler from "../ZipAdd/ZipQueryHandler";
 import ZipPlace from "../ZipAdd/ZipPlace";
 import GoogleMap from "../ZipAdd/GoogleMap";
+import axios from 'axios'
 //
 
 const styles = {
@@ -51,8 +52,20 @@ class Home extends React.Component {
     }
   }
   setDataOnState = () => {
-    this.props.quote.baseLocation = this.state.baseLocation
-    this.props.setQuoteObject(this.props.quote)
+    if(this.state.baseLocation)
+    {
+      this.props.quote.baseLocation = this.state.baseLocation      
+      this.props.quote.lastVisitedPage = "driverdetails"      
+      console.log("before calling api"+ JSON.stringify(this.props.quote))
+        axios.post('https://1nbs6supkj.execute-api.us-east-1.amazonaws.com/v1/pc/auto/policyexpapi', this.props.quote)
+        .then(response => {console.log("Response"+JSON.stringify(response.data)) 
+        this.props.quote.policyNumber=response.data.policyNumber
+        this.props.quote.policyId=response.data.policyId 
+        console.log("dharma home before stroing in session"+ JSON.stringify(this.props.quote))
+        this.props.setQuoteObject(this.props.quote) })
+        .catch(error =>{console.log("ERROR"+error)})
+    }
+
   }
   render() {
 
@@ -89,7 +102,7 @@ class Home extends React.Component {
         </Grid>
       </Grid>
       <Link align="left" to='/driverdetails' onClick={this.setDataOnState}>
-        <Button variant="contained" style={{backgroundColor:'#041c3d',color:'white'}}>
+        <Button variant="contained" style={{backgroundColor:'#041c3d',color:'white'}}> 
             Get Started
         </Button>
         </Link>

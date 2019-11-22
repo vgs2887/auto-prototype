@@ -24,9 +24,10 @@ const date = new Date()
 
 const emptyObject ={
     "baseLocation": null, 
-    "premium": null, 
+    "premium": null,
+    "policyId" : null, 
     "packageCode": null, 
-    "policyNr": null, 
+    "policyNumber": null, 
     "isQuote": true, 
     "policyEffDate": date.getFullYear()+"-"+date.getMonth()+"-"+date.getDate(), 
     "policyExpDate": null, 

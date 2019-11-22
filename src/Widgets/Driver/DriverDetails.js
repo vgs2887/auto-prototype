@@ -42,12 +42,18 @@ class DriverDetails extends React.Component {
         history.push('/adddriver')
     }
     goToNextPage = () => {
+        this.props.quote.lastVisited ="vehicledetails"
+        console.log("on clicko f next on driver page "+ JSON.stringify(this.props.quote))        
+        axios.put("https://1nbs6supkj.execute-api.us-east-1.amazonaws.com/v1/pc/auto/policyexpapi/"+this.props.quote.policyId, this.props.quote)
+        .then(response => {console.log("Response on click of next on driver page"+JSON.stringify(response.data))})
+        .catch(error =>{console.log("ERROR"+error)})
+        
         history.push('/vehicledetails')
     }
     doSomethingBeforeUnload = (ev) => {
-        console.log("SEE YOU SOON WITH A NEW quote")
-        axios.post('https://1nbs6supkj.execute-api.us-east-1.amazonaws.com/v1/pc/auto/policyexpapi', this.props.quote)
-        .then(response => {console.log("Response"+JSON.stringify(response))})
+        console.log("SEE YOU SOON WITH A NEW quote"+ JSON.stringify(this.props.quote))        
+        axios.put("https://1nbs6supkj.execute-api.us-east-1.amazonaws.com/v1/pc/auto/policyexpapi/"+this.props.quote.policyId, this.props.quote)
+        .then(response => {console.log("Response"+JSON.stringify(response.data))})
         .catch(error =>{console.log("ERROR"+error)})
         return ev.returnValue="Are you sure want to exit?"
     }
@@ -90,6 +96,7 @@ class DriverDetails extends React.Component {
     }
 }
 const mapStateToProps = (state) => {
+    console.log("Updated state for quote " + JSON.stringify(state.quote))
     return {
         "drivers": state.drivers,
         "quote":state.quote
