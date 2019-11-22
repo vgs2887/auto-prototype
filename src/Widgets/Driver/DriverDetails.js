@@ -40,7 +40,7 @@ class DriverDetails extends React.Component {
     goToNextPage = () => {
         this.props.quote.lastVisited ="vehicledetails"
         console.log("on clicko f next on driver page "+ JSON.stringify(this.props.quote))        
-        axios.put("https://1nbs6supkj.execute-api.us-east-1.amazonaws.com/v1/pc/auto/policyexpapi/"+this.props.quote.policyId, this.props.quote)
+        axios.post("https://1nbs6supkj.execute-api.us-east-1.amazonaws.com/v1/pc/auto/policyexpapi/"+this.props.quote.policyId, this.props.quote)
         .then(response => {console.log("Response on click of next on driver page"+JSON.stringify(response.data))})
         .catch(error =>{console.log("ERROR"+error)})
         
@@ -48,7 +48,7 @@ class DriverDetails extends React.Component {
     }
     doSomethingBeforeUnload = (ev) => {
         console.log("SEE YOU SOON WITH A NEW quote"+ JSON.stringify(this.props.quote))        
-        axios.put("https://1nbs6supkj.execute-api.us-east-1.amazonaws.com/v1/pc/auto/policyexpapi/"+this.props.quote.policyId, this.props.quote)
+        axios.post("https://1nbs6supkj.execute-api.us-east-1.amazonaws.com/v1/pc/auto/policyexpapi/"+this.props.quote.policyId, this.props.quote)
         .then(response => {console.log("Response"+JSON.stringify(response.data))})
         .catch(error =>{console.log("ERROR"+error)})
         return ev.returnValue="Are you sure want to exit?"
