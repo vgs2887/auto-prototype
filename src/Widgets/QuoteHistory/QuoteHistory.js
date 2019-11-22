@@ -20,14 +20,15 @@ const useStyles = {
         align: 'left'
     }   
 };
+const date = new Date()
+
 const emptyObject ={
-    "quoteID": Math.round(Math.random()*(1000000 - 1) + 1),
     "baseLocation": null, 
     "premium": null, 
     "packageCode": null, 
     "policyNr": null, 
     "isQuote": true, 
-    "policyEffDate": null, 
+    "policyEffDate": date.getFullYear()+"-"+date.getMonth()+"-"+date.getDate(), 
     "policyExpDate": null, 
     "coverages": {
                     "bodilyInjury": null, 
@@ -35,7 +36,15 @@ const emptyObject ={
                     "comprehensive": null, 
                     "collision": null
                 }, 
-    "drivers": [],
+    "drivers": [
+                {
+                    "name": "Monica Feloola Geller", 
+                    "age": 29, 
+                    "relationship": "SELF", 
+                    "gender": "female", 
+                    "license": "OH00000001"
+                }
+    ],
     "vehicles": []
     };
 const policyHeader = ['Policy#','Location','Premium'];
@@ -108,8 +117,7 @@ class QuoteHistory extends React.Component
   };
 
 render(){    
-    var list = this.state.listToDisplay
-  return (      
+  return (         
         <div style={{backgroundColor:'#F5F5F5'}}>            
             <Header headerText="My Accounts"/>
             <Typography variant="h6" align="left" style={{color:'#041c3d'}}>
@@ -164,7 +172,7 @@ render(){
                         expandIcon={<ExpandMoreIcon />}
                         aria-controls="panel1c-content"
                         id="panel1c-header"
-                        > <Typography variant="caption" className={{
+                        > <Typography variant="caption" style={{
                             color:"#041c3d",fontWeight:"bold"
                           }}>Drivers</Typography>
                           </ExpansionPanelSummary>    
@@ -192,7 +200,7 @@ render(){
                         expandIcon={<ExpandMoreIcon />}
                         aria-controls="panel1c-content"
                         id="panel1c-header"
-                        > <Typography variant="caption" className={{
+                        > <Typography variant="caption" style={{
                             color:"#041c3d",fontWeight:"bold"
                           }}>Vehicles</Typography>
                           </ExpansionPanelSummary>    
@@ -213,6 +221,29 @@ render(){
                                         />
                                     </Grid>
                                 )})}                            
+                        </Grid>
+                        </ExpansionPanelDetails>
+                        </ExpansionPanel>
+                        <ExpansionPanel square>
+                        <ExpansionPanelSummary
+                        expandIcon={<ExpandMoreIcon />}
+                        aria-controls="panel1c-content"
+                        id="panel1c-header"
+                        > <Typography variant="caption" style={{
+                            color:"#041c3d",fontWeight:"bold"
+                          }}>Coverages</Typography>
+                          </ExpansionPanelSummary>    
+                        <ExpansionPanelDetails>                                                   
+                        <Grid container>
+                        <Table size="small">
+                        <TableHead><TableRow><TableCell align='left'>Coverages</TableCell><TableCell align='left'>Premium</TableCell></TableRow></TableHead>
+                        <TableBody>
+                            {quote.coverages.bodilyInjury ? <TableRow><TableCell align='left'>Bodily Injury</TableCell><TableCell align='left'>{quote.coverages.bodilyInjury}</TableCell></TableRow> : <span></span>}
+                            {quote.coverages.propertyDamage ? <TableRow><TableCell align='left'>Property Damage</TableCell><TableCell align='left'>{quote.coverages.propertyDamage}</TableCell></TableRow> : <span></span>}
+                            {quote.coverages.comprehensive ? <TableRow><TableCell align='left'>Comprehensive</TableCell><TableCell align='left'>{quote.coverages.comprehensive}</TableCell></TableRow> : <span></span>}
+                            {quote.coverages.collision ? <TableRow><TableCell align='left'>Collision</TableCell><TableCell align='left'>{quote.coverages.collision}</TableCell></TableRow> : <span></span>}
+                        </TableBody>
+                        </Table>
                         </Grid>
                         </ExpansionPanelDetails>
                         </ExpansionPanel>                    
