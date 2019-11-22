@@ -361,7 +361,7 @@ body {
         background-color: #fff;
         float: left;
         list-style-type: none;
-        width: 17%;
+        width: 25%;
         margin-left: 20px;
         left: 120px;
         text-align: center;
@@ -420,7 +420,6 @@ body {
   width: 80px;
     height: 80px;
     background-color: rgb(14, 46, 73);
-    opacity: 90%;
     vertical-align: text-bottom;
     bottom: 15px;
 }

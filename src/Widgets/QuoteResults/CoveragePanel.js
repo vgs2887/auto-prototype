@@ -15,6 +15,10 @@ import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormControl from '@material-ui/core/FormControl';
 import FormLabel from '@material-ui/core/FormLabel';
+import InputLabel from '@material-ui/core/InputLabel';
+import Select from '@material-ui/core/Select';
+import Button from '@material-ui/core/Button';
+import MenuItem from '@material-ui/core/MenuItem';
 import 'react-dropdown/style.css'
 
 const useStyles = {
@@ -33,22 +37,29 @@ const useStyles = {
     {
         padding: "0px",
         paddingTop: "10px",
-        fontSize: "1.3rem",
-        fontWeight: "bold"
+        fontSize: "16px",
+        fontWeight: "bold",
+        color: "#041C3D"
     },
     childCovgText:
     {
         padding: "0px",
         paddingTop: "10px",
         fontSize: "1.0rem",
-        fontWeight: "bold"
+        fontWeight: "bold",
+        color: "#041C3D"
     },
 
     covgHelperText:
     {
         fontSize: "12px"
-    }
-
+    },
+        button: {
+          display: 'block'
+        },
+        formControl: {
+          minWidth: '61%'
+        }
 };
 const options = [
     { value: 'one', label: '25,000/30,000' },
@@ -187,19 +198,21 @@ class CoveragePanel extends React.Component {
         var premium = this.state.premium;
         var prevSel = this.biCovAmnt;
         var biCoverageAmnt = parseInt(e.target.value);
-
+        console.log("BI value-"+biCoverageAmnt);
         //State has previously selected value, remove the previously added amount and add the new amount for this coverage selection.
 
         premium = premium - prevSel + biCoverageAmnt;
 
         this.BICoverageAmntText = "$" + biCoverageAmnt;
         
+        console.log("BI 2 value-"+biCoverageAmnt);
         this.quote.coverages.bodilyInjury = biCoverageAmnt;
         
         this.quote.premium = premium;
 
         this.setState({ premium: premium, biCovAmnt: biCoverageAmnt });
         this.props.setQuoteObject(this.quote);
+        console.log(this.quote.coverages.bodilyInjury);
         
     }
 
@@ -230,6 +243,7 @@ class CoveragePanel extends React.Component {
         var premium = this.state.premium;
         var inputArr = e.target.value.split(":");
         var compCoverageAmnt = parseInt(inputArr[1]);
+
         var vin = inputArr[0];
         var prevCompCoverageAmnt = 0;
 
@@ -244,12 +258,14 @@ class CoveragePanel extends React.Component {
 
         premium = premium - prevCompCoverageAmnt + compCoverageAmnt;
 
-        this.quote.coverages.comprehensive = this.quote.coverages.comprehensive - prevCompCoverageAmnt + compCoverageAmnt ;;
+        
+        var compCovAmt = this.quote.coverages.comprehensive - prevCompCoverageAmnt + compCoverageAmnt ;
+        
+        this.quote.coverages.comprehensive = vin+":"+compCoverageAmnt;
         this.quote.premium = premium;
 
         this.setState({ premium: premium });
-        this.props.setQuoteObject(this.quote);
-        
+        this.props.setQuoteObject(this.quote);       
     }
 
     onChangeCovgForColl = (e) => {
@@ -273,7 +289,9 @@ class CoveragePanel extends React.Component {
 
         premium = premium - prevCollCoverageAmnt + collCoverageAmnt;
       
-        this.quote.coverages.comprehensive = this.quote.coverages.collision - prevCollCoverageAmnt + collCoverageAmnt ;
+        
+        var collCovAmt = this.quote.coverages.collision - prevCollCoverageAmnt + collCoverageAmnt ;
+        this.quote.coverages.collision = vin+":"+collCovAmt;
         this.quote.premium = premium;
 
         this.setState({ premium: premium });
@@ -290,24 +308,28 @@ class CoveragePanel extends React.Component {
         var compVehiCovItems = this.compVehiCov.map((vehicle, key) =>
             <div key={vehicle.vin}>
                 <p style={useStyles.childCovgText}>{vehicle.year} {vehicle.make} {vehicle.model} {vehicle.vin}</p>
-                <table>
+                <table style={{ width: "100%" }}>
                     <tr>
-                        <td style={{ width: "100%" }}>
-                            <select onChange={this.onChangeCovgForComp} multiple="" class="ui fluid dropdown">
-
-                                {this.compCoverages.map((coverage, key) => {
-                                    var compCovKey = vehicle.vin + ":" + coverage.amnt;
-                                    var CompCoverageAmntText_ind = this.CompCoverageAmntText;
-                                    return <option key={coverage.id}
-                                        value={compCovKey}>
-                                        {coverage.covgValue}</option>
-                                })}
-                            </select>
-                            <p style={useStyles.covgHelperText}>per occurence</p>
+                        <td style={{ width: "80%" }}>
+                            <FormControl className={useStyles.formControl} style={{ width: "100%" }}>
+                                        <Select
+                                        value={this.quote.coverages.comprehensive}
+                                        onChange={this.onChangeCovgForComp}
+                                        >
+                                        {this.compCoverages.map((coverage, key) => {
+                                             var compCovKey = vehicle.vin + ":" + coverage.amnt;
+                                             var CompCoverageAmntText_ind = this.CompCoverageAmntText;
+                                            return <MenuItem key={coverage.id}
+                                            value={compCovKey}>{coverage.covgValue}</MenuItem>
+                                        })}
+                                        
+                                        </Select>
+                                    </FormControl>
+                                    <FormHelperText style={{color: "black", marginTop: 0}}>per occurence</FormHelperText>
                         </td>
-                        <td >
+                        <td style={{ width: "20%" }}>
                             <div class="ui input" style={{ width: "100%", float: "right" }} >
-                                <input type="text" readOnly value={vehicle.coverAmntText} />
+                                <input type="text" style={{ width: "100%"}} readOnly value={vehicle.coverAmntText} />
                             </div>
                         </td>
                     </tr>
@@ -318,22 +340,27 @@ class CoveragePanel extends React.Component {
         var collVehiCovItems = this.collVehiCov.map((vehicle, key) =>
             <div key={vehicle.vin}>
                 <p style={useStyles.childCovgText}>{vehicle.year} {vehicle.make} {vehicle.model} {vehicle.vin}</p>
-                <table>
+                <table style={{ width: "100%" }}>
                     <tr>
-                        <td style={{ width: "100%" }}>
-                            <select onChange={this.onChangeCovgForColl} multiple="" class="ui fluid dropdown">
-                                {this.compCoverages.map((coverage, key) => {
-                                    var collCovKey = vehicle.vin + ":" + coverage.amnt;
-                                    return <option key={coverage.id}
-                                        value={collCovKey}>
-                                        {coverage.covgValue}</option>
-                                })}
-                            </select>
-                            <p style={useStyles.covgHelperText}>per occurence</p>
+                        <td style={{ width: "80%" }}>
+                            <FormControl className={useStyles.formControl} style={{ width: "100%" }}>
+                                        <Select
+                                        value={this.quote.coverages.collision}
+                                        onChange={this.onChangeCovgForColl}
+                                        >
+                                        {this.collCoverages.map((coverage, key) => {
+                                            var collCovKey = vehicle.vin + ":" + coverage.amnt;
+                                            return <MenuItem key={coverage.id}
+                                            value={collCovKey}>{coverage.covgValue}</MenuItem>
+                                        })}
+                                        
+                                        </Select>
+                                    </FormControl>
+                                    <FormHelperText style={{color: "black", marginTop: 0}}>per occurence</FormHelperText>
                         </td>
-                        <td >
+                        <td style={{ width: "20%" }}>
                             <div class="ui input" style={{ width: "100%", float: "right" }} >
-                                <input type="text" readOnly value={vehicle.coverAmntText} />
+                                <input type="text" style={{ width: "100%"}} readOnly value={vehicle.coverAmntText} />
                             </div>
                         </td>
                     </tr>
@@ -349,23 +376,26 @@ class CoveragePanel extends React.Component {
                         {/* Bodily Injury Section */}
                         <div className="coveragetext" style={useStyles.covgText}> Bodily Injury Liability Coverage</div>
                         <Divider />
-                        <table>
+                        <table style={{ width: "100%" }}>
                             <tr>
-                                <td style={{ width: "100%" }}>
-                                    <select onChange={this.onChangeCovForBI} class="ui fluid dropdown" >
-                                        {this.BIcoverages.map((coverage) => {
-                                            return <option                                                
-                                                value={coverage.amnt}>
-                                                {coverage.covgValue}
-                                            </option>
+                                <td style={{ width: "80%" }}>
+                                    <FormControl className={useStyles.formControl} style={{ width: "100%" }}>
+                                        <Select
+                                        value={this.quote.coverages.bodilyInjury}
+                                        onChange={this.onChangeCovForBI}
+                                        >
+                                        {this.BIcoverages.map(coverage=>{
+                                            return <MenuItem value={coverage.amnt}>{coverage.covgValue}</MenuItem>
                                         })}
-                                    </select>
-                                    <p style={useStyles.covgHelperText}>per person/per accident</p>
+                                        
+                                        </Select>
+                                    </FormControl>
+                                    <FormHelperText style={{color: "black", marginTop: 0}}>per person/per accident</FormHelperText>
                                 </td>
-                                <td >
+                                <td style={{ width: "20%"}}>
                                     <div class="ui input" style={{ width: "100%", float: "right" }} >
                                         {/* <input type="text" readOnly value={100} /> */}
-                                        <input type="text" readOnly value={this.BICoverageAmntText} />
+                                        <input type="text" style={{width: "100%"}} readOnly value={this.BICoverageAmntText} />
                                     </div>
                                 </td>
                             </tr>
@@ -376,22 +406,25 @@ class CoveragePanel extends React.Component {
                         {/* Property Damage Section */}
                         <div className="coveragetext" style={useStyles.covgText}>Property Damage Liability Coverage</div>
                         <Divider />
-                        <table>
+                        <table style={{ width: "100%" }}>
                             <tr>
-                                <td style={{ width: "100%" }}>
-                                    <select onChange={this.onChangeCovgForPD} multiple="" class="ui fluid dropdown">
-                                        {this.PDcoverages.map((coverage, key) => {
-                                            return <option key={coverage.id}
-                                                value={coverage.amnt}>
-                                                {coverage.covgValue}
-                                            </option>
+                                <td style={{ width: "80%" }}>
+                                    <FormControl className={useStyles.formControl} style={{ width: "100%" }}>
+                                        <Select
+                                        value={this.quote.coverages.propertyDamage}
+                                        onChange={this.onChangeCovgForPD}
+                                        >
+                                        {this.PDcoverages.map(coverage=>{
+                                            return <MenuItem value={coverage.amnt}>{coverage.covgValue}</MenuItem>
                                         })}
-                                    </select>
-                                    <p style={useStyles.covgHelperText}>per accident</p>
+                                        
+                                        </Select>
+                                    </FormControl>
+                                    <FormHelperText style={{color: "black", marginTop: 0}}>per accident</FormHelperText>
                                 </td>
-                                <td >
+                                <td style={{ width: "20%" }}>
                                     <div class="ui input" style={{ width: "100%", float: "right" }} >
-                                        <       input type="text" readOnly value={this.PDCoverageAmntText} />
+                                        <input type="text" style={{ width: "100%"}} readOnly value={this.PDCoverageAmntText} />
                                     </div>
                                 </td>
                             </tr>
