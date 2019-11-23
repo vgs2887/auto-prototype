@@ -64,6 +64,7 @@ class PaymentPage extends React.Component {
 
   submitHandler = e => {
     quote.lastVisitedPage="confirm";
+    quote.isQuote=false;
     console.log("arun testing ", quote);
     this.props.setQuoteObject(quote);
     console.log("Payment Page postRequest:  "+JSON.stringify(quote));
@@ -171,7 +172,7 @@ class PaymentPage extends React.Component {
 }
 
 const mapStateToProps = state => {
-  console.log("AAAAAAAAAAAAAAAAA quote state on click"+JSON.stringify(state.quote))
+  console.log("Payment Page quote state on click"+JSON.stringify(state.quote))
   return {
     "quote": state.quote,
       };

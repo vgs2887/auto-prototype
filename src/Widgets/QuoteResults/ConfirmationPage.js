@@ -24,7 +24,7 @@ const useStyles = {
   },
 }
 
-export default class ConfirmationPage extends React.Component {
+ class ConfirmationPage extends React.Component {
 
   constructor(props) {
     super(props);
@@ -44,7 +44,7 @@ export default class ConfirmationPage extends React.Component {
   }
 
   render() {  
-    console.log(this.props);
+    // console.log(this.props);
     return (
       <div className="confirmcss">
         {/* <div className="success-checkmark">
@@ -63,50 +63,61 @@ export default class ConfirmationPage extends React.Component {
             <CardContent>
                 <div>
                     <ul><Typography variant="body2" color="textSecondary" component="p">
-                    Thank you Major Alex, Your Auto policy has been processed. A confirmation and follow up steps are sent to your registered email address.
+                    Thank you {this.props.quote.drivers[0].name}, Your Auto policy has been processed. A confirmation and follow up steps are sent to your registered email address.
                         </Typography>
                     </ul>
-                    <Card className = "id-details" style={{flex: 1, flexDirection: 'row', flexWrap: 'Wrap'}}>
-                  <div class="row">
-                      <div class="avatar-container">
-                        <div class="photo">
-                        <Typography  > <img src={require("../../assets/carlogo.png")} width = "100%" className = "vehicle-img"/> </Typography>
-                        </div>
-                      </div>
-                    <div class="details-container" style={{flex: 1, flexDirection: 'row'}}>
-                      <div class="content">
-                        <h3>Joe Doe</h3>
-                     <div className = "top-row">
-                      <div className = "item">
-                      <ul className = "top-column">Policy Number</ul>
-                      <ul className = "bottom-column">00000001</ul>
-                        </div>
-                      <div className = "item">
-                      <ul className = "top-column">Effective Date</ul>
-                      <ul className = "bottom-column">11/15/2019</ul>
-                      </div>
-
                     
-                      </div>
+                     {this.props.quote.vehicles.map( vehicle => {
+                       return(
+                         <div>
+                        <Card className = "id-details" style={{flex: 1, flexDirection: 'row', flexWrap: 'Wrap'}}> 
+                        <div class="row">
+                        <div class="avatar-container">
+                          <div class="photo">
+                          <Typography  > <img src={require("../../assets/carlogo.png")} width = "100%" className = "vehicle-img"/> </Typography>
+                          </div>
+                        </div>
+                      <div class="details-container" style={{flex: 1, flexDirection: 'row'}}>
+                        <div class="content">
+                          <h3>{vehicle.driverName}</h3>
+                       <div className = "top-row">
+                        <div className = "item">
+                        <ul className = "top-column">Policy Number</ul>
+                        <ul className = "bottom-column">{this.props.quote.policyNumber ? this.props.quote.policyNumber : 7010 }</ul>
+                          </div>
+                        <div className = "item">
+                        <ul className = "top-column">Effective Date</ul>
+                        <ul className = "bottom-column">{this.props.quote.policyEffDate ? this.props.quote.policyEffDate : 2019-10-22 }</ul>
+                        </div>
+  
                       
-                      <div className = "top-row">
-                      <div className = "item">
-                      <ul className = "top-column">Expiration Date</ul>
-                      <ul className = "bottom-column">05/15/2020</ul>
                         </div>
-                      <div className = "item">
-                      <ul className = "top-column">Vehicle</ul>
-                      <ul className = "bottom-column">2016 Tesla 3</ul>
+                        
+                        <div className = "top-row">
+                        <div className = "item">
+                        <ul className = "top-column">Expiration Date</ul>
+                        <ul className = "bottom-column">{this.props.quote.policyExpDate ? this.props.quote.policyExpDate : 2020-10-22 }</ul>
+                          </div>
+                        <div className = "item">
+                        <ul className = "top-column">Vehicle</ul>
+                        <ul className = "bottom-column">{vehicle.year} {vehicle.make} {vehicle.model}</ul>
+                        </div>
+  
+                      
+                        </div>                                           
+  
                       </div>
-
-                    
-                      </div>                                           
-
-                    </div>
+                  </div>
                 </div>
-              </div>
+                </Card>
+                <br></br>
+                </div>
+                       );
+                     }
+
+                     )} 
                                   
-                    </Card>
+                    
                                            
                     
                 </div>
@@ -127,3 +138,12 @@ export default class ConfirmationPage extends React.Component {
     );
   }
 }
+
+const mapStateToProps = state => {
+  console.log("Confirmation page quote state on click"+JSON.stringify(state.quote))
+  return {
+    "quote": state.quote,
+      };
+};
+
+export default connect(mapStateToProps,null)(ConfirmationPage)

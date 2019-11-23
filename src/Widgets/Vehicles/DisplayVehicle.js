@@ -59,7 +59,7 @@ class DisplayVehicle extends React.Component {
                   showDeleteButton={true}
                   id={vehicle.id}
                   image={path}
-                  model={vehicle.miles ? vehicle.miles : "1000 miles"}
+                  model={vehicle.mileage ? vehicle.mileage : "1000 miles"}
                   name={vehicle.driverName}
                   milteryStatus={vehName}
                   data={vehVin}

@@ -152,7 +152,7 @@ class AddVehicle extends React.Component {
     const isValid = this.validate();
     if (isValid) {
       // console.log("shit",postData);
-      postData.driverName="sa";
+      postData.driverName=this.state.primaryowner;
       postData.vin=this.state.vin;
       postData.make=this.state.make;
       postData.model=this.state.model;
@@ -210,7 +210,7 @@ class AddVehicle extends React.Component {
                 onClick={this.goBack}
                 style={{ border: "none", float: "left" }}
               >
-                <i class="fa fa-angle-left"><h1>back butom</h1></i>
+                <i class="fa fa-angle-left"></i>
               </span>
               <span>Add New Vehicle</span>
             </div>
