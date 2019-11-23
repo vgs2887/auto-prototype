@@ -44,16 +44,16 @@ class App extends React.Component{
                     classNames="slide"
                     >
                     <Switch location = {location} >
-                    <Route exact path="/auto/" component={QuoteHistory} />
-                     <Route exact path="/auto/getstarted" component={Home} />
-                     <Route path="/auto/quoteresults" exact component={QuoteResultsPage} />
-                     <Route path="/auto/adddriver" exact component={AddDriver} />
-                     <Route path="/auto/driver" exact component={DriverDetails} />
-                     <Route path="/auto/vehicle" exact component={VehicleDetails} />
-                     <Route path="/auto/addvehicle" component={AddVehicle} />
-                     <Route path='/auto/addproperty' component={AddProperty}/>
-                     <Route path='/auto/payment' component={paymentPage}/>
-                     <Route path='/auto/confirm' component={ConfirmationPage}/>
+                    <Route exact path="/" component={QuoteHistory} />
+                     <Route exact path="/getstarted" component={Home} />
+                     <Route path="/quoteresults" exact component={QuoteResultsPage} />
+                     <Route path="/adddriver" exact component={AddDriver} />
+                     <Route path="/driver" exact component={DriverDetails} />
+                     <Route path="/vehicle" exact component={VehicleDetails} />
+                     <Route path="/addvehicle" component={AddVehicle} />
+                     <Route path='/addproperty' component={AddProperty}/>
+                     <Route path='/payment' component={paymentPage}/>
+                     <Route path='/confirm' component={ConfirmationPage}/>
                      </Switch>
                         </CSSTransition>
                 </TransitionGroup> 

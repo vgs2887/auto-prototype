@@ -38,7 +38,7 @@ const emptyObject ={
                     "propertyDamage": null, 
                     "comprehensive": null, 
                     "collision": null
-                }, 
+                },
     "drivers": [
                 {
                     "name": "Monica Feloola Geller", 
