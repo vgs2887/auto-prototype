@@ -9,6 +9,7 @@ import { connect } from "react-redux";
 import axios from 'axios'
 import { setQuoteObject } from "../../actions";
 import history from "../../utils/history";
+import {determineStateCodes} from "./DetState"
 const useStyles = {
     root: {
         width: 'auto', 
@@ -64,7 +65,7 @@ const emptyObject ={
     ]
     };
 const policyHeader = ['Policy#','Location','Premium'];
-const quoteHeader = ['Quote#','State','Premium'];
+const quoteHeader = ['Quote Desc','State','Premium'];
 class QuoteHistory extends React.Component 
 {
   constructor(props)
@@ -76,14 +77,19 @@ class QuoteHistory extends React.Component
         policies:[],
         listToDisplay : [],
         headerToDisplay: [],
+        textToDisplayPolicy: null,
         textToDisplay: null,
+        textToDisplayQuote: null,
         policyAvaialble: false,
-        isEmpty: false        
+        tooglePolicy:false,
+        quoteAvaialble: false,
+        isEmpty: true ,
+        canDisplayGetStarted:false       
     }
 
   }  
 
-  componentDidMount() {
+  componentDidMount() {    
     axios.get('https://bkjapch3s9.execute-api.us-east-1.amazonaws.com/v1/pc/auto/policysummaryexpapi')
     .then(response => {    
         console.log(response.data)        
@@ -93,37 +99,34 @@ class QuoteHistory extends React.Component
             quotes: response.data.filter(quote => quote.isQuote),
             policies: response.data.filter(quote => !quote.isQuote)
             })            
+            this.setState({textToDisplay:"Click the below button to get started!"})
+            this.setState({canDisplayGetStarted:true})
             if(this.state.policies && this.state.policies.length > 0) {
+                this.setState({policyAvaialble:true})
+                this.setState({isEmpty:false})
+                this.setState({tooglePolicy:true})                
+                this.setState({canDisplayGetStarted:false})
                 if(this.state.policies.length > 1)
                 {
-                    this.setState({textToDisplay:"Auto Insurance Policies"})
+                   this.setState({textToDisplayPolicy:"Auto Insurance Policies"})
                 }
                 else{
-                    this.setState({textToDisplay:"Auto Insurance Policy"})
+                    this.setState({textToDisplayPolicy:"Auto Insurance Policy"})
                 }
-                this.setState({listToDisplay:this.state.policies})
-                this.setState({policyAvaialble:true})
-                this.setState({headerToDisplay:policyHeader})
               }
-              else{
-                  if(this.state.quotes && this.state.quotes.length > 0 )
-                  {
-                    if(this.state.quotes.length > 1)
-                    {
-                        this.setState({textToDisplay:"Auto Insurance Quotes"})   
-                    }
-                    else{
-                        this.setState({textToDisplay:"Auto Insurance Quote"})
-                    }
-                    this.setState({listToDisplay:this.state.quotes})
-                    this.setState({policyAvaialble:false})  
-                    this.setState({headerToDisplay:quoteHeader})                                      
-                 } 
-                else{
-                        this.setState({isEmpty : true})
-                        this.setState({textToDisplay:"Click Get Started to get a Quote!"})
+            if(this.state.quotes && this.state.quotes.length > 0 )
+            {
+                this.setState({quoteAvaialble:true})
+                this.setState({isEmpty:false})   
+                this.setState({canDisplayGetStarted:false})
+                if(this.state.quotes.length > 1)
+                {
+                   this.setState({textToDisplayQuote:"Auto Insurance Quotes"})
                 }
-            }  
+                else{
+                    this.setState({textToDisplayQuote:"Auto Insurance Quote"})
+                }             
+            }               
           })    
       .catch(error =>{console.log("ERROR"+error)})
   }
@@ -133,33 +136,34 @@ class QuoteHistory extends React.Component
   };
 
 render(){    
-  return (         
+  return (               
         <div style={{backgroundColor:'#F5F5F5'}}>            
             <Header headerText="My Accounts"/>
             <Typography variant="h6" align="left" style={{color:'#041c3d'}}>
-                {this.state.isEmpty ? "Click Get Started to get a Quote!" : this.state.textToDisplay}
-                {this.state.isEmpty ? null : <div style={{float:'right',fontSize:'10px',fontWeight:'bold'}}>Quotes<Switch size="small" style={{color:'#041c3d'}} color="primary" checked={this.state.policyAvaialble} onChange={()=>{this.setState({policyAvaialble:!this.state.policyAvaialble})}}/>Policies</div>}
+                {!this.state.tooglePolicy && this.state.quoteAvaialble ? this.state.textToDisplayQuote : this.state.tooglePolicy && this.state.policyAvaialble ? this.state.textToDisplayPolicy:this.state.textToDisplay}
+                {this.state.isEmpty ? null : <div style={{float:'right',fontSize:'10px',fontWeight:'bold'}}>Quotes<Switch size="small" style={{color:'#041c3d'}} color="primary" checked={this.state.tooglePolicy} onChange={()=>{this.setState({tooglePolicy:!this.state.tooglePolicy})}}/>Policies</div>}
             </Typography> 
             <br />   
-            { this.state.listToDisplay && this.state.listToDisplay.length > 0 && !this.state.policyAvaialble ?
+            <br /> 
+            { !this.state.tooglePolicy && this.state.quoteAvaialble ?
             <Grid style={useStyles.root}>
                 <Table size="small">
                     <TableHead>
                     <TableRow >
-                        {this.state.headerToDisplay.map((header)=>{return(
+                        {quoteHeader.map((header)=>{return(
                             <TableCell align='left' style={{color:'#041c3d'}}>{header}</TableCell>
                         )})}                        
                         <TableCell align='left'></TableCell>
                     </TableRow>
                     </TableHead>
                     <TableBody>
-                    {this.state.listToDisplay.map((quote, index) => {
+                    {this.state.quotes.map((quote, index) => {
 
                     return(
 
                     <TableRow>
-                        <TableCell align='left'>{quote.policyNumber}</TableCell>
-                        <TableCell align='left'>{quote.baseLocation}</TableCell>
+                        <TableCell align='left'>{quote.lastVisitedPage?"Quote Saved on "+quote.lastVisitedPage : "Auto Insurance Quote"}</TableCell>
+                        <TableCell align='left'>{determineStateCodes(quote.baseLocation)}</TableCell>
                         <TableCell align='left'>{quote.premium}</TableCell>
                         <TableCell align="left">                    
                             <Link key={quote.policyNumber} to={"/"+quote.lastVisitedPage} onClick={()=> this.setQuoteDataInState(quote)}><Button variant="contained" style={{backgroundColor:'#041c3d',color:'white'}}>Continue</Button></Link>
@@ -169,8 +173,8 @@ render(){
                 </TableBody>
                 </Table>
             </Grid>  
-            :<div>{this.state.listToDisplay.map((quote, index) => {
-                    var a = "Your " +quote.baseLocation+" Policy" + "   #" + quote.policyNumber
+            :<div>{this.state.tooglePolicy && this.state.policyAvaialble ? this.state.policies.map((quote, index) => {
+                    var a = "Your " +determineStateCodes(quote.baseLocation)+" Policy" + "   #" + quote.policyNumber
                     var driverid = 0;
                     var vehicleid = 0;
                     var effectiveDatemsg = "Effective from "+new Date(quote.policyEffDate).toLocaleDateString([],{ year: 'numeric', month: 'long', day: 'numeric' })
@@ -179,7 +183,7 @@ render(){
                     <CardHeader title={a}titleTypographyProps={{variant:"h6", align:"left", component:"p"}} subheader={effectiveDatemsg} subheaderTypographyProps={{variant:"subtitle1", align:"left",component:"p"}}
                     avatar={
                         <Avatar aria-label="location" style={{backgroundColor:"#041c3d"}}>
-                          {quote.baseLocation}
+                          {determineStateCodes(quote.baseLocation)}
                         </Avatar>
                       }/>
                     <CardContent>     
@@ -264,13 +268,13 @@ render(){
                         </ExpansionPanelDetails>
                         </ExpansionPanel>                    
                     </CardContent>
-                </Card>)})}
-            </div>} 
+                </Card>)}):""}
+            </div>}
 <br />
 <br/> 
-<Link align="left" to='/getstarted' onClick={()=>this.props.setQuoteObject(emptyObject)}><Button variant="contained" style={{backgroundColor:'#041c3d',color:'white'}}>
+{this.state.canDisplayGetStarted ? <Link align="left" to='/getstarted' onClick={()=>this.props.setQuoteObject(emptyObject)}><Button variant="contained" style={{backgroundColor:'#041c3d',color:'white'}}>
                                 Get A New Quote
-                            </Button></Link> 
+                        </Button></Link> :"" }
 <br/><br/><br/><br/></div>
   );
 }
