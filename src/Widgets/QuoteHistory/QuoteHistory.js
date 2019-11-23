@@ -81,7 +81,7 @@ class QuoteHistory extends React.Component
         textToDisplay: null,
         textToDisplayQuote: null,
         policyAvaialble: false,
-        tooglePolicy:false,
+        togglePolicy:false,
         quoteAvaialble: false,
         isEmpty: true ,
         canDisplayGetStarted:false       
@@ -104,8 +104,7 @@ class QuoteHistory extends React.Component
             if(this.state.policies && this.state.policies.length > 0) {
                 this.setState({policyAvaialble:true})
                 this.setState({isEmpty:false})
-                this.setState({tooglePolicy:true})                
-                this.setState({canDisplayGetStarted:false})
+                this.setState({togglePolicy:true})                                
                 if(this.state.policies.length > 1)
                 {
                    this.setState({textToDisplayPolicy:"Auto Insurance Policies"})
@@ -118,7 +117,6 @@ class QuoteHistory extends React.Component
             {
                 this.setState({quoteAvaialble:true})
                 this.setState({isEmpty:false})   
-                this.setState({canDisplayGetStarted:false})
                 if(this.state.quotes.length > 1)
                 {
                    this.setState({textToDisplayQuote:"Auto Insurance Quotes"})
@@ -126,7 +124,7 @@ class QuoteHistory extends React.Component
                 else{
                     this.setState({textToDisplayQuote:"Auto Insurance Quote"})
                 }             
-            }               
+            }           
           })    
       .catch(error =>{console.log("ERROR"+error)})
   }
@@ -140,12 +138,12 @@ render(){
         <div style={{backgroundColor:'#F5F5F5'}}>            
             <Header headerText="My Accounts"/>
             <Typography variant="h6" align="left" style={{color:'#041c3d'}}>
-                {!this.state.tooglePolicy && this.state.quoteAvaialble ? this.state.textToDisplayQuote : this.state.tooglePolicy && this.state.policyAvaialble ? this.state.textToDisplayPolicy:this.state.textToDisplay}
-                {this.state.isEmpty ? null : <div style={{float:'right',fontSize:'10px',fontWeight:'bold'}}>Quotes<Switch size="small" style={{color:'#041c3d'}} color="primary" checked={this.state.tooglePolicy} onChange={()=>{this.setState({tooglePolicy:!this.state.tooglePolicy})}}/>Policies</div>}
+                {!this.state.togglePolicy && this.state.quoteAvaialble ? this.state.textToDisplayQuote : this.state.togglePolicy && this.state.policyAvaialble ? this.state.textToDisplayPolicy:this.state.textToDisplay}
+                {this.state.isEmpty ? null : <div style={{float:'right',fontSize:'10px',fontWeight:'bold'}}>Quotes<Switch size="small" style={{color:'#041c3d'}} color="primary" checked={this.state.togglePolicy} onChange={()=>{this.setState({togglePolicy:!this.state.togglePolicy})}}/>Policies</div>}
             </Typography> 
             <br />   
             <br /> 
-            { !this.state.tooglePolicy && this.state.quoteAvaialble ?
+            { !this.state.togglePolicy && this.state.quoteAvaialble ?
             <Grid style={useStyles.root}>
                 <Table size="small">
                     <TableHead>
@@ -173,7 +171,7 @@ render(){
                 </TableBody>
                 </Table>
             </Grid>  
-            :<div>{this.state.tooglePolicy && this.state.policyAvaialble ? this.state.policies.map((quote, index) => {
+            :<div>{this.state.togglePolicy && this.state.policyAvaialble ? this.state.policies.map((quote, index) => {
                     var a = "Your " +determineStateCodes(quote.baseLocation)+" Policy" + "   #" + quote.policyNumber
                     var driverid = 0;
                     var vehicleid = 0;
@@ -272,7 +270,7 @@ render(){
             </div>}
 <br />
 <br/> 
-{this.state.canDisplayGetStarted ? <Link align="left" to='/getstarted' onClick={()=>this.props.setQuoteObject(emptyObject)}><Button variant="contained" style={{backgroundColor:'#041c3d',color:'white'}}>
+{this.state.canDisplayGetStarted && !this.state.togglePolicy ? <Link align="left" to='/getstarted' onClick={()=>this.props.setQuoteObject(emptyObject)}><Button variant="contained" style={{backgroundColor:'#041c3d',color:'white'}}>
                                 Get A New Quote
                         </Button></Link> :"" }
 <br/><br/><br/><br/></div>
