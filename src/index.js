@@ -31,7 +31,6 @@ const store = createStore(reducers, enhancer(applyMiddleware(thunk)))
 class App extends React.Component{
     render(){
         return(
-            <div>            
             <Router history={history}>
                 <div>
                 <Route render={({location}) => (
@@ -48,8 +47,8 @@ class App extends React.Component{
                      <Route exact path="/getstarted" component={Home} />
                      <Route path="/quoteresults" exact component={QuoteResultsPage} />
                      <Route path="/adddriver" exact component={AddDriver} />
-                     <Route path="/driver" exact component={DriverDetails} />
-                     <Route path="/vehicle" exact component={VehicleDetails} />
+                     <Route path="/driverdetails" exact component={DriverDetails} />
+                     <Route path="/vehicledetails" exact component={VehicleDetails} />
                      <Route path="/addvehicle" component={AddVehicle} />
                      <Route path='/addproperty' component={AddProperty}/>
                      <Route path='/payment' component={paymentPage}/>
@@ -59,7 +58,7 @@ class App extends React.Component{
                 </TransitionGroup> 
         )} />
                 </div>
-            </Router></div>
+            </Router>
         )
     }
 }
