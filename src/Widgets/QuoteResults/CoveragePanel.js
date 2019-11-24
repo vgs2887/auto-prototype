@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { updatepremiumaction } from '../../actions'
-//import { updateCoveragesAction } from '../../actions'
+import { updateCoverages } from '../../actions'
 import { setQuoteObject } from "../../actions";
 import { Divider, Paper, Grid } from '@material-ui/core';
 //import Select from 'react-select';
@@ -116,13 +116,16 @@ class CoveragePanel extends React.Component {
     constructor(props) {
         super(props)                             
         
+        this.quote = this.props.quote ;
+
         this.biCovAmnt = 5;
         this.pdCovgAmnt = 5;
 
         this.BICoverageAmntText = "$" + this.biCovAmnt; //Initial display text for the Coverage amount
         this.PDCoverageAmntText = "$" + this.pdCovgAmnt;
 
-        var vehicles = this.props.vehicles;
+        var vehicles = this.quote.vehicles;
+        //var vehicles = this.props.vehicles;
         //var vehicles = this.vehicles_hardcoded;
         var compVehicles = null;
         var collVehicles = null;
@@ -154,7 +157,7 @@ class CoveragePanel extends React.Component {
         var premiumConst = 30 + (vehicles.length * (2 * 20));
         //alert('premiumConst = '+premiumConst );        
 
-        this.quote = this.props.quote ; 
+         
         
         if(this.quote == null){
             var coverages = {
@@ -176,7 +179,8 @@ class CoveragePanel extends React.Component {
         this.quote.coverages.collision = compCollInitialCovAmnt;
         this.quote.premium = premiumConst; 
 
-        this.props.setQuoteObject(this.quote);
+        //this.props.setQuoteObject(this.quote);
+        this.props.updateCoverages(this.quote);
 
         this.state = {
             didMount: false,
@@ -185,7 +189,7 @@ class CoveragePanel extends React.Component {
             collCovAmnt: compCollInitialCovAmnt,                        
         };        
 
-        //this.props.updatepremiumaction(premiumConst);
+        
     }
     componentDidMount() {
         setTimeout(() => {
@@ -208,10 +212,12 @@ class CoveragePanel extends React.Component {
         console.log("BI 2 value-"+biCoverageAmnt);
         this.quote.coverages.bodilyInjury = biCoverageAmnt;
         
-        this.quote.premium = premium;
+        this.quote.premium = premium;        
 
         this.setState({ premium: premium, biCovAmnt: biCoverageAmnt });
-        this.props.setQuoteObject(this.quote);
+        //this.props.setQuoteObject(this.quote);
+        //this.props.updatepremiumaction(premium);
+        this.props.updateCoverages(this.quote);
         console.log(this.quote.coverages.bodilyInjury);
         
     }
@@ -234,7 +240,8 @@ class CoveragePanel extends React.Component {
         this.quote.premium = premium;
 
         this.setState({ premium: premium, pdCovgAmnt: pdCoverageAmnt });
-        this.props.setQuoteObject(this.quote);
+        //this.props.setQuoteObject(this.quote);
+        this.props.updateCoverages(this.quote);
         
     }
 
@@ -265,7 +272,8 @@ class CoveragePanel extends React.Component {
         this.quote.premium = premium;
 
         this.setState({ premium: premium });
-        this.props.setQuoteObject(this.quote);       
+        //this.props.setQuoteObject(this.quote); 
+        this.props.updateCoverages(this.quote);      
     }
 
     onChangeCovgForColl = (e) => {
@@ -295,7 +303,8 @@ class CoveragePanel extends React.Component {
         this.quote.premium = premium;
 
         this.setState({ premium: premium });
-        this.props.setQuoteObject(this.quote);
+        //this.props.setQuoteObject(this.quote);
+        this.props.updateCoverages(this.quote);
 
     }
 
@@ -457,8 +466,11 @@ const mapStateToProps = state => {
     return {
         vehicles: state.vehicles,
         quote: state.quote,
+        premium:  state.premium
     };
 };
 
 
-export default connect(mapStateToProps, { setQuoteObject })(CoveragePanel)
+export default connect(mapStateToProps, { updateCoverages })(CoveragePanel)
+//export default connect(mapStateToProps, { updatepremiumaction })(CoveragePanel)
+// export default connect(mapStateToProps, { setQuoteObject })(CoveragePanel)

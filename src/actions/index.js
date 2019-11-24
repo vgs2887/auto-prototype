@@ -76,3 +76,10 @@ export const setQuoteObject=(quote) => async dispatch => {
         payload:quote
     })
 }
+
+export const updateCoverages=(quote) => async dispatch => {
+    dispatch({
+        type:"UPDATECOVERAGES",
+        payload:quote
+    })
+}
