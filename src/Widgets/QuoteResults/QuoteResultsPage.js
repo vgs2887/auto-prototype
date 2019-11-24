@@ -93,7 +93,7 @@ getComponent = () => {
 
 render() {
     return (
-        <div style={useStyles.root}><Header headerText="Auto Insurance Quote"/> 
+        <div style={useStyles.root}>
             <Grid container spacing={3}>              
                 <Grid item xs={12}>
                   <CircularDiv premium={this.state.premium}/>

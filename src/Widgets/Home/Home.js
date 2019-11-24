@@ -5,6 +5,7 @@ import Btn from '../../SharedJSX/Inputs/Button/Buttons';
 import "./stylehome.css"
 import {Button} from '@material-ui/core';
 import { setQuoteObject } from "../../actions";
+import history from '../../utils/history'
 import { connect } from "react-redux";
 import Header from '../../Widgets/Header/Header'
 //
@@ -26,7 +27,7 @@ const styles = {
     color: 'Navy',
     fontWeight: 'small',
     textAlign: 'left',
-    marginLeft: '30px',
+    marginLeft: '10%',
     marginTop: '135px',
     width: '250px'
   },
@@ -34,8 +35,7 @@ const styles = {
   {
 color:'Navy',
 textAlign: 'center',
-marginLeft: '180px',
-marginTop: '135px',
+marginTop: '5%',
 width: '500px'
 },
   button:
@@ -64,20 +64,22 @@ class Home extends React.Component {
         console.log("dharma home before stroing in session"+ JSON.stringify(this.props.quote))
         this.props.setQuoteObject(this.props.quote) })
         .catch(error =>{console.log("ERROR"+error)})
+        history.push('/driverdetails')
+
     }
 
   }
   render() {
 
     return (
-      <div style={{backgroundColor:'#F5F5F5'}}><Header headerText="Auto Insurance Quote"/>
-      <Grid container spacing={1} className="App" styles={{textAlign:"center"}}>
+      <div style={{backgroundColor:'#F5F5F5'}}>
+      <Grid container spacing={1} className="App" style={{textAlign:"center"}}>
       {/*   <Grid style={styles.logo} item xs={9} sm={9} direction="column-reverse" alignItems="flex-end">
           <img src="https://content.usaa.com/mcontent/static_assets/Media/globalHeader-usaaLogo-2016.svg" alt="Usaa logo"/><br />
-        </Grid> */}
+        </Grid> */} 
 
         <Grid style={styles.tag1} item  direction="column" alignContent="flex-start">
-          <p>Good Morning,<br/>
+          <p style={{textAlign:"center"}}>Good Morning,<br/>
 
             <b>Major Alex</b>          
             
@@ -85,7 +87,7 @@ class Home extends React.Component {
             <p >Enhance your protection with an Auto Insurance for greater peace of mind. Go ahead, click on get started to create a quote.</p>
         </Grid>
 
-         <Grid  style={styles.tag2}>      
+         <div  style={styles.tag2}>      
     <ZipQueryHandler
       render={data => (
            <card>
@@ -99,7 +101,7 @@ class Home extends React.Component {
           </card>
       )}
     />   
-        </Grid>
+        </div>
       </Grid>
       <Link align="left" to='/driverdetails' onClick={this.setDataOnState}>
         <Button variant="contained" style={{backgroundColor:'#041c3d',color:'white'}}> 
@@ -115,7 +117,7 @@ class Home extends React.Component {
 
 const mapStateToProps = state => {
   return {
-      quote: state.quote,
+      "quote": state.quote,
   };
 };
 

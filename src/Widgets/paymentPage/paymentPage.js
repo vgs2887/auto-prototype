@@ -82,7 +82,7 @@ class PaymentPage extends React.Component {
     return (
       <div style={{backgroundColor:'#F5F5F5'}}>
            <div>
-           <Header headerText="Auto Insurance Quote"/>
+           
 
                 <br></br>
                 <div>

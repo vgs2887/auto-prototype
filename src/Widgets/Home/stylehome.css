@@ -23,3 +23,18 @@
     width: 170px;
     margin-bottom: 5px;
 }
+.MuiGrid-container {
+  width: 100%;
+  display: flex;
+  align-content: center;
+  flex-wrap: wrap;
+  flex-direction: column;
+  box-sizing: border-box;
+}
+
+@media only screen and (max-width: 600px) {
+  .MuiGrid-container{
+    flex-direction: row;
+  }
+
+}

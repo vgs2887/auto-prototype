@@ -16,6 +16,7 @@ import VehicleDetails from './Widgets/Vehicles/VehicleDetails'
 import AddVehicle from './Widgets/AddVehicle/AddVehicle'
 import AddProperty from './Widgets/AddProperty/AddProperty'
 import TxHeader from './Widgets/QuoteResults/TXHeader'
+import Header from './Widgets/Header/Header'
 import PageTransition from 'react-router-page-transition';
 
 import './index.css'
@@ -33,6 +34,8 @@ class App extends React.Component{
         return(
             <Router history={history}>
                 <div>
+                <Header headerText="Auto Insurance Quote"/>
+
                 <Route render={({location}) => (
                     <TransitionGroup>
                     <CSSTransition

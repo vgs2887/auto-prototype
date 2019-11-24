@@ -199,7 +199,7 @@ class AddVehicle extends React.Component {
 // console.log(this.state)
     return (
       <div style={{backgroundColor:'#F5F5F5'}}>
-        <Header headerText="Auto Insurance Quote"/>
+        
         <form>
        {/* <AddHeader /> */}
         <Grid container>

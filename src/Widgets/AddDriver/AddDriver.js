@@ -160,8 +160,8 @@ class AddDriver extends React.Component {
 
   render() {
     return (
-      <div style={{backgroundColor:'#F5F5F5'}}><Header headerText="Auto Insurance Quote"/><form onSubmit={this.onAddDriverSubmit}>
-        <AddHeader/>
+      <div style={{backgroundColor:'#F5F5F5'}}><form onSubmit={this.onAddDriverSubmit}>
+        
         <Grid container>
           <Grid sm={2} />
           <Grid xs={12} sm={8}>
