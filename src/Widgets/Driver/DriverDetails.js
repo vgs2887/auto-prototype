@@ -64,7 +64,7 @@ class DriverDetails extends React.Component {
     render() {
         const {didMount} = this.state
         return (
-            <div style={{backgroundColor:'#F5F5F5'}}><Header headerText="Auto Insurance Quote"/>
+            <div style={{backgroundColor:'#F5F5F5'}}>
             <Paper style={useStyles.root}>
                 <div className={`drivers fade-in ${didMount && 'visible'}`}>
                 <Grid container >

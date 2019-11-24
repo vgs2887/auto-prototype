@@ -147,7 +147,7 @@ class AddProperty extends React.Component {
   render() {
     return (
       <form onSubmit={this.onAddPrppertySubmit}>
-        <AddHeader/>
+        {/* <AddHeader/> */}
         <Grid container>
           <Grid sm={2} />
           <Grid xs={12} sm={8}>

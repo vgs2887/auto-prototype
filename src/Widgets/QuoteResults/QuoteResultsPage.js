@@ -93,40 +93,54 @@ class QuoteResultsPage extends React.Component {
         }
     }
 
-    // paymentPage = () => {
-    //     history.push("/payment");
-    //   };
+setComponent = (pageName) => {
 
-    render() {
-        var premiumRender = this.props.premium;
-        console.log("in Render "+premiumRender);
+    this.props.setPageNameAction(pageName);
+    console.log("quote results page : setComponent set page name ..." +pageName);
+    this.setState({pageName: pageName, activeCls: ''})
+}
 
-        return (
-            <div style={useStyles.root}><Header headerText="Auto Insurance Quote" />
-                <Grid container spacing={3}>
-                    <Grid item xs={12}>
-                        {/* <CircularDiv premium={this.state.premium} /> */}
-                        <CircularDiv premium={premiumRender} />
-                    </Grid>
+getComponent = () => {
+    switch(this.state.pageName){
+        case 'driver' : return (<Grid item xs={12}><DriverDetails/></Grid>);
+        case 'vechicle' : return (<Grid item xs={12}><VehicleDetails/></Grid>);
+        case 'property' : return (<Grid item xs={12}><PropertyDetails/></Grid>);
+        case 'coverage' : return (<Grid item xs={12}><CoveragePanel/></Grid>);
+        default: return (<Grid item xs={12}><CoveragePanel/></Grid>);
+    }
+}
 
-                    <Grid item xs={12}>
-                        <Link to={{ pathname: '/payment' }}><Button variant="contained" style={{ backgroundColor: '#041c3d', color: 'white' }} onClick={this.submitHandler}> Proceed to Checkout </Button></Link>
-                    </Grid>
+// paymentPage = () => {
+//     history.push("/payment");
+//   };
 
-                    <Grid item xs={12} sm={12}>
-                        <div class="scroll">
-                            <ul className="corousal">
-                                <li className="courosal-indicator">
-                                    <a className={`${this.state.pageName === 'driver' && 'active'}`} style={{ width: "200px" }} onClick={() => this.setComponent('driver')} href="#">
-                                        <img src={require("../../assets/car-driver.png")} width="15px" />Drivers</a></li>
-                                <li className="courosal-indicator">
-                                    <a className={`${this.state.pageName === 'vechicle' && 'active'}`} onClick={() => this.setComponent('vechicle')} href="#">
-                                        <img src={require("../../assets/car.png")} width="15px" />Vehicles</a></li>
-                                <li className="courosal-indicator">
-                                    <a className={`${this.state.pageName === 'coverage' && 'active'}`} onClick={() => this.setComponent('coverage')} href="#">
-                                        <img src={require("../../assets/umb.jpg")} width="20px" />Coverage</a>
-                                </li>
-                            </ul>
+render() {
+    var premium = this.props.premium ;
+    return (
+        <div style={useStyles.root}>
+            <Grid container spacing={3}>              
+                <Grid item xs={12}>
+                  <CircularDiv premium={premium}/>
+                </Grid>
+
+                <Grid item xs={12}>
+                <Link to={{pathname:'/payment'}}><Button variant="contained" style={{backgroundColor:'#041c3d',color:'white'}} onClick={this.submitHandler}> Proceed to Checkout </Button></Link>
+                </Grid>
+
+                <Grid item xs={12} sm={12}>
+                <div class="scroll">
+                <ul className="corousal">
+                            <li className="courosal-indicator">
+                            <a  className={`${this.state.pageName === 'driver' && 'active'}`} style={{width:"200px"}} onClick={() => this.setComponent('driver')} href="#">
+                            <img src={require("../../assets/car-driver.png")}  width="15px"/>Drivers</a></li>
+                            <li className="courosal-indicator">
+                            <a   className={`${this.state.pageName === 'vechicle' && 'active'}`}  onClick={() => this.setComponent('vechicle')} href="#">
+                            <img src={require("../../assets/car.png")}  width="15px"/>Vehicles</a></li>
+                            <li className="courosal-indicator">
+                                <a className={`${this.state.pageName === 'coverage' && 'active'}`} onClick={() => this.setComponent('coverage')} href="#">
+                                <img src={require("../../assets/umb.jpg")} width="20px"/>Coverage</a>
+                            </li>
+                        </ul>
                         </div>
                     </Grid>
                     <br />

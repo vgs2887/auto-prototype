@@ -25,7 +25,7 @@ const date = new Date()
 
 const emptyObject ={
     "baseLocation": null, 
-    "premium": null,
+    "premium": 70,
     "policyId" : null, 
     "packageCode": null, 
     "policyNumber": null, 
@@ -136,7 +136,6 @@ class QuoteHistory extends React.Component
 render(){    
   return (               
         <div style={{backgroundColor:'#F5F5F5'}}>            
-            <Header headerText="My Accounts"/>
             <Typography variant="h6" align="left" style={{color:'#041c3d'}}>
                 {!this.state.togglePolicy && this.state.quoteAvaialble ? this.state.textToDisplayQuote : this.state.togglePolicy && this.state.policyAvaialble ? this.state.textToDisplayPolicy:this.state.textToDisplay}
                 {this.state.isEmpty ? null : <div style={{float:'right',fontSize:'10px',fontWeight:'bold'}}>Quotes<Switch size="small" style={{color:'#041c3d'}} color="primary" checked={this.state.togglePolicy} onChange={()=>{this.setState({togglePolicy:!this.state.togglePolicy})}}/>Policies</div>}

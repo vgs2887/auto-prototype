@@ -48,7 +48,7 @@ class VehicleDetails  extends React.Component {
 
     render() {
         return (
-            <div style={{backgroundColor:'#F5F5F5'}}><Header headerText="Auto Insurance Quote"/>   <Paper style={useStyles.root}>
+            <div style={{backgroundColor:'#F5F5F5'}}>   <Paper style={useStyles.root}>
                 <div className="drivers">
                 <Grid container >
                 <Grid item xs={1}><img  style={useStyles.img} src={path} alt="icon"/></Grid>
