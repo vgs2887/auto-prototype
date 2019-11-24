@@ -166,7 +166,7 @@ render(){
                         <TableCell align='left' style={{paddingLeft:'5px',paddingRight:'5px'}}>{determineStateCodes(quote.baseLocation)}</TableCell>
                         <TableCell align='left' style={{paddingLeft:'5px',paddingRight:'5px'}}>{quote.premium}</TableCell>
                         <TableCell align="left" style={{paddingLeft:'5px',paddingRight:'5px'}}>                    
-                            <Link key={quote.policyNumber} to={"/"+quote.lastVisitedPage} onClick={()=> this.setQuoteDataInState(quote)}><Button variant="contained" style={{backgroundColor:'#041c3d',color:'white'}}>Modify</Button></Link>
+                            <Link key={quote.policyNumber} to={"/"+quote.lastVisitedPage} onClick={()=> this.setQuoteDataInState(quote)}><Button variant="contained" style={{backgroundColor:'#041c3d',color:'white'}}>Continue</Button></Link>
                         </TableCell>
                     </TableRow>        
                     )})}
