@@ -4,7 +4,7 @@ import Home from './Widgets/Home/Home';
 import Login from './Widgets/Login/Login';
 import * as serviceWorker from './serviceWorker';
 import QuoteResultsPage from './Widgets/QuoteResults/QuoteResultsPage'
-import {Router,Route, Switch} from 'react-router-dom' 
+import {Router,Route, Switch,Redirect} from 'react-router-dom' 
 import history from './utils/history'
 import { Provider } from 'react-redux'
 import {createStore, applyMiddleware, compose } from 'redux'
@@ -16,7 +16,6 @@ import VehicleDetails from './Widgets/Vehicles/VehicleDetails'
 import AddVehicle from './Widgets/AddVehicle/AddVehicle'
 import AddProperty from './Widgets/AddProperty/AddProperty'
 import TxHeader from './Widgets/QuoteResults/TXHeader'
-import Header from './Widgets/Header/Header'
 import PageTransition from 'react-router-page-transition';
 
 import './index.css'
@@ -34,8 +33,6 @@ class App extends React.Component{
         return(
             <Router history={history}>
                 <div>
-                <Header headerText="Auto Insurance Quote"/>
-
                 <Route render={({location}) => (
                     <TransitionGroup>
                     <CSSTransition
@@ -46,16 +43,26 @@ class App extends React.Component{
                     classNames="slide"
                     >
                     <Switch location = {location} >
-                    <Route exact path="/" component={QuoteHistory} />
-                     <Route exact path="/getstarted" component={Home} />
-                     <Route path="/quoteresults" exact component={QuoteResultsPage} />
-                     <Route path="/adddriver" exact component={AddDriver} />
-                     <Route path="/driverdetails" exact component={DriverDetails} />
-                     <Route path="/vehicledetails" exact component={VehicleDetails} />
-                     <Route path="/addvehicle" component={AddVehicle} />
-                     <Route path='/addproperty' component={AddProperty}/>
-                     <Route path='/payment' component={paymentPage}/>
-                     <Route path='/confirm' component={ConfirmationPage}/>
+                     <Route exact path="/" component={() => (<Redirect to='/pc/auto' />)} />   
+                     <Route exact path="/getstarted" component={() => (<Redirect to='/pc/auto/getstarted' />)} />
+                     <Route exact path="/quoteresults" component={() => (<Redirect to='/pc/auto/quoteresults' />)} />
+                     <Route exact path="/adddriver" component={() => (<Redirect to='/pc/auto/adddriver' />)} />
+                     <Route exact path="/driverdetails" component={() => (<Redirect to='/pc/auto/driverdetails' />)} />
+                     <Route exact path="/vehicledetails" component={() => (<Redirect to='/pc/auto/vehicledetails' />)} />
+                     <Route exact path="/addvehicle" component={() => (<Redirect to='/pc/auto/addvehicle' />)} />
+                     <Route exact path='/addproperty' component={() => (<Redirect to='/pc/auto/addproperty' />)}/>
+                     <Route exact path='/payment' component={() => (<Redirect to='/pc/auto/payment' />)}/>
+                     <Route exact path='/confirm' component={() => (<Redirect to='/pc/auto/confirm' />)}/>
+                     <Route exact path="/pc/auto" component={QuoteHistory} />
+                     <Route exact path="/pc/auto/getstarted" component={Home} />
+                     <Route path="/pc/auto/quoteresults" exact component={QuoteResultsPage} />
+                     <Route path="/pc/auto/adddriver" exact component={AddDriver} />
+                     <Route path="/pc/auto/driverdetails" exact component={DriverDetails} />
+                     <Route path="/pc/auto/vehicledetails" exact component={VehicleDetails} />
+                     <Route path="/pc/auto/addvehicle" component={AddVehicle} />
+                     <Route path='/pc/auto/addproperty' component={AddProperty}/>
+                     <Route path='/pc/auto/payment' component={paymentPage}/>
+                     <Route path='/pc/auto/confirm' component={ConfirmationPage}/>
                      </Switch>
                         </CSSTransition>
                 </TransitionGroup> 

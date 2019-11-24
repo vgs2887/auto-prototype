@@ -107,10 +107,10 @@ class QuoteHistory extends React.Component
                 this.setState({togglePolicy:true})                                
                 if(this.state.policies.length > 1)
                 {
-                   this.setState({textToDisplayPolicy:"Auto Insurance Policies"})
+                   this.setState({textToDisplayPolicy:" Your Active Policies"})
                 }
                 else{
-                    this.setState({textToDisplayPolicy:"Auto Insurance Policy"})
+                    this.setState({textToDisplayPolicy:" Your Active Policy"})
                 }
               }
             if(this.state.quotes && this.state.quotes.length > 0 )
@@ -119,10 +119,10 @@ class QuoteHistory extends React.Component
                 this.setState({isEmpty:false})   
                 if(this.state.quotes.length > 1)
                 {
-                   this.setState({textToDisplayQuote:"Auto Insurance Quotes"})
+                   this.setState({textToDisplayQuote:" Your Saved Quotes"})
                 }
                 else{
-                    this.setState({textToDisplayQuote:"Auto Insurance Quote"})
+                    this.setState({textToDisplayQuote:" Your Saved Quote"})
                 }             
             }           
           })    
@@ -137,10 +137,13 @@ render(){
   return (               
         <div style={{backgroundColor:'#F5F5F5'}}>            
             <Typography variant="h6" align="left" style={{color:'#041c3d'}}>
-                {!this.state.togglePolicy && this.state.quoteAvaialble ? this.state.textToDisplayQuote : this.state.togglePolicy && this.state.policyAvaialble ? this.state.textToDisplayPolicy:this.state.textToDisplay}
+                Auto Insurance
                 {this.state.isEmpty ? null : <div style={{float:'right',fontSize:'10px',fontWeight:'bold'}}>Quotes<Switch size="small" style={{color:'#041c3d'}} color="primary" checked={this.state.togglePolicy} onChange={()=>{this.setState({togglePolicy:!this.state.togglePolicy})}}/>Policies</div>}
             </Typography> 
             <br />   
+            <Typography variant="h6" align="left" style={{color:'#041c3d'}}>
+                {!this.state.togglePolicy && this.state.quoteAvaialble ? this.state.textToDisplayQuote : this.state.togglePolicy && this.state.policyAvaialble ? this.state.textToDisplayPolicy:this.state.textToDisplay}
+            </Typography>
             <br /> 
             { !this.state.togglePolicy && this.state.quoteAvaialble ?
             <Grid style={useStyles.root}>
@@ -148,7 +151,7 @@ render(){
                     <TableHead>
                     <TableRow >
                         {quoteHeader.map((header)=>{return(
-                            <TableCell align='left' style={{color:'#041c3d'}}>{header}</TableCell>
+                            <TableCell align='left' style={{color:'#041c3d',fontWeight:'bold',paddingLeft:'5px',paddingRight:'5px'}}>{header}</TableCell>
                         )})}                        
                         <TableCell align='left'></TableCell>
                     </TableRow>
@@ -159,11 +162,11 @@ render(){
                     return(
 
                     <TableRow>
-                        <TableCell align='left'>{quote.lastVisitedPage?"Quote Saved on "+quote.lastVisitedPage : "Auto Insurance Quote"}</TableCell>
-                        <TableCell align='left'>{determineStateCodes(quote.baseLocation)}</TableCell>
-                        <TableCell align='left'>{quote.premium}</TableCell>
-                        <TableCell align="left">                    
-                            <Link key={quote.policyNumber} to={"/"+quote.lastVisitedPage} onClick={()=> this.setQuoteDataInState(quote)}><Button variant="contained" style={{backgroundColor:'#041c3d',color:'white'}}>Continue</Button></Link>
+                        <TableCell align='left' style={{paddingLeft:'5px',paddingRight:'5px'}}>{quote.lastVisitedPage?"Quote Saved on "+quote.lastVisitedPage : "Auto Insurance Quote"}</TableCell>
+                        <TableCell align='left' style={{paddingLeft:'5px',paddingRight:'5px'}}>{determineStateCodes(quote.baseLocation)}</TableCell>
+                        <TableCell align='left' style={{paddingLeft:'5px',paddingRight:'5px'}}>{quote.premium}</TableCell>
+                        <TableCell align="left" style={{paddingLeft:'5px',paddingRight:'5px'}}>                    
+                            <Link key={quote.policyNumber} to={"/"+quote.lastVisitedPage} onClick={()=> this.setQuoteDataInState(quote)}><Button variant="contained" style={{backgroundColor:'#041c3d',color:'white'}}>Modify</Button></Link>
                         </TableCell>
                     </TableRow>        
                     )})}
