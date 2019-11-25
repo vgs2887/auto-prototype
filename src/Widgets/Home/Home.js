@@ -28,7 +28,6 @@ const styles = {
     fontWeight: 'small',
     textAlign: 'center',
     marginLeft: '8%',
-    marginTop: '135px',
     width: '250px'
   },
   tag2:
@@ -102,12 +101,13 @@ class Home extends React.Component {
       )}
     />   
         </div>
-      </Grid>
-      <Link align="left" to='/driverdetails' onClick={this.setDataOnState}>
+        <Link className = "startedButton" align="left" to='/driverdetails' onClick={this.setDataOnState}>
         <Button variant="contained" style={{backgroundColor:'#041c3d',color:'white'}}> 
             Get Started
         </Button>
         </Link>
+      </Grid>
+      
         
 <br/><br/><br/><br/>
       </div>

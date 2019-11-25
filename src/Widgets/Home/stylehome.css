@@ -32,6 +32,10 @@
   box-sizing: border-box;
 }
 
+.startedButton{
+    margin-left: 200px;
+}
+
 @media only screen and (max-width: 600px) {
   .MuiGrid-container{
     flex-direction: row;
@@ -41,5 +45,9 @@
    text-align: center !important;
     margin-left: 12% !important;
  }
+ .startedButton{
+  display: block;
+  max-width: 300px;
+  margin: auto;}
 
 }
