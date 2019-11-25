@@ -68,8 +68,8 @@ class PaymentPage extends React.Component {
     console.log("arun testing ", quote);
     this.props.setQuoteObject(quote);
     console.log("Payment Page postRequest:  "+JSON.stringify(quote));
-    axios.post('https://1nbs6supkj.execute-api.us-east-1.amazonaws.com/v1/pc/auto/policyexpapi', quote)
-    .then(response => {console.log("Payment Page Response"+JSON.stringify(response))})
+    axios.post('https://1nbs6supkj.execute-api.us-east-1.amazonaws.com/v1/pc/auto/policyexpapi/'+this.props.quote.policyId, quote)
+    .then(response => {console.log("Payment Page Response",response)})
     .catch(error =>{console.log("Payment Page ERROR"+error)})
 }
 

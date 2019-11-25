@@ -26,9 +26,8 @@ const styles = {
     display: 'flex',
     color: 'Navy',
     fontWeight: 'small',
-    textAlign: 'left',
-    marginLeft: '10%',
-    marginTop: '135px',
+    textAlign: 'center',
+    marginLeft: '8%',
     width: '250px'
   },
   tag2:
@@ -79,7 +78,7 @@ class Home extends React.Component {
         </Grid> */} 
 
         <Grid style={styles.tag1} item  direction="column" alignContent="flex-start">
-          <p style={{textAlign:"center"}}>Good Morning,<br/>
+          <p>Good Morning,<br/>
 
             <b>Major Alex</b>          
             
@@ -102,12 +101,13 @@ class Home extends React.Component {
       )}
     />   
         </div>
-      </Grid>
-      <Link align="left" to='/driverdetails' onClick={this.setDataOnState}>
+        <Link className = "startedButton" align="left" to='/driverdetails' onClick={this.setDataOnState}>
         <Button variant="contained" style={{backgroundColor:'#041c3d',color:'white'}}> 
             Get Started
         </Button>
         </Link>
+      </Grid>
+      
         
 <br/><br/><br/><br/>
       </div>

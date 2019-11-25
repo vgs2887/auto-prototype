@@ -17,7 +17,7 @@ import AddVehicle from './Widgets/AddVehicle/AddVehicle'
 import AddProperty from './Widgets/AddProperty/AddProperty'
 import TxHeader from './Widgets/QuoteResults/TXHeader'
 import PageTransition from 'react-router-page-transition';
-
+import Header from './Widgets/Header/Header'
 import './index.css'
 import ConfirmationPage from './Widgets/QuoteResults/ConfirmationPage';
 import QuoteHistory from './Widgets/QuoteHistory/QuoteHistory';
@@ -33,6 +33,7 @@ class App extends React.Component{
         return(
             <Router history={history}>
                 <div>
+                    <Header/>
                 <Route render={({location}) => (
                     <TransitionGroup>
                     <CSSTransition
