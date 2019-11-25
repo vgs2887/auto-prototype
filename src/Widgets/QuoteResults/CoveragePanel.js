@@ -124,9 +124,9 @@ class CoveragePanel extends React.Component {
         this.BICoverageAmntText = "$" + this.biCovAmnt; //Initial display text for the Coverage amount
         this.PDCoverageAmntText = "$" + this.pdCovgAmnt;
 
-        var vehicles = this.quote.vehicles;
+        //var vehicles = this.quote.vehicles;
         //var vehicles = this.props.vehicles;
-        //var vehicles = this.vehicles_hardcoded;
+        var vehicles = this.vehicles_hardcoded;
         var compVehicles = null;
         var collVehicles = null;
         var compCollInitialCovAmnt = (20 * vehicles.length);
@@ -138,7 +138,8 @@ class CoveragePanel extends React.Component {
                 make: vehicle.make,
                 model: vehicle.model,
                 coverAmnt: 20,
-                coverAmntText: "$" + 20
+                coverAmntText: "$" + 20,
+                value:  vehicle.vin + ":" + 20
             };
             collVehicles = {
                 vin: vehicle.vin,
@@ -146,7 +147,8 @@ class CoveragePanel extends React.Component {
                 make: vehicle.make,
                 model: vehicle.model,
                 coverAmnt: 20,
-                coverAmntText: "$" + 20
+                coverAmntText: "$" + 20,
+                value:   vehicle.vin + ":" + 20
             };
             this.compVehiCov.push(compVehicles);
             this.collVehiCov.push(collVehicles);
@@ -163,8 +165,8 @@ class CoveragePanel extends React.Component {
             var coverages = {
                 bodilyInjury: 5, 
                 propertyDamage: 5, 
-                comprehensive: compCollInitialCovAmnt, 
-                collision: compCollInitialCovAmnt
+                comprehensive: 20, 
+                collision: 20
             }
             var quote = {
                 premium : premiumConst,
@@ -173,10 +175,10 @@ class CoveragePanel extends React.Component {
             this.quote = quote ;
         }
 
-        this.quote.coverages.bodilyInjury = 5;
-        this.quote.coverages.propertyDamage = 5;
-        this.quote.coverages.comprehensive = compCollInitialCovAmnt;
-        this.quote.coverages.collision = compCollInitialCovAmnt;
+        this.quote.coverages.bodilyInjury = "5";
+        this.quote.coverages.propertyDamage = "5";
+        this.quote.coverages.comprehensive = "20";
+        this.quote.coverages.collision = "20";
         this.quote.premium = premiumConst; 
 
         //this.props.setQuoteObject(this.quote);
@@ -184,9 +186,7 @@ class CoveragePanel extends React.Component {
 
         this.state = {
             didMount: false,
-            premium: premiumConst,            
-            compCovAmnt: compCollInitialCovAmnt,
-            collCovAmnt: compCollInitialCovAmnt,                        
+            premium: premiumConst,                                              
         };        
 
         
@@ -202,11 +202,11 @@ class CoveragePanel extends React.Component {
         var premium = this.state.premium;
         var prevSel = this.biCovAmnt;
         var biCoverageAmnt = parseInt(e.target.value);
-        console.log("BI value-"+biCoverageAmnt);
-        //State has previously selected value, remove the previously added amount and add the new amount for this coverage selection.
+        console.log("BI value-"+biCoverageAmnt);        
 
         premium = premium - prevSel + biCoverageAmnt;
 
+        this.biCovAmnt = biCoverageAmnt;
         this.BICoverageAmntText = "$" + biCoverageAmnt;
         
         console.log("BI 2 value-"+biCoverageAmnt);
@@ -214,7 +214,7 @@ class CoveragePanel extends React.Component {
         
         this.quote.premium = premium;        
 
-        this.setState({ premium: premium, biCovAmnt: biCoverageAmnt });
+        this.setState({ premium: premium });
         //this.props.setQuoteObject(this.quote);
         //this.props.updatepremiumaction(premium);
         this.props.updateCoverages(this.quote);
@@ -227,19 +227,17 @@ class CoveragePanel extends React.Component {
 
         var premium = this.state.premium;
         var prevSel = this.pdCovgAmnt; //fix state var
-        var pdCoverageAmnt = parseInt(e.target.value);
-
-        //State has previously selected value, remove the previously added amount and add the new amount for this coverage selection.
+        var pdCoverageAmnt = parseInt(e.target.value);        
 
         premium = premium - prevSel + pdCoverageAmnt;    
 
-        this.quote.coverages.propertyDamage = pdCoverageAmnt;
-                        
+        this.pdCovgAmnt = pdCoverageAmnt;
         this.PDCoverageAmntText = "$" + pdCoverageAmnt;
 
+        this.quote.coverages.propertyDamage = pdCoverageAmnt;                                
         this.quote.premium = premium;
 
-        this.setState({ premium: premium, pdCovgAmnt: pdCoverageAmnt });
+        this.setState({ premium: premium });
         //this.props.setQuoteObject(this.quote);
         this.props.updateCoverages(this.quote);
         
@@ -260,15 +258,13 @@ class CoveragePanel extends React.Component {
                 prevCompCoverageAmnt = obj.coverAmnt;
                 obj.coverAmnt = compCoverageAmnt;
                 obj.coverAmntText = "$" + compCoverageAmnt;
+                obj.value = obj.vin + ":" + compCoverageAmnt;
             }
         }
 
         premium = premium - prevCompCoverageAmnt + compCoverageAmnt;
-
-        
-        var compCovAmt = this.quote.coverages.comprehensive - prevCompCoverageAmnt + compCoverageAmnt ;
-        
-        this.quote.coverages.comprehensive = vin+":"+compCoverageAmnt;
+                                
+        this.quote.coverages.comprehensive = compCoverageAmnt;
         this.quote.premium = premium;
 
         this.setState({ premium: premium });
@@ -292,14 +288,14 @@ class CoveragePanel extends React.Component {
                 prevCollCoverageAmnt = obj1.coverAmnt;
                 obj1.coverAmnt = collCoverageAmnt;
                 obj1.coverAmntText = collCoverageAmntText;
+                obj1.value = obj1.vin + ":" + collCoverageAmnt;
             }
         }
 
         premium = premium - prevCollCoverageAmnt + collCoverageAmnt;
-      
-        
-        var collCovAmt = this.quote.coverages.collision - prevCollCoverageAmnt + collCoverageAmnt ;
-        this.quote.coverages.collision = vin+":"+collCovAmt;
+                      
+        //this.quote.coverages.collision = vin+":"+collCovAmt;
+        this.quote.coverages.collision = collCoverageAmnt;
         this.quote.premium = premium;
 
         this.setState({ premium: premium });
@@ -316,13 +312,13 @@ class CoveragePanel extends React.Component {
 
         var compVehiCovItems = this.compVehiCov.map((vehicle, key) =>
             <div key={vehicle.vin}>
-                <p style={useStyles.childCovgText}>{vehicle.year} {vehicle.make} {vehicle.model} {vehicle.vin}</p>
+                <p style={useStyles.childCovgText}>{vehicle.coverAmnt} {vehicle.year} {vehicle.make} {vehicle.model} {vehicle.vin}</p>
                 <table style={{ width: "100%" }}>
                     <tr>
                         <td style={{ width: "80%" }}>
                             <FormControl className={useStyles.formControl} style={{ width: "100%" }}>
-                                        <Select
-                                        value={this.quote.coverages.comprehensive}
+                                        <Select  
+                                        value={vehicle.value}                                      
                                         onChange={this.onChangeCovgForComp}
                                         >
                                         {this.compCoverages.map((coverage, key) => {
@@ -354,7 +350,7 @@ class CoveragePanel extends React.Component {
                         <td style={{ width: "80%" }}>
                             <FormControl className={useStyles.formControl} style={{ width: "100%" }}>
                                         <Select
-                                        value={this.quote.coverages.collision}
+                                        value={vehicle.value}                                        
                                         onChange={this.onChangeCovgForColl}
                                         >
                                         {this.collCoverages.map((coverage, key) => {
@@ -390,7 +386,7 @@ class CoveragePanel extends React.Component {
                                 <td style={{ width: "80%" }}>
                                     <FormControl className={useStyles.formControl} style={{ width: "100%" }}>
                                         <Select
-                                        value={this.quote.coverages.bodilyInjury}
+                                        value={this.biCovAmnt}                                        
                                         onChange={this.onChangeCovForBI}
                                         >
                                         {this.BIcoverages.map(coverage=>{
@@ -420,7 +416,7 @@ class CoveragePanel extends React.Component {
                                 <td style={{ width: "80%" }}>
                                     <FormControl className={useStyles.formControl} style={{ width: "100%" }}>
                                         <Select
-                                        value={this.quote.coverages.propertyDamage}
+                                        value={this.pdCovgAmnt}                                        
                                         onChange={this.onChangeCovgForPD}
                                         >
                                         {this.PDcoverages.map(coverage=>{
