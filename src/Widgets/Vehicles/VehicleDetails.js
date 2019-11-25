@@ -33,8 +33,8 @@ class VehicleDetails  extends React.Component {
         // console.log("Arun Testing ",quote);
         this.props.setQuoteObject(quote);
         console.log("Vehicle Details postRequest:  "+JSON.stringify(quote));
-        axios.post('https://1nbs6supkj.execute-api.us-east-1.amazonaws.com/v1/pc/auto/policyexpapi', quote)
-        .then(response => {console.log("Vehicle Details Response"+JSON.stringify(response))})
+        axios.post('https://1nbs6supkj.execute-api.us-east-1.amazonaws.com/v1/pc/auto/policyexpapi/'+this.props.quote.policyId, quote)
+        .then(response => {console.log("Vehicle Details Response",response)})
         .catch(error =>{console.log("Vehicle Details ERROR"+error)})
         history.push('/quoteresults')
     }

@@ -168,8 +168,8 @@ class AddVehicle extends React.Component {
       // console.log("test",k);
       this.props.setQuoteObject(k); 
       console.log("ADD Vehicle postRequest:  "+JSON.stringify(k))
-        axios.post('https://1nbs6supkj.execute-api.us-east-1.amazonaws.com/v1/pc/auto/policyexpapi', k)
-        .then(response => {console.log("ADD Vehicle Response"+JSON.stringify(response))})
+        axios.post('https://1nbs6supkj.execute-api.us-east-1.amazonaws.com/v1/pc/auto/policyexpapi/'+this.props.quote.policyId, k)
+        .then(response => {console.log("ADD Vehicle Response"+response)})
         .catch(error =>{console.log("ADD Vehicle  ERROR"+error)})
       
 
