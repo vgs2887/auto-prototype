@@ -37,7 +37,7 @@ class VehicleDetails  extends React.Component {
                     </Grid>
                     <Grid item xs={4}/>
                     <Grid item xs={4}>
-                    <button className="vehicleadd" onClick={this.onAddVehicalClick}>Add+</button>
+                    {/* <button className="vehicleadd" onClick={this.onAddVehicalClick}>Add+</button> */} 
                     </Grid>
                  </Grid>
                 </div>

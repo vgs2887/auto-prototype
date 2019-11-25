@@ -12,7 +12,7 @@ const useStyles = {
   },
   aligning: {
     display: "inline-block",
-    padding: 10
+    padding: 10 
   }
 };
 
@@ -48,15 +48,15 @@ class DisplayVehicle extends React.Component {
             return ( 
             <span>
               <div style={useStyles.aligning}>
-                <SimpleCard
+              <SimpleCard
                   key={vehicle.id}
                   type="vehicle"
-                  showDeleteButton={true}
+                  showDeleteButton={false}
                   id={vehicle.id}
                   image={path}
-                  model={vehicle.miles ? vehicle.miles : "1000 miles"}
-                  name={vehicle.primaryowner}
-                  militerystatus={vehicle.primaryowner}
+                  model={vehicle.mileage ? vehicle.mileage : "1000 miles"}
+                  name={vehicle.driverName}
+                  milteryStatus={vehName}
                   data={vehVin}
                 ></SimpleCard>
               </div>
@@ -70,7 +70,8 @@ class DisplayVehicle extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    vehicles: state.vehicles
+    //vehicles: state.vehicles
+    vehicles: state.quote.vehicles
   };
 };
 export default connect(

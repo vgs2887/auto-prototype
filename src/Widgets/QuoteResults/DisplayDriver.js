@@ -29,6 +29,9 @@ class DisplayDriver extends React.Component {
                 showDeleteButton = true;
             }
           let image = "";
+          var fullname = driver.name.split(" ");
+          var firstLastName = fullname[0] + " " + fullname[fullname.length - 1];
+          
 
           if ((driver.gender == "Male") || (driver.gender == "male") || (driver.gender == "M") || (driver.gender == "M") || (driver.gender == "MALE")){
             image = "https://www.w3schools.com/howto/img_avatar.png";
@@ -43,16 +46,16 @@ class DisplayDriver extends React.Component {
               <div style={useStyles.aligning}>
                 <SimpleCard
                   type="driver"
-                  showDeleteButton={true}
+                  showDeleteButton={false}
                   id={driver.id}
                   image={image}
-                  milteryStatus={milteryStatus}
-                  name={driver.username}
-                  model={driver.reg ? driver.reg : "0H0002345"}
+                  milteryStatus={"Major"}
+                  name={firstLastName}
+                  model={driver.license ? driver.license : "0H0002345"}
                   data={driver.age ? driver.age : "Age 21"}
                 />
               </div>
-              {driver.name}
+              
             </span>
           );
         })}
@@ -63,7 +66,8 @@ class DisplayDriver extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    drivers: Object.values(state.drivers)
+    //drivers: Object.values(state.drivers)
+    drivers: state.quote.drivers
   };
 };
 export default connect(mapStateToProps,  null)(DisplayDriver);
