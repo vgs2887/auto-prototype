@@ -124,9 +124,9 @@ class CoveragePanel extends React.Component {
         this.BICoverageAmntText = "$" + this.biCovAmnt; //Initial display text for the Coverage amount
         this.PDCoverageAmntText = "$" + this.pdCovgAmnt;
 
-        var vehicles = this.quote.vehicles;
+        //var vehicles = this.quote.vehicles;
         //var vehicles = this.props.vehicles;
-        //var vehicles = this.vehicles_hardcoded;
+        var vehicles = this.vehicles_hardcoded;
         var compVehicles = null;
         var collVehicles = null;
         var compCollInitialCovAmnt = (20 * vehicles.length);
@@ -312,7 +312,7 @@ class CoveragePanel extends React.Component {
 
         var compVehiCovItems = this.compVehiCov.map((vehicle, key) =>
             <div key={vehicle.vin}>
-                <p style={useStyles.childCovgText}>{vehicle.coverAmnt} {vehicle.year} {vehicle.make} {vehicle.model} {vehicle.vin}</p>
+                <p style={useStyles.childCovgText}>{vehicle.year} {vehicle.make} {vehicle.model} {vehicle.vin}</p>
                 <table style={{ width: "100%" }}>
                     <tr>
                         <td style={{ width: "80%" }}>
