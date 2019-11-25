@@ -50,7 +50,8 @@ class DriverDetails extends React.Component {
                     <span className="drivertext"><b>Drivers</b></span>
                     </Grid>
                     <Grid item xs={4}/>
-                    <Grid item xs={4}>                    
+                    <Grid item xs={4}>
+                    {/* <button className="driveradd" onClick={this.onAddDriverClick}>Add+</button> */}
                     </Grid>
                  </Grid>
                 </div>
