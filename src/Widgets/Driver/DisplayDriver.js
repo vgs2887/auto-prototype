@@ -38,6 +38,9 @@ class DisplayDriver extends React.Component {
             }
           let image = "";
 
+          var fullname = driver.name.split(" ");
+          var firstLastName = fullname[0] + " " + fullname[fullname.length - 1];
+
           if ((driver.gender == "Male") || (driver.gender == "male") || (driver.gender == "M") || (driver.gender == "M") || (driver.gender == "MALE")){
             image = "https://www.w3schools.com/howto/img_avatar.png";
           } else if ((driver.gender == "Female")|| (driver.gender == "female") || (driver.gender == "F") || (driver.gender == "f") || (driver.gender == "FEMALE")){
@@ -55,7 +58,7 @@ class DisplayDriver extends React.Component {
                   id={driver.id}
                   image={image}
                   milteryStatus={milteryStatus}
-                  name={driver.name}
+                  name={firstLastName}
                   model={driver.license ? driver.license : "0H0002345"}
                   data={driver.age ? driver.age : "Age 21"}
                 />
