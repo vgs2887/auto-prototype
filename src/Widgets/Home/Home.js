@@ -26,8 +26,8 @@ const styles = {
     display: 'flex',
     color: 'Navy',
     fontWeight: 'small',
-    textAlign: 'left',
-    marginLeft: '10%',
+    textAlign: 'center',
+    marginLeft: '8%',
     marginTop: '135px',
     width: '250px'
   },
@@ -79,7 +79,7 @@ class Home extends React.Component {
         </Grid> */} 
 
         <Grid style={styles.tag1} item  direction="column" alignContent="flex-start">
-          <p style={{textAlign:"center"}}>Good Morning,<br/>
+          <p>Good Morning,<br/>
 
             <b>Major Alex</b>          
             

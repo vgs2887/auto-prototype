@@ -12,6 +12,7 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
 import MailIcon from '@material-ui/icons/Mail';
+import { withRouter } from "react-router-dom";
 const theme = null
 class Header extends React.Component {
   constructor(props) {
@@ -27,7 +28,14 @@ class Header extends React.Component {
     this.setState({open:false})
   };
   render() {
+    let path = this.props.location.pathname;
 
+    if (path.endsWith("auto") ||(path.endsWith ("getstarted") )) {
+      path = "Auto Insurance";
+    }
+    else{
+      path = "TX Auto Insurance Quote";
+    }
     return (
         <div><AppBar position="static" style={{backgroundColor:'#041c3d',color:'white'}}>          
         <Toolbar>
@@ -35,7 +43,7 @@ class Header extends React.Component {
                 <MenuIcon onClick={this.handleDrawerOpen}/>
             </IconButton>
             <Typography variant="h6" align="center" display="inline">
-                {this.props.headerText}
+                {path}
             </Typography>                                        
         </Toolbar>
     </AppBar>
@@ -65,4 +73,4 @@ class Header extends React.Component {
   }
 }
 
-export default Header;
+export default withRouter(Header);

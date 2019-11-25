@@ -36,5 +36,10 @@
   .MuiGrid-container{
     flex-direction: row;
   }
+  .MuiGrid-item
+  {
+   text-align: center !important;
+    margin-left: 12% !important;
+ }
 
 }
