@@ -37,7 +37,6 @@ class DisplayDriver extends React.Component {
             }
           let image = "";
 
-<<<<<<< HEAD
           var fullname = driver.name.split(" "); 
 
           if(fullname.length > 1){            
@@ -47,12 +46,7 @@ class DisplayDriver extends React.Component {
             var firstLastName = fullname ;
           }
           
-
-=======
-          var fullname = driver.name.split(" ");
-          var firstLastName = fullname[0] + " " + fullname[fullname.length - 1];
-          console.log("fn ln"+firstLastName)
->>>>>>> 047d726cf9bba9d9afbf9593b754cf1ee3b19096
+          console.log(" driver.gender = "+driver.gender);
           if ((driver.gender == "Male") || (driver.gender == "male") || (driver.gender == "M") || (driver.gender == "M") || (driver.gender == "MALE")){
             image = "https://www.w3schools.com/howto/img_avatar.png";
           } else if ((driver.gender == "Female")|| (driver.gender == "female") || (driver.gender == "F") || (driver.gender == "f") || (driver.gender == "FEMALE")){
@@ -60,6 +54,7 @@ class DisplayDriver extends React.Component {
           } else{
             image = require("../../assets/nogenavatar.jpg")
           }
+          console.log(" image = "+image);
 
           return (
             <span key={index}>
