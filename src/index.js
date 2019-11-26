@@ -30,6 +30,7 @@ const store = createStore(reducers, enhancer(applyMiddleware(thunk)))
 
 class App extends React.Component{
     render(){
+        console.log("Abbinav printing in index");
         return(
             <Router history={history}>
                 <div>
