@@ -124,9 +124,9 @@ class CoveragePanel extends React.Component {
         this.BICoverageAmntText = "$" + this.biCovAmnt; //Initial display text for the Coverage amount
         this.PDCoverageAmntText = "$" + this.pdCovgAmnt;
 
-        //var vehicles = this.quote.vehicles;
-        //var vehicles = this.props.vehicles;
-        var vehicles = this.vehicles_hardcoded;
+        var vehicles = this.quote.vehicles;
+        
+        //var vehicles = this.vehicles_hardcoded;
         var compVehicles = null;
         var collVehicles = null;
         var compCollInitialCovAmnt = (20 * vehicles.length);
