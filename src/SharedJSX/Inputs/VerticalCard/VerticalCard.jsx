@@ -6,7 +6,7 @@ import CancelIcon from "@material-ui/icons/Cancel";
 import CardMedia from "@material-ui/core/CardMedia";
 import IconButton from "@material-ui/core/Button";
 import PropTypes from 'prop-types';
-import { deletedriveraction, deletevehicleaction, deletepropertyaction } from "../../../actions";
+import { deletedriveraction, deletevehicleaction, deletepropertyaction,deleteDriverFromQuote,deleteVehicleFromQuote  } from "../../../actions";
 import { connect } from 'react-redux';
 
 const useStyles = {
@@ -41,9 +41,20 @@ class SimpleCard extends React.Component {
 
   onDeleteDriverClick = () => {
     if (this.props.type === "driver")
+    {      
+      this.props.quote.drivers.splice(this.props.index,1)
+      console.log("DDsdfhjkshdfkjhD printing inside delete driver click --- "+JSON.stringify(this.props.quote.drivers))
+      this.props.deleteDriverFromQuote(this.props.quote)
       this.props.deletedriveraction(this.props.id);
+
+    }      
     else if (this.props.type === "vehicle") 
-      this.props.deletevehicleaction(this.props.id);
+      {
+        this.props.quote.vehicles.splice(this.props.index,1)
+        console.log("DDsdfhjkshdfkjhD printing inside delete vehicle click --- "+JSON.stringify(this.props.quote.vehicles))
+      this.props.deleteVehicleFromQuote(this.props.quote)
+        this.props.deletevehicleaction(this.props.id);
+      }
     else if (this.props.type === "property") 
       this.props.deletepropertyaction(this.props.id);
   };
@@ -96,7 +107,14 @@ SimpleCard.propTypes = {
   showDeleteButton: PropTypes.bool
 };
 
+const mapStateToProps = (state) => {
+  console.log("Updated state for quote " + JSON.stringify(state.quote))
+  return {
+      "quote":state.quote
+  }
+}
+
 export default connect(
-  null,
-  { deletedriveraction, deletevehicleaction, deletepropertyaction } 
+  mapStateToProps,
+  { deletedriveraction, deletevehicleaction, deletepropertyaction,deleteDriverFromQuote ,deleteVehicleFromQuote } 
 )(SimpleCard);

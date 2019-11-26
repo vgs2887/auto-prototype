@@ -152,18 +152,24 @@ class AddVehicle extends React.Component {
     const isValid = this.validate();
     if (isValid) {
       // console.log("shit",postData);
-      postData.driverName=this.state.primaryowner;
-      postData.vin=this.state.vin;
-      postData.make=this.state.make;
-      postData.model=this.state.model;
-      postData.year=this.state.year;
-      
+      var pod={}
+      pod.driverName=this.state.primaryowner;
+      pod.vin=this.state.vin;
+      pod.make=this.state.make;
+      pod.model=this.state.model;
+      pod.year=this.state.year;
+      pod.mileage="130000";
+      pod.addressLineOne="4980 usaa blvd";
+      pod.addressLineTwo="apt9999";
+      pod.city="San Antonio";
+      pod.state="Texas"
+      pod.zip="78240"
       // let v=this.props.quote.vehicles
 
       // console.log("test1",postData);
       // console.log("test2",k.vehicles);
 
-      k.vehicles=k.vehicles.concat(postData);
+      k.vehicles=k.vehicles.concat(pod);
       // console.log("test3",k.vehicles);
       // console.log("test",k);
       this.props.setQuoteObject(k); 
