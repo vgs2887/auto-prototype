@@ -17,6 +17,8 @@ const useStyles = {
         backgroundColor: 'white',
         boxShadow: '0px 2px 1px 2px rgba(0,0,0,0.2), 0px 1px 1px 0px rgba(0,0,0,0.14), 0px 1px 3px 3px rgba(0,0,0,0.12)'
     },
+    alignCenter:
+    {margin: '0 auto'},
     aligning:
     {
         display: 'inline-block',
@@ -51,8 +53,8 @@ class VehicleDetails  extends React.Component {
             <div style={{backgroundColor:'#F5F5F5'}}>   <Paper style={useStyles.root}>
                 <div className="drivers">
                 <Grid container >
-                <Grid item xs={1}><img  style={useStyles.img} src={path} alt="icon"/></Grid>
-                <Grid item xs={3}>
+                <Grid item xs={1} style={useStyles.alignCenter}><img  style={useStyles.img} src={path} alt="icon"/></Grid>
+                <Grid item xs={3} style={useStyles.alignCenter}>
                     <span className="drivertext"><b>Vehicles</b></span>
                     </Grid>
                     <Grid item xs={4}/>
@@ -65,7 +67,7 @@ class VehicleDetails  extends React.Component {
                 <DisplayVehicle />
                 <Grid container>
                     <Grid sm={2} />
-                    <Grid xs={12} sm={8}>
+                    <Grid xs={12} sm={12}>
                         <Button variant="contained" style={{backgroundColor:'#041c3d',color:'white'}} onClick={this.goToNextPage}>NEXT</Button>
                     </Grid>
                     <Grid sm={2} />

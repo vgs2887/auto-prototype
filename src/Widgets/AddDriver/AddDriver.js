@@ -36,11 +36,16 @@ const useStyles = {
     width: "100%"
   },
   InputWidth: {
-    width: "60%"
+    width: "60%",
+    margin: "0 auto"
   },
   InputWidth_: {
-    paddingLeft: "20%",
-    width: "60%"
+    // paddingLeft: "45%",
+    // width: "60%",
+    // margin: "0 auto"
+  },
+  AlignCenter:{
+    margin: "0 auto"
   }
 };
 const defaultProps = {
@@ -165,11 +170,12 @@ class AddDriver extends React.Component {
         
         <Grid container>
           <Grid sm={2} />
-          <Grid xs={12} sm={8}>
+          <Grid xs={12} sm={12}>
             <div style={useStyles.InputWidth_}>
               <span
                 onClick={this.goBack}
-                style={{ border: "none", float: "left" }}
+                style={{ border: "none"}}
+                // , float: "left" 
               >
                 <i class="fa fa-angle-left"></i>
               </span>
@@ -180,7 +186,7 @@ class AddDriver extends React.Component {
         </Grid>
         <Grid container>
           <Grid sm={2} />
-          <Grid xs={12} sm={8}>
+          <Grid xs={12} sm={12}>
             <div style={useStyles.InputWidth_}>
               <Box display="flex" justifyContent="center">
                 <Box borderRadius="50%" {...defaultProps}>
@@ -217,7 +223,7 @@ class AddDriver extends React.Component {
           <div>  */}
         <Grid container style={useStyles.grid}>
           <Grid sm={2} />
-          <Grid xs={12} sm={8}>
+          <Grid xs={12} sm={8} style={useStyles.AlignCenter}>
             <Input
               style={useStyles.InputWidth}
               placeholder="Driver Name"
@@ -232,7 +238,7 @@ class AddDriver extends React.Component {
         </Grid>
         <Grid container style={useStyles.grid}>
           <Grid sm={2} />
-          <Grid xs={12} sm={8}>
+          <Grid xs={12} sm={8} style={useStyles.AlignCenter}>
             <Input
               style={useStyles.InputWidth}
               placeholder="Age"
@@ -248,7 +254,7 @@ class AddDriver extends React.Component {
         </Grid>
         <Grid container style={useStyles.grid}>
           <Grid sm={2} />
-          <Grid xs={12} sm={8}>
+          <Grid xs={12} sm={8} style={useStyles.AlignCenter}>
             <Input
               style={useStyles.InputWidth}
               placeholder="Relationship"
@@ -263,7 +269,7 @@ class AddDriver extends React.Component {
         </Grid>
         <Grid container style={useStyles.grid}>
           <Grid sm={2} />
-          <Grid xs={12} sm={8}>
+          <Grid xs={12} sm={8} style={useStyles.AlignCenter}>
             <Input
               style={useStyles.InputWidth}
               placeholder="Gender"
@@ -278,7 +284,7 @@ class AddDriver extends React.Component {
         </Grid>
         <Grid container>
           <Grid sm={2} />
-          <Grid xs={12} sm={8}>
+          <Grid xs={12} sm={8} style={useStyles.AlignCenter}>
             <Button variant="contained" style={{backgroundColor:'#041c3d',color:'white'}} type="submit">
               Add
             </Button>

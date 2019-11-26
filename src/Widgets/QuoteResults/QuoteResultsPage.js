@@ -18,9 +18,18 @@ const useStyles = {
     root: {
         flexGrow: 1,
     },
+    CommonDivWidth:
+    {width:'40%', 
+    margin: '0 auto'},
     paper: {
         textAlign: 'center',
     },
+    uLStyle:
+    {
+        left: '-20%',
+        position: 'relative'
+
+    }
 }
 
 const postData = { "policyId": "7b4ba338-0b66-11ea-a983-060ef1aaca49", "baseLocation": "TX", "premium": 1000.99, "packageCode": "QUOTE", "policyNumber": "7001", "isQuote": false, "policyEffDate": "2019-11-19", "policyExpDate": "2020-06-13", "lastVisitedPage": "Complete", "coverages": { "bodilyInjury": 50.11, "propertyDamage": 10.22, "comprehensive": 100.0, "collision": 400.99 }, "drivers": [{ "name": "Monica Feloola Geller", "age": 29, "relationship": "SELF", "gender": "female", "license": "OH00000001" }, { "name": "Regina Phelange", "age": 30, "relationship": "ROOMIE", "gender": "female", "license": "OH00000001" }], "vehicles": [{ "driverName": "Regina Phelange", "year": 2018, "make": "Honda", "model": "Civic", "vin": "HODHFOAHDLASDOI", "mileage": 130000, "addressLineOne": "4980 usaa blvd", "addressLineTwo": "apt9999", "city": "San Antonio", "state": "Texas", "zip": "78240" }, { "driverName": "Monica Feloola Geller", "year": 2017, "make": "Porshe", "model": "Civic", "vin": "HODHFOAHDLASDOI", "mileage": 120000, "addressLineOne": "4980 usaa blvd", "addressLineTwo": "home", "city": "San Antonio", "state": "Texas", "zip": "99999" }] };
@@ -118,7 +127,7 @@ render() {
     var premium = this.props.premium ;
     return (
         <div style={useStyles.root}>
-            <Grid container spacing={3}>              
+            <Grid container spacing={3} style={useStyles.CommonDivWidth}>              
                 <Grid item xs={12}>
                   <CircularDiv premium={premium}/>
                 </Grid>
@@ -129,7 +138,7 @@ render() {
 
                 <Grid item xs={12} sm={12}>
                 <div class="scroll">
-                <ul className="corousal">
+                <ul className="corousal" style={useStyles.uLStyle}>
                             <li className="courosal-indicator">
                             <a  className={`${this.state.pageName === 'driver' && 'active'}`} style={{width:"200px"}} onClick={() => this.setComponent('driver')} href="#">
                             <img src={require("../../assets/car-driver.png")}  width="15px"/>Drivers</a></li>

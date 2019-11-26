@@ -13,7 +13,7 @@ const useStyles = {
   card: {
     width: 140,
     borderRadius: 200,
-    height: 300,
+    height: 320,
     boxShadow:'0px 2px 1px -1px rgba(0,0,0,0.2), 0px 1px 1px 0px rgba(0,0,0,0.14), 0px 1px 3px 2px rgba(0,0,0,0.12)',
  
   },
@@ -25,7 +25,7 @@ const useStyles = {
   content: {
     textAlign: "center",
     padding:13,
-    height:48
+    height:65
   },
   horizon: {
     border: "1px solid lightgrey",

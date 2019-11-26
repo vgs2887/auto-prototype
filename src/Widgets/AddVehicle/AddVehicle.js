@@ -40,12 +40,20 @@ const useStyles = {
     width: "100%"
   },
   InputWidth: {
-    width: "60%"
+    width: "60%",
+    margin: "0 auto"
   },
   InputWidth_: {
-    paddingLeft: "20%",
-    width: "60%",
-
+    // paddingLeft: "45%",
+    // width: "60%",
+    // margin: "0 auto"
+  },
+  AlignCenter:{
+    margin: "0 auto"
+  },
+  AlignCenterWidth:{
+    margin: "0 auto",
+    width: "20%"
   }
 };
 const defaultProps = {
@@ -210,11 +218,12 @@ class AddVehicle extends React.Component {
        {/* <AddHeader /> */}
         <Grid container>
           <Grid sm={2} />
-          <Grid xs={12} sm={8}>
+          <Grid xs={12} sm={12}>
             <div style={useStyles.InputWidth_}>
               <span
                 onClick={this.goBack}
-                style={{ border: "none", float: "left" }}
+                style={{ border: "none"}}
+                // , float: "left" 
               >
                 <i class="fa fa-angle-left"></i>
               </span>
@@ -225,7 +234,7 @@ class AddVehicle extends React.Component {
         </Grid>
         <Grid container>
           <Grid sm={2} />
-          <Grid xs={12} sm={8}>
+          <Grid xs={12} sm={12}>
             <div style={useStyles.InputWidth_}>
               <Box display="flex" justifyContent="center">
                 <Box borderRadius="50%" {...defaultProps}>
@@ -262,12 +271,12 @@ class AddVehicle extends React.Component {
           <div>  */}
         <Grid container style={useStyles.grid}>
           <Grid sm={2} />
-          <Grid xs={12} sm={8}>
+          <Grid xs={12} sm={12} style={useStyles.AlignCenterWidth}>
             {/* {JSON.stringify(this.props.quote.drivers)} */}
               <AddPrimaryOwnerDD drivers={this.props.quote.drivers} primarydriver={this.primarydriver}/> 
           </Grid>
           <Grid sm={2} />
-          <Grid xs={12} sm={8}>
+          <Grid xs={12} sm={8} style={useStyles.AlignCenter}>
               <AddressAutoComplete></AddressAutoComplete>
           </Grid>
           <Grid sm={2} />
@@ -275,7 +284,7 @@ class AddVehicle extends React.Component {
 
         <Grid container style={useStyles.grid}>
           <Grid sm={2} />
-          <Grid xs={12} sm={8}>
+          <Grid xs={12} sm={8} style={useStyles.AlignCenter}>
             <Input
               style={useStyles.InputWidth}
               placeholder="Vehicle Identification Number(VIN)"
@@ -291,7 +300,7 @@ class AddVehicle extends React.Component {
         
         <Grid container style={useStyles.grid}>
           <Grid sm={2} />
-          <Grid xs={12} sm={8}>
+          <Grid xs={12} sm={8} style={useStyles.AlignCenter}>
             <Input
               style={useStyles.InputWidth}
               placeholder="Year"
@@ -306,7 +315,7 @@ class AddVehicle extends React.Component {
         </Grid>
         <Grid container style={useStyles.grid}>
           <Grid sm={2} />
-          <Grid xs={12} sm={8}>
+          <Grid xs={12} sm={8} style={useStyles.AlignCenter}>
             <Input
               style={useStyles.InputWidth}
               placeholder="Make"
@@ -321,7 +330,7 @@ class AddVehicle extends React.Component {
         </Grid>
         <Grid container style={useStyles.grid}>
           <Grid sm={2} />
-          <Grid xs={12} sm={8}>
+          <Grid xs={12} sm={8} style={useStyles.AlignCenter}>
             <Input
               style={useStyles.InputWidth}
               placeholder="Model"
@@ -336,7 +345,7 @@ class AddVehicle extends React.Component {
         </Grid>
         <Grid container>
           <Grid sm={2} />
-          <Grid xs={12} sm={8}>
+          <Grid xs={12} sm={8} style={useStyles.AlignCenter}> 
           <Link to="/vehicledetails"><Button variant="contained" style={{backgroundColor:'#041c3d',color:'white'}} onClick={this.submitHandler}>
               Add
             </Button></Link>

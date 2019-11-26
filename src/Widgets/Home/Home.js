@@ -30,19 +30,22 @@ const styles = {
     fontWeight: 'small',
     textAlign: 'center',
     marginLeft: '8%',
-    width: '250px'
+    margin: '0 auto',
+    width: '250px'    
   },
   tag2:
   {
 color:'Navy',
 textAlign: 'center',
 marginTop: '5%',
-width: '500px'
+width: '500px',
+margin: '0 auto',
 },
   button:
   {
     marginLeft: '620px',
-    marginTop: '-80px'
+    marginTop: '-80px',
+    margin: '0 auto',
   }
 };
 
