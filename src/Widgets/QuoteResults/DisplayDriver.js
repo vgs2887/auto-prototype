@@ -30,7 +30,13 @@ class DisplayDriver extends React.Component {
             }
           let image = "";
           var fullname = driver.name.split(" ");
-          var firstLastName = fullname[0] + " " + fullname[fullname.length - 1];
+
+          if(fullname.length > 1){            
+            var firstLastName = fullname[0] + " " + fullname[fullname.length - 1];
+          }else
+          {            
+            var firstLastName = fullname ;
+          }
           
 
           if ((driver.gender == "Male") || (driver.gender == "male") || (driver.gender == "M") || (driver.gender == "M") || (driver.gender == "MALE")){
