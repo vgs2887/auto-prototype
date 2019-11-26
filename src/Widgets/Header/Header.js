@@ -34,7 +34,7 @@ class Header extends React.Component {
       path = "Auto Insurance";
     }
     else{
-      path = "TX Auto Insurance Quote";
+      path = "Auto Insurance Quote";
     }
     return (
         <div><AppBar position="static" style={{backgroundColor:'#041c3d',color:'white'}}>          

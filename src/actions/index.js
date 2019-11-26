@@ -83,3 +83,16 @@ export const updateCoverages=(quote) => async dispatch => {
         payload:quote
     })
 }
+
+export const deleteDriverFromQuote=(quote) => async dispatch => {
+    dispatch({
+        type:"DELETEDRIVERSTATE",
+        payload:quote
+    })
+}
+export const deleteVehicleFromQuote=(quote) => async dispatch => {
+    dispatch({
+        type:"DELETEVEHICLESTATE",
+        payload:quote
+    })
+}

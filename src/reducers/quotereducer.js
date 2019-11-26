@@ -16,6 +16,14 @@ export default (state=null, action)=>{
                 },
                 premium: action.payload.premium
             })
+        case "DELETEDRIVERSTATE" :
+            return updateObject (state,{
+                drivers:action.payload.drivers
+            })
+        case "DELETEVEHICLESTATE" :
+        return updateObject (state,{
+            vehicles:action.payload.vehicles
+        })
         default:return state
     }
 }

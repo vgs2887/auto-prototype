@@ -138,7 +138,7 @@ render(){
         <div style={{backgroundColor:'#F5F5F5'}}>            
             <Typography variant="h6" align="left" style={{color:'#041c3d'}}>
                 
-                {this.state.isEmpty ? null : <div style={{float:'right',fontSize:'10px',fontWeight:'bold'}}>Quotes<Switch size="small" style={{color:'#041c3d'}} color="primary" checked={this.state.togglePolicy} onChange={()=>{this.setState({togglePolicy:!this.state.togglePolicy})}}/>Policies</div>}
+                {this.state.isEmpty ? null : this.state.quoteAvaialble && this.state.policyAvaialble? <div style={{float:'right',fontSize:'10px',fontWeight:'bold'}}>Quotes<Switch size="small" style={{color:'#041c3d'}} color="primary" checked={this.state.togglePolicy} onChange={()=>{this.setState({togglePolicy:!this.state.togglePolicy})}}/>Policies</div>:""}
             </Typography> 
             <br />   
             <Typography variant="h6" align="left" style={{color:'#041c3d'}}>

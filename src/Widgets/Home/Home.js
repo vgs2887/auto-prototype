@@ -13,6 +13,8 @@ import { Card, CardContent, Typography } from "@material-ui/core";
 import ZipQueryHandler from "../ZipAdd/ZipQueryHandler";
 import ZipPlace from "../ZipAdd/ZipPlace";
 import GoogleMap from "../ZipAdd/GoogleMap";
+import {determineStateCodes} from ".././QuoteHistory/DetState"
+
 import axios from 'axios'
 //
 
@@ -43,18 +45,28 @@ width: '500px'
     marginTop: '-80px'
   }
 };
+
+//const [stateCode, setStateCode] = React.useState("");
+
+var baseLocationLocal;
+// var baseLocation = "TX";
 class Home extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
       baseLocation: "TX"
     }
+    
   }
+
+
   setDataOnState = () => {
-    if(this.state.baseLocation)
+    console.log("Abbinav in setData", baseLocationLocal)
+     if(baseLocationLocal != null)
     {
-      this.props.quote.baseLocation = this.state.baseLocation      
-      this.props.quote.lastVisitedPage = "driverdetails"      
+      // this.props.quote.baseLocation = this.state.baseLocation      
+      this.props.quote.lastVisitedPage = "driverdetails"
+      this.props.quote.baseLocation = baseLocationLocal 
       console.log("before calling api"+ JSON.stringify(this.props.quote))
         axios.post('https://1nbs6supkj.execute-api.us-east-1.amazonaws.com/v1/pc/auto/policyexpapi', this.props.quote)
         .then(response => {console.log("Response"+JSON.stringify(response.data)) 
@@ -67,7 +79,11 @@ class Home extends React.Component {
 
     }
 
+    
+
   }
+
+  
   render() {
 
     return (
@@ -94,15 +110,21 @@ class Home extends React.Component {
             <Typography gutterBottom variant="h5" component="h2">
              Please enter your zip code to get started
             </Typography>
-            <ZipPlace data={data} /> 
-            {data.city && <GoogleMap lat={data.lat} lon={data.lon} />}     
+            <ZipPlace data={data} primarydriver={this.primarydriver}/> 
+            {data.city && <GoogleMap lat={data.lat} lon={data.lon} />}    
+            {baseLocationLocal=determineStateCodes(data.state)}
+            
+         
+            {/* baseLocation = (data) => {
+            this.setState((determineStateCodes(data.state)))
+            } */}
           </CardContent>
           </card>
       )}
     />   
         </div>
-        <Link className = "startedButton" align="left" to='/driverdetails' onClick={this.setDataOnState}>
-        <Button variant="contained" style={{backgroundColor:'#041c3d',color:'white'}}> 
+        <Link className = "startedButton" align="left" to='/driverdetails' >
+        <Button variant="contained" style={{backgroundColor:'#041c3d',color:'white'}}onClick={this.setDataOnState}> 
             Get Started
         </Button>
         </Link>
@@ -116,6 +138,8 @@ class Home extends React.Component {
 }
 
 const mapStateToProps = state => {
+  console.log("quote state on click in home"+state.quote)
+
   return {
       "quote": state.quote,
   };
