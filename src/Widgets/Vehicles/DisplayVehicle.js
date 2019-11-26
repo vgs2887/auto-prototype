@@ -56,7 +56,7 @@ class DisplayVehicle extends React.Component {
                 <SimpleCard
                   key={vehicle.id}
                   type="vehicle"
-                  showDeleteButton={this.props.vehicles.length>1}
+                  showDeleteButton={this.props.quote.vehicles.length>1}
                   id={vehicle.id}
                   image={path}
                   model={vehicle.mileage ? vehicle.mileage : "1000 miles"}
