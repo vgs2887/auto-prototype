@@ -41,7 +41,7 @@ const emptyObject ={
                 },
     "drivers": [
                 {
-                    "name": "Monica Feloola Geller", 
+                    "name": "Jenny Doe", 
                     "age": 29, 
                     "relationship": "SELF", 
                     "gender": "female", 
@@ -50,7 +50,7 @@ const emptyObject ={
     ],
     "vehicles": [
         {
-            "driverName": "Regina Phelange",
+            "driverName": "Jenny Doe",
             "year": 2018,
             "make": "Honda",
             "model": "Civic",
@@ -129,8 +129,13 @@ class QuoteHistory extends React.Component
       .catch(error =>{console.log("ERROR"+error)})
   }
   setQuoteDataInState = quote => {
-    console.log("dharma"+JSON.stringify(quote))    
-    this.props.setQuoteObject(quote)    
+    this.props.setQuoteObject(emptyObject) 
+    console.log("dharma"+JSON.stringify(quote)) 
+    axios.get('https://bkjapch3s9.execute-api.us-east-1.amazonaws.com/v1/pc/auto/policysummaryexpapi/'+quote.policyId)
+    .then(qte => {    
+        console.log("Original quote Data in session--- "+JSON.stringify(qte.data))                                                
+                    this.props.setQuoteObject(qte.data) 
+                    })                          
   };
 
 render(){    
@@ -202,7 +207,7 @@ render(){
                                     <Grid>
                                     <SimpleCard
                                     type="driver"
-                                    showDeleteButton={true}
+                                    showDeleteButton={false}
                                     id={driverid+1}
                                     image={"https://www.w3schools.com/howto/img_avatar.png"}
                                     milteryStatus={"active"}
@@ -231,7 +236,7 @@ render(){
                                         <SimpleCard                                        
                                         key={vehicleid+1}
                                         type="vehicle"
-                                        showDeleteButton={true}
+                                        showDeleteButton={false}
                                         id={vehicleid+1}
                                         image={path}
                                         model={vehicle.mileage}
