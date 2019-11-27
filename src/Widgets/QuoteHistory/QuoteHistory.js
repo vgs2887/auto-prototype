@@ -34,10 +34,10 @@ const emptyObject ={
     "policyExpDate": null, 
     "lastVisitedPage": null,
     "coverages": {
-                    "bodilyInjury": null, 
-                    "propertyDamage": null, 
-                    "comprehensive": null, 
-                    "collision": null
+                    "bodilyInjury": 15, 
+                    "propertyDamage": 15, 
+                    "comprehensive": 20, 
+                    "collision": 20
                 },
     "drivers": [
                 {

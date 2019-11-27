@@ -47,7 +47,23 @@ class VehicleDetails  extends React.Component {
         // .catch(error =>{console.log("Payment Page ERROR"+error)})
         history.push('/addvehicle')
     }
-
+    componentDidMount(){
+         this.setupBeforeUnloadListener();
+     }
+     doSomethingBeforeUnload = (ev) => {
+        console.log("SEE YOU SOON WITH A NEW quote"+ JSON.stringify(this.props.quote))        
+        axios.post("https://1nbs6supkj.execute-api.us-east-1.amazonaws.com/v1/pc/auto/policyexpapi/"+this.props.quote.policyId, this.props.quote)
+        .then(response => {console.log("Response"+response.data)})
+        .catch(error =>{console.log("ERROR"+error)})
+        return ev.returnValue="Are you sure want to exit?"
+    }
+      setupBeforeUnloadListener = () => {
+        window.addEventListener("beforeunload", (ev) => {
+            ev.preventDefault();
+            console.log("GOOD BYE")
+            return this.doSomethingBeforeUnload(ev);
+        });
+    };
     render() {
         return (
             <div style={{backgroundColor:'#F5F5F5'}}>   <Paper style={useStyles.root}>
