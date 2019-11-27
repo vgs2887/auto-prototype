@@ -75,6 +75,7 @@ class QuoteHistory extends React.Component
         aggregate:[],
         quotes:[],
         policies:[],
+        basePolicies:[],
         listToDisplay : [],
         headerToDisplay: [],
         textToDisplayPolicy: null,
@@ -97,11 +98,21 @@ class QuoteHistory extends React.Component
             isLoaded: true,
             aggregate:response.data,
             quotes: response.data.filter(quote => quote.isQuote),
-            policies: response.data.filter(quote => !quote.isQuote)
+            basePolicies: response.data.filter(quote => !quote.isQuote)
             })            
             this.setState({textToDisplay:"Click the below button to get started!"})
             this.setState({canDisplayGetStarted:true})
-            if(this.state.policies && this.state.policies.length > 0) {
+            if(this.state.basePolicies && this.state.basePolicies.length > 0) {
+                this.state.basePolicies.map((basePolicy)=>{
+                    axios.get('https://bkjapch3s9.execute-api.us-east-1.amazonaws.com/v1/pc/auto/policysummaryexpapi/'+basePolicy.policyId)
+                    .then(pol=>{
+                        this.state.policies.push(pol.data)
+                        this.setState({
+                            policies: this.state.policies
+                        })
+                    })
+                })
+                console.log("POLICIES ---------- "+JSON.stringify(this.state.policies))
                 this.setState({policyAvaialble:true})
                 this.setState({isEmpty:false})
                 this.setState({togglePolicy:true})                                
@@ -179,6 +190,7 @@ render(){
                 </Table>
             </Grid>  
             :<div>{this.state.togglePolicy && this.state.policyAvaialble ? this.state.policies.map((quote, index) => {
+                console.log("POLICIES ---------- "+JSON.stringify(this.state.policies))
                     var a = "Your " +determineStateCodes(quote.baseLocation)+" Policy" + "   #" + quote.policyNumber
                     var driverid = 0;
                     var vehicleid = 0;
