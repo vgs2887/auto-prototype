@@ -32,8 +32,6 @@ const useStyles = {
     }
 }
 
-const postData = { "policyId": "7b4ba338-0b66-11ea-a983-060ef1aaca49", "baseLocation": "TX", "premium": 1000.99, "packageCode": "QUOTE", "policyNumber": "7001", "isQuote": false, "policyEffDate": "2019-11-19", "policyExpDate": "2020-06-13", "lastVisitedPage": "Complete", "coverages": { "bodilyInjury": 50.11, "propertyDamage": 10.22, "comprehensive": 100.0, "collision": 400.99 }, "drivers": [{ "name": "Monica Feloola Geller", "age": 29, "relationship": "SELF", "gender": "female", "license": "OH00000001" }, { "name": "Regina Phelange", "age": 30, "relationship": "ROOMIE", "gender": "female", "license": "OH00000001" }], "vehicles": [{ "driverName": "Regina Phelange", "year": 2018, "make": "Honda", "model": "Civic", "vin": "HODHFOAHDLASDOI", "mileage": 130000, "addressLineOne": "4980 usaa blvd", "addressLineTwo": "apt9999", "city": "San Antonio", "state": "Texas", "zip": "78240" }, { "driverName": "Monica Feloola Geller", "year": 2017, "make": "Porshe", "model": "Civic", "vin": "HODHFOAHDLASDOI", "mileage": 120000, "addressLineOne": "4980 usaa blvd", "addressLineTwo": "home", "city": "San Antonio", "state": "Texas", "zip": "99999" }] };
-
 class QuoteResultsPage extends React.Component {
 
     constructor(props) {
@@ -43,9 +41,9 @@ class QuoteResultsPage extends React.Component {
 
 
     submitHandler = e => {
-        console.log("postRequest:  " + JSON.stringify(postData))
-        axios.post('https://1nbs6supkj.execute-api.us-east-1.amazonaws.com/v1/pc/auto/policyexpapi', postData)
-            .then(response => { console.log("Response" + JSON.stringify(response)) })
+        console.log("postRequest:  " + JSON.stringify(this.props.quote))
+        axios.post('https://1nbs6supkj.execute-api.us-east-1.amazonaws.com/v1/pc/auto/policyexpapi/'+this.props.quote.policyId, this.props.quote)
+            .then(response => { console.log("Save on QR Response" + JSON.stringify(response.data)) })
             .catch(error => { console.log("ERROR" + error) })
     }
 
@@ -122,7 +120,23 @@ getComponent = () => {
 // paymentPage = () => {
 //     history.push("/payment");
 //   };
-
+componentDidMount(){
+    this.setupBeforeUnloadListener();
+}
+doSomethingBeforeUnload = (ev) => {
+   console.log("SEE YOU SOON WITH A NEW quote"+ JSON.stringify(this.props.quote))        
+   axios.post("https://1nbs6supkj.execute-api.us-east-1.amazonaws.com/v1/pc/auto/policyexpapi/"+this.props.quote.policyId, this.props.quote)
+   .then(response => {console.log("Response"+response.data)})
+   .catch(error =>{console.log("ERROR"+error)})
+   return ev.returnValue="Are you sure want to exit?"
+}
+ setupBeforeUnloadListener = () => {
+   window.addEventListener("beforeunload", (ev) => {
+       ev.preventDefault();
+       console.log("GOOD BYE")
+       return this.doSomethingBeforeUnload(ev);
+   });
+};
 render() {
     var premium = this.props.premium ;
     return (
@@ -159,6 +173,10 @@ render() {
                     </Grid>
                 </Grid>
 
+                <br /><br />
+                <Link align="left" to='/' onClick={this.submitHandler}><Button variant="contained" style={{backgroundColor:'#041c3d',color:'white'}}>
+                                Save
+                        </Button></Link>
                 <br /><br /><br /><br />
             </div>
         )
@@ -171,7 +189,8 @@ const mapStateToProps = (state) => {
         "premium": state.quote.premium, 
         "driverNo": state.drivers.length,
         "vehiclesNo": state.vehicles.length,
-        "pageName": state.pagename
+        "pageName": state.pagename,
+        "quote": state.quote
 
     }
 }

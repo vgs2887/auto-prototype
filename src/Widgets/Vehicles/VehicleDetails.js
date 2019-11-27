@@ -36,7 +36,7 @@ class VehicleDetails  extends React.Component {
         this.props.setQuoteObject(quote);
         console.log("Vehicle Details postRequest:  "+JSON.stringify(quote));
         axios.post('https://1nbs6supkj.execute-api.us-east-1.amazonaws.com/v1/pc/auto/policyexpapi/'+this.props.quote.policyId, quote)
-        .then(response => {console.log("Vehicle Details Response",response)})
+        .then(response => {console.log("Vehicle Details Response",response.data)})
         .catch(error =>{console.log("Vehicle Details ERROR"+error)})
         history.push('/quoteresults')
     }
