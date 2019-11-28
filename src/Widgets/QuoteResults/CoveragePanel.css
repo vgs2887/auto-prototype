@@ -1,0 +1,12 @@
+.MuiPaper-elevation1 {
+box-shadow: 1px 2px 10px 1px rgba(0,0,0,0.2), 1px 1px 1px 1px rgba(0,0,0,0.14), 1px 1px 3px 1px rgba(0,0,0,0.12) !important;
+}
+.MuiGrid-grid-xs-12 {
+max-width: 98% !important;
+}
+.MuiPaper-rounded {
+border-radius: 2px !important;
+}
+.MuiGrid-container {
+margin-left:0 px !important;
+}
