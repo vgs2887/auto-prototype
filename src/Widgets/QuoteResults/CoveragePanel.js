@@ -329,7 +329,7 @@ class CoveragePanel extends React.Component {
 
         var compVehiCovItems = this.compVehiCov.map((vehicle, key) =>
             <table key={vehicle.vin} style={useStyles.tableStyle}>
-                <tr><p style={useStyles.childCovgText}>{vehicle.year} {vehicle.make} {vehicle.model} {vehicle.vin}</p></tr>
+                <tr><p style={useStyles.childCovgText}>{vehicle.year} {vehicle.make} {vehicle.model} {[<small>(VIN: {vehicle.vin})</small>]}</p></tr>
                 <tr>
                     <td style={{ width: "80%" }}>
                         <Grid item sm="12" xs="12" >
@@ -363,7 +363,7 @@ class CoveragePanel extends React.Component {
 
         var collVehiCovItems = this.collVehiCov.map((vehicle, key) =>
                  <table key={vehicle.vin} style={useStyles.tableStyle}>
-                    <tr><p style={useStyles.childCovgText}>{vehicle.year} {vehicle.make} {vehicle.model} {vehicle.vin}</p></tr>
+                    <tr><p style={useStyles.childCovgText}>{vehicle.year} {vehicle.make} {vehicle.model} {[<small>(VIN: {vehicle.vin})</small>]}</p></tr>
                     <tr>
                         <td style={{ width: "80%" }}>
                             <Grid item sm="12" xs="12" >
