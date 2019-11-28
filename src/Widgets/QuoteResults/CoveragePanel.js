@@ -63,7 +63,7 @@ const useStyles = {
     },
     tableStyle: {
         width: '99%',
-        backgroundColor: 'rgb(222, 237, 245)',
+        backgroundColor: 'rgb(239, 247, 252)',
         borderRadius: '2px !important'
     },
     covgHelperText:
