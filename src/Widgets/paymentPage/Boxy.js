@@ -16,6 +16,9 @@ const useStyles = makeStyles(theme => ({
   control: {
     padding: theme.spacing(3),
   },
+  MuiGridRow: {
+    flexDirection: 'row !important'
+   },
 }));
 
 export default function Boxy(props) {
@@ -29,7 +32,7 @@ export default function Boxy(props) {
     <Grid container className={classes.root} spacing={2}>
  
       <Grid item xs={12}>
-        <Grid container justify="center" spacing={3}>
+        <Grid container className={classes.MuiGridRow} justify="center" spacing={3}>
           <Grid item>
             <Paper id="current" className={classes.paper}>{props.value}$ is owed for November</Paper>
           </Grid>

@@ -19,7 +19,7 @@ const useStyles = {
         flexGrow: 1,
     },
     CommonDivWidth:
-    {width:'40%', 
+    {
     margin: '0 auto'},
     paper: {
         textAlign: 'center',
@@ -29,6 +29,9 @@ const useStyles = {
         left: '-20%',
         position: 'relative'
 
+    },
+    gridstyle:{
+        marginLeft: '0px !important'
     }
 }
 
@@ -142,8 +145,8 @@ render() {
     return (
         <div style={useStyles.root}>
             <Grid container spacing={3} style={useStyles.CommonDivWidth}>              
-                <Grid item xs={12}>
-                  <CircularDiv premium={premium}/>
+                <Grid item id="circualrgrid" style={{marginLeft:'0px !importatnt'}} xs={12}>
+                  <CircularDiv premium={premium} />
                 </Grid>
 
                 <Grid item xs={12}>
@@ -152,7 +155,7 @@ render() {
 
                 <Grid item xs={12} sm={12}>
                 <div class="scroll">
-                <ul className="corousal" style={useStyles.uLStyle}>
+                <ul className="corousal" >
                             <li className="courosal-indicator">
                             <a  className={`${this.state.pageName === 'driver' && 'active'}`} style={{width:"200px"}} onClick={() => this.setComponent('driver')} href="#">
                             <img src={require("../../assets/car-driver.png")}  width="15px"/>Drivers</a></li>
@@ -161,7 +164,7 @@ render() {
                             <img src={require("../../assets/car.png")}  width="15px"/>Vehicles</a></li>
                             <li className="courosal-indicator">
                                 <a className={`${this.state.pageName === 'coverage' && 'active'}`} onClick={() => this.setComponent('coverage')} href="#">
-                                <img src={require("../../assets/umb.jpg")} width="20px"/>Coverage</a>
+                                <img src={require("../../assets/car.png")} width="20px"/>Coverage</a>
                             </li>
                         </ul>
                         </div>

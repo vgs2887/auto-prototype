@@ -91,11 +91,7 @@ class Home extends React.Component {
 
     return (
       <div style={{backgroundColor:'#F5F5F5'}}>
-      <Grid container spacing={1} className="App" style={{textAlign:"center"}}>
-      {/*   <Grid style={styles.logo} item xs={9} sm={9} direction="column-reverse" alignItems="flex-end">
-          <img src="https://content.usaa.com/mcontent/static_assets/Media/globalHeader-usaaLogo-2016.svg" alt="Usaa logo"/><br />
-        </Grid> */} 
-
+      <Grid container spacing={1} >
         <Grid style={styles.tag1} item  direction="column" alignContent="flex-start">
           <p>Good Morning,<br/>
 
@@ -132,9 +128,6 @@ class Home extends React.Component {
         </Button>
         </Link>
       </Grid>
-      
-        
-<br/><br/><br/><br/>
       </div>
     );
   }

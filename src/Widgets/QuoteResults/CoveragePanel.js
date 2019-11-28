@@ -4,6 +4,7 @@ import { updatepremiumaction } from '../../actions'
 import { updateCoverages } from '../../actions'
 import { setQuoteObject } from "../../actions";
 import { Divider, Paper, Grid } from '@material-ui/core';
+import './CoveragePanel.css';
 //import Select from 'react-select';
 
 
@@ -39,7 +40,8 @@ const useStyles = {
         paddingTop: "10px",
         fontSize: "16px",
         fontWeight: "bold",
-        color: "#041C3D"
+        color: "#041C3D",
+        textAlign: "center"
     },
     childCovgText:
     {
@@ -49,17 +51,32 @@ const useStyles = {
         fontWeight: "bold",
         color: "#041C3D"
     },
-
+    childtext: {
+        padding: "0px",
+        paddingTop: "10px",
+        fontSize: "1.0rem",
+        color: "#041C3D",
+        textAlign: "lfet"
+    },
+    leftAlign: {
+        textAlign: "left !important",
+    },
+    tableStyle: {
+        width: '99%',
+        backgroundColor: 'rgb(222, 237, 245)',
+        borderRadius: '2px !important'
+    },
     covgHelperText:
     {
         fontSize: "12px"
     },
-        button: {
-          display: 'block'
-        },
-        formControl: {
-          minWidth: '61%'
-        }
+    button: {
+        display: 'block'
+    },
+    formControl: {
+        minWidth: '61%',
+        marginLeft: '1%'
+    }
 };
 const options = [
     { value: 'one', label: '25,000/30,000' },
@@ -78,14 +95,14 @@ class CoveragePanel extends React.Component {
     compVehiCov = [];
     collVehiCov = [];
     quote = [];
-    
-        
+
+
     BIcoverages = [
         { id: "0", covgValue: "$15,000/$30,000", amnt: "5" },
         { id: "1", covgValue: "$50,000/$100,000", amnt: "10" },
         { id: "2", covgValue: "$100,000/$250,000", amnt: "15" },
         { id: "3", covgValue: "$500,000/$1,000,000", amnt: "20" }
-    ];    
+    ];
 
     PDcoverages = [
         { id: "0", covgValue: "$10,000", amnt: "5" },
@@ -114,9 +131,9 @@ class CoveragePanel extends React.Component {
     ]
 
     constructor(props) {
-        super(props)                             
-        
-        this.quote = this.props.quote ;
+        super(props)
+
+        this.quote = this.props.quote;
 
         this.biCovAmnt = 5;
         this.pdCovgAmnt = 5;
@@ -125,7 +142,7 @@ class CoveragePanel extends React.Component {
         this.PDCoverageAmntText = "$" + this.pdCovgAmnt;
 
         var vehicles = this.quote.vehicles;
-        
+
         //var vehicles = this.vehicles_hardcoded;
         var compVehicles = null;
         var collVehicles = null;
@@ -139,7 +156,7 @@ class CoveragePanel extends React.Component {
                 model: vehicle.model,
                 coverAmnt: 20,
                 coverAmntText: "$" + 20,
-                value:  vehicle.vin + ":" + 20
+                value: vehicle.vin + ":" + 20
             };
             collVehicles = {
                 vin: vehicle.vin,
@@ -148,7 +165,7 @@ class CoveragePanel extends React.Component {
                 model: vehicle.model,
                 coverAmnt: 20,
                 coverAmntText: "$" + 20,
-                value:   vehicle.vin + ":" + 20
+                value: vehicle.vin + ":" + 20
             };
             this.compVehiCov.push(compVehicles);
             this.collVehiCov.push(collVehicles);
@@ -159,88 +176,88 @@ class CoveragePanel extends React.Component {
         var premiumConst = 30 + (vehicles.length * (2 * 20));
         //alert('premiumConst = '+premiumConst );        
 
-         
-        
-        if(this.quote == null){
+
+
+        if (this.quote == null) {
             var coverages = {
-                bodilyInjury: 5, 
-                propertyDamage: 5, 
-                comprehensive: 20, 
+                bodilyInjury: 5,
+                propertyDamage: 5,
+                comprehensive: 20,
                 collision: 20
             }
             var quote = {
-                premium : premiumConst,
+                premium: premiumConst,
                 coverages,
             }
-            this.quote = quote ;
+            this.quote = quote;
         }
 
         this.quote.coverages.bodilyInjury = "5";
         this.quote.coverages.propertyDamage = "5";
         this.quote.coverages.comprehensive = "20";
         this.quote.coverages.collision = "20";
-        this.quote.premium = premiumConst; 
+        this.quote.premium = premiumConst;
 
         //this.props.setQuoteObject(this.quote);
         this.props.updateCoverages(this.quote);
 
         this.state = {
             didMount: false,
-            premium: premiumConst,                                              
-        };        
+            premium: premiumConst,
+        };
 
-        
+
     }
     componentDidMount() {
         setTimeout(() => {
             this.setState({ didMount: true })
         }, 0)
-    }    
+    }
 
     onChangeCovForBI = (e) => {
 
         var premium = this.state.premium;
         var prevSel = this.biCovAmnt;
         var biCoverageAmnt = parseInt(e.target.value);
-        console.log("BI value-"+biCoverageAmnt);        
+        console.log("BI value-" + biCoverageAmnt);
 
         premium = premium - prevSel + biCoverageAmnt;
 
         this.biCovAmnt = biCoverageAmnt;
         this.BICoverageAmntText = "$" + biCoverageAmnt;
-        
-        console.log("BI 2 value-"+biCoverageAmnt);
+
+        console.log("BI 2 value-" + biCoverageAmnt);
         this.quote.coverages.bodilyInjury = biCoverageAmnt;
-        
-        this.quote.premium = premium;        
+
+        this.quote.premium = premium;
 
         this.setState({ premium: premium });
         //this.props.setQuoteObject(this.quote);
         //this.props.updatepremiumaction(premium);
         this.props.updateCoverages(this.quote);
         console.log(this.quote.coverages.bodilyInjury);
-        
+
     }
 
 
-    onChangeCovgForPD = (e) => { 
+    onChangeCovgForPD = (e) => {
 
         var premium = this.state.premium;
         var prevSel = this.pdCovgAmnt; //fix state var
-        var pdCoverageAmnt = parseInt(e.target.value);        
+        var pdCoverageAmnt = parseInt(e.target.value);
 
-        premium = premium - prevSel + pdCoverageAmnt;    
+        premium = premium - prevSel + pdCoverageAmnt;
 
         this.pdCovgAmnt = pdCoverageAmnt;
         this.PDCoverageAmntText = "$" + pdCoverageAmnt;
 
-        this.quote.coverages.propertyDamage = pdCoverageAmnt;                                
+        this.quote.coverages.propertyDamage = pdCoverageAmnt;
         this.quote.premium = premium;
 
         this.setState({ premium: premium });
         //this.props.setQuoteObject(this.quote);
         this.props.updateCoverages(this.quote);
-        
+
     }
 
     onChangeCovgForComp = (e) => {
@@ -253,7 +270,7 @@ class CoveragePanel extends React.Component {
         var prevCompCoverageAmnt = 0;
 
         for (var obj of this.compVehiCov) {
-            
+
             if (obj.vin === vin) {
                 prevCompCoverageAmnt = obj.coverAmnt;
                 obj.coverAmnt = compCoverageAmnt;
@@ -263,13 +280,13 @@ class CoveragePanel extends React.Component {
         }
 
         premium = premium - prevCompCoverageAmnt + compCoverageAmnt;
-                                
+
         this.quote.coverages.comprehensive = compCoverageAmnt;
         this.quote.premium = premium;
 
         this.setState({ premium: premium });
         //this.props.setQuoteObject(this.quote); 
-        this.props.updateCoverages(this.quote);      
+        this.props.updateCoverages(this.quote);
     }
 
     onChangeCovgForColl = (e) => {
@@ -293,7 +310,7 @@ class CoveragePanel extends React.Component {
         }
 
         premium = premium - prevCollCoverageAmnt + collCoverageAmnt;
-                      
+
         //this.quote.coverages.collision = vin+":"+collCovAmt;
         this.quote.coverages.collision = collCoverageAmnt;
         this.quote.premium = premium;
@@ -311,149 +328,182 @@ class CoveragePanel extends React.Component {
         const { didMount } = this.state;
 
         var compVehiCovItems = this.compVehiCov.map((vehicle, key) =>
-            <div key={vehicle.vin}>
-                <p style={useStyles.childCovgText}>{vehicle.year} {vehicle.make} {vehicle.model} {vehicle.vin}</p>
-                <table style={{ width: "100%" }}>
-                    <tr>
-                        <td style={{ width: "80%" }}>
+            <table key={vehicle.vin} style={useStyles.tableStyle}>
+                <tr><p style={useStyles.childCovgText}>{vehicle.year} {vehicle.make} {vehicle.model} {vehicle.vin}</p></tr>
+                <tr>
+                    <td style={{ width: "80%" }}>
+                        <Grid item sm="12" xs="12" >
                             <FormControl className={useStyles.formControl} style={{ width: "100%" }}>
-                                        <Select  
-                                        value={vehicle.value}                                      
-                                        onChange={this.onChangeCovgForComp}
-                                        >
-                                        {this.compCoverages.map((coverage, key) => {
-                                             var compCovKey = vehicle.vin + ":" + coverage.amnt;
-                                             var CompCoverageAmntText_ind = this.CompCoverageAmntText;
-                                            return <MenuItem key={coverage.id}
+                                <Select
+                                    value={vehicle.value}
+                                    onChange={this.onChangeCovgForComp}
+                                >
+                                    {this.compCoverages.map((coverage, key) => {
+                                        var compCovKey = vehicle.vin + ":" + coverage.amnt;
+                                        return <MenuItem key={coverage.id}
                                             value={compCovKey}>{coverage.covgValue}</MenuItem>
-                                        })}
-                                        
-                                        </Select>
-                                    </FormControl>
-                                    <FormHelperText style={{color: "black", marginTop: 0}}>per occurence</FormHelperText>
-                        </td>
-                        <td style={{ width: "20%" }}>
+                                    })}
+
+                                </Select>
+                            </FormControl>
+                            <FormHelperText style={{ color: "black", marginTop: 0 }}>per occurence</FormHelperText>
+                        </Grid>
+                    </td>
+                    <td style={{ width: "20%" }}>
+                        <Grid item sm="12" xs="12" >
                             <div class="ui input" style={{ width: "100%", float: "right" }} >
-                                <input type="text" style={{ width: "100%"}} readOnly value={vehicle.coverAmntText} />
+                                {/* <input type="text" readOnly value={100} /> */}
+                                <input type="text" style={{ width: "100%" }} readOnly value={vehicle.coverAmntText} />
                             </div>
-                        </td>
-                    </tr>
-                </table>
-            </div>
+                        </Grid>
+                    </td>
+                </tr>
+            </table>
         );
 
         var collVehiCovItems = this.collVehiCov.map((vehicle, key) =>
-            <div key={vehicle.vin}>
-                <p style={useStyles.childCovgText}>{vehicle.year} {vehicle.make} {vehicle.model} {vehicle.vin}</p>
-                <table style={{ width: "100%" }}>
+                 <table key={vehicle.vin} style={useStyles.tableStyle}>
+                    <tr><p style={useStyles.childCovgText}>{vehicle.year} {vehicle.make} {vehicle.model} {vehicle.vin}</p></tr>
                     <tr>
                         <td style={{ width: "80%" }}>
-                            <FormControl className={useStyles.formControl} style={{ width: "100%" }}>
-                                        <Select
-                                        value={vehicle.value}                                        
+                            <Grid item sm="12" xs="12" >
+                                <FormControl className={useStyles.formControl} style={{ width: "100%" }}>
+                                    <Select
+                                        value={vehicle.value}
                                         onChange={this.onChangeCovgForColl}
-                                        >
+                                    >
                                         {this.collCoverages.map((coverage, key) => {
                                             var collCovKey = vehicle.vin + ":" + coverage.amnt;
                                             return <MenuItem key={coverage.id}
-                                            value={collCovKey}>{coverage.covgValue}</MenuItem>
+                                                value={collCovKey}>{coverage.covgValue}</MenuItem>
                                         })}
-                                        
-                                        </Select>
-                                    </FormControl>
-                                    <FormHelperText style={{color: "black", marginTop: 0}}>per occurence</FormHelperText>
+
+                                    </Select>
+                                </FormControl>
+                                <FormHelperText style={{ color: "black", marginTop: 0 }}>per occurence</FormHelperText>
+                            </Grid>
                         </td>
                         <td style={{ width: "20%" }}>
-                            <div class="ui input" style={{ width: "100%", float: "right" }} >
-                                <input type="text" style={{ width: "100%"}} readOnly value={vehicle.coverAmntText} />
-                            </div>
+                            <Grid item sm="12" xs="12" >
+                                <div class="ui input" style={{ width: "100%", float: "right" }} >
+                                    {/* <input type="text" readOnly value={100} /> */}
+                                    <input type="text" style={{ width: "100%" }} readOnly value={vehicle.coverAmntText} />
+                                </div>
+                            </Grid>
                         </td>
                     </tr>
                 </table>
-            </div>
         );
 
         return (
-            <div>                
-                <Paper >
-                    <Grid >
+            <div>
 
-                        {/* Bodily Injury Section */}
-                        <div className="coveragetext" style={useStyles.covgText}> Bodily Injury Liability Coverage</div>
-                        <Divider />
-                        <table style={{ width: "100%" }}>
+
+                <Paper square="true" >
+                    <Grid container justify="flex-start" alignItems="flex-start" style={{ marginLeft: "0px !important" }}>
+
+                        <Grid item xs={12} sm={12} style={{textAlign: "center"}}>
+                            <div className="coveragetext" style={useStyles.covgText}> Bodily Injury Liability Coverage</div>
+                        </Grid>
+                        <Grid item sm="12" xs="12"  >
+                            <div className="coveragetext" style={useStyles.childtext}>Covers medical expenxes for other injured when you cause an accident</div>
+                        </Grid>
+                        <table style={useStyles.tableStyle}>
                             <tr>
                                 <td style={{ width: "80%" }}>
-                                    <FormControl className={useStyles.formControl} style={{ width: "100%" }}>
-                                        <Select
-                                        value={this.biCovAmnt}                                        
-                                        onChange={this.onChangeCovForBI}
-                                        >
-                                        {this.BIcoverages.map(coverage=>{
-                                            return <MenuItem value={coverage.amnt}>{coverage.covgValue}</MenuItem>
-                                        })}
-                                        
-                                        </Select>
-                                    </FormControl>
-                                    <FormHelperText style={{color: "black", marginTop: 0}}>per person/per accident</FormHelperText>
-                                </td>
-                                <td style={{ width: "20%"}}>
-                                    <div class="ui input" style={{ width: "100%", float: "right" }} >
-                                        {/* <input type="text" readOnly value={100} /> */}
-                                        <input type="text" style={{width: "100%"}} readOnly value={this.BICoverageAmntText} />
-                                    </div>
-                                </td>
-                            </tr>
-                        </table>
+                                    <Grid item sm="12" xs="12" >
+                                        <FormControl className={useStyles.formControl} style={{ width: "100%" }}>
+                                            <Select
+                                                value={this.biCovAmnt}
+                                                onChange={this.onChangeCovForBI}
+                                            >
+                                                {this.BIcoverages.map(coverage => {
+                                                    return <MenuItem value={coverage.amnt}>{coverage.covgValue}</MenuItem>
+                                                })}
 
-                        <Divider />
-
-                        {/* Property Damage Section */}
-                        <div className="coveragetext" style={useStyles.covgText}>Property Damage Liability Coverage</div>
-                        <Divider />
-                        <table style={{ width: "100%" }}>
-                            <tr>
-                                <td style={{ width: "80%" }}>
-                                    <FormControl className={useStyles.formControl} style={{ width: "100%" }}>
-                                        <Select
-                                        value={this.pdCovgAmnt}                                        
-                                        onChange={this.onChangeCovgForPD}
-                                        >
-                                        {this.PDcoverages.map(coverage=>{
-                                            return <MenuItem value={coverage.amnt}>{coverage.covgValue}</MenuItem>
-                                        })}
-                                        
-                                        </Select>
-                                    </FormControl>
-                                    <FormHelperText style={{color: "black", marginTop: 0}}>per accident</FormHelperText>
+                                            </Select>
+                                        </FormControl>
+                                        <FormHelperText style={{ color: "black", marginTop: 0 }}>per person/per accident</FormHelperText>
+                                    </Grid>
                                 </td>
                                 <td style={{ width: "20%" }}>
-                                    <div class="ui input" style={{ width: "100%", float: "right" }} >
-                                        <input type="text" style={{ width: "100%"}} readOnly value={this.PDCoverageAmntText} />
-                                    </div>
+                                    <Grid item sm="12" xs="12" >
+                                        <div class="ui input" style={{ width: "100%", float: "right" }} >
+                                            {/* <input type="text" readOnly value={100} /> */}
+                                            <input type="text" style={{ width: "100%" }} readOnly value={this.BICoverageAmntText} />
+                                        </div>
+                                    </Grid>
                                 </td>
                             </tr>
                         </table>
-                        <Divider />
-
-                        {/* Comp Section */}
-                        <div>
-                            <div className="coveragetext" style={useStyles.covgText}>Comprehensive</div>
-                            {compVehiCovItems}
-                        </div>
-                        <Divider />
-
-                        {/* Coll Section */}
-                        <div>
-                            <div className="coveragetext" style={useStyles.covgText}>Collision</div>
-                            {collVehiCovItems}
-                        </div>
-                        <Divider />
-                        <Divider />
-
                     </Grid>
                 </Paper>
+                <br />
+                <Paper square="true" >
+                    <Grid container justify="flex-start" alignItems="flex-start" style={{ marginLeft: "0px !important" }}>
+                        <Grid item sm="12" xs="12" >
+                            <div className="coveragetext" style={useStyles.covgText}> Property Damage</div>
+                        </Grid>
+                        <Grid item sm="12" xs="12"  >
+                            <div className="coveragetext" style={useStyles.childtext}>Covers damage to other vehicle or property when you cause an accident.</div>
+                        </Grid>
+                        <table style={useStyles.tableStyle}>
+                            <tr>
+                                <td style={{ width: "80%" }}>
+                                    <Grid item sm="12" xs="12" >
+                                        <FormControl className={useStyles.formControl} style={{ width: "100%" }}>
+                                            <Select
+                                                value={this.pdCovgAmnt}
+                                                onChange={this.onChangeCovgForPD}
+                                            >
+                                                {this.PDcoverages.map(coverage => {
+                                                    return <MenuItem value={coverage.amnt}>{coverage.covgValue}</MenuItem>
+                                                })}
+
+                                            </Select>
+                                        </FormControl>
+                                        <FormHelperText style={{ color: "black", marginTop: 0 }}>per accident</FormHelperText>
+                                    </Grid>
+                                </td>
+                                <td style={{ width: "20%" }}>
+                                    <Grid item sm="12" xs="12" >
+                                        <div class="ui input" style={{ width: "100%", float: "right" }} >
+                                            {/* <input type="text" readOnly value={100} /> */}
+                                            <input type="text" style={{ width: "100%" }} readOnly value={this.BICoverageAmntText} />
+                                        </div>
+                                    </Grid>
+                                </td>
+                            </tr>
+                        </table>
+                    </Grid>
+                </Paper>
+                <br />
+                <Paper square="true" >
+                    <Grid container justify="flex-start" alignItems="flex-start" style={{ marginLeft: "0px !important" }}>
+                        <Grid item sm="12" xs="12" >
+                            <div className="coveragetext" style={useStyles.covgText}> Comprehensive</div>
+                        </Grid>
+                        <Grid item sm="12" xs="12"  >
+                            <div className="coveragetext" style={useStyles.childtext}>Covers repairs your car if it is damaged from fire, vandalism or falling objects (like a tree or hail).</div>
+                        </Grid>
+                        {compVehiCovItems}
+                    </Grid>
+                </Paper>
+                <br></br>
+                <Paper square="true" >
+                    <Grid container justify="flex-start" alignItems="flex-start" style={{ marginLeft: "0px !important" }}>
+                        <Grid item sm="12" xs="12" >
+                            <div className="coveragetext" style={useStyles.covgText}> Collision</div>
+                        </Grid>
+                        <Grid item sm="12" xs="12"  >
+                            <div className="coveragetext" style={useStyles.childtext}>Covers repairs your car if it is damaged in an accident with another vehicle or object, such as a fence or a tree.</div>
+                        </Grid>
+                        {collVehiCovItems}
+                    </Grid>
+                </Paper>
+
             </div>
+
 
         )
     }
@@ -462,7 +512,7 @@ const mapStateToProps = state => {
     return {
         vehicles: state.vehicles,
         quote: state.quote,
-        premium:  state.premium
+        premium: state.premium
     };
 };
 
