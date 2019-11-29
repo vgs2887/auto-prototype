@@ -72,7 +72,7 @@ class QuoteHistory extends React.Component
   {
     super(props)
     this.state = {
-        aggregate:[],
+        aggregate:[],   
         quotes:[],
         policies:[],
         basePolicies:[],
@@ -272,6 +272,7 @@ render(){
                           </ExpansionPanelSummary>    
                         <ExpansionPanelDetails>                                                   
                         <Grid container>
+                            { console.logquote.coverages && quote.coverages.length > 0 ?
                         <Table size="small">
                         <TableHead><TableRow><TableCell align='left'>Coverages</TableCell><TableCell align='left'>Premium</TableCell></TableRow></TableHead>
                         <TableBody>
@@ -280,7 +281,7 @@ render(){
                             {quote.coverages.comprehensive ? <TableRow><TableCell align='left'>Comprehensive</TableCell><TableCell align='left'>{quote.coverages.comprehensive}</TableCell></TableRow> : <span></span>}
                             {quote.coverages.collision ? <TableRow><TableCell align='left'>Collision</TableCell><TableCell align='left'>{quote.coverages.collision}</TableCell></TableRow> : <span></span>}
                         </TableBody>
-                        </Table>
+                        </Table> :""}
                         </Grid>
                         </ExpansionPanelDetails>
                         </ExpansionPanel>                    
