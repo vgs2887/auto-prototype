@@ -5,6 +5,7 @@ import { updateCoverages } from '../../actions'
 import { setQuoteObject } from "../../actions";
 import { Divider, Paper, Grid } from '@material-ui/core';
 import './CoveragePanel.css';
+
 //import Select from 'react-select';
 
 
@@ -21,6 +22,7 @@ import Select from '@material-ui/core/Select';
 import Button from '@material-ui/core/Button';
 import MenuItem from '@material-ui/core/MenuItem';
 import 'react-dropdown/style.css'
+import BiLimits from "./BiLimits";
 
 const useStyles = {
     root: {
@@ -422,8 +424,10 @@ class CoveragePanel extends React.Component {
                                                 })}
 
                                             </Select>
+                                           
                                         </FormControl>
                                         <FormHelperText style={{ color: "black", marginTop: 0 }}>per person/per accident</FormHelperText>
+                                        <BiLimits/>
                                     </Grid>
                                 </td>
                                 <td style={{ width: "20%" }}>
