@@ -8,6 +8,8 @@ import { connect } from 'react-redux';
 import Header from '../../Widgets/Header/Header'
 import {Button} from '@material-ui/core';
 import axios from 'axios'
+import "./chatstyle.css"
+import { Widget,addResponseMessage, addLinkSnippet, addUserMessage } from 'react-chat-widget';
 import { setQuoteObject } from "../../actions";
 const useStyles = {
     root: {
@@ -39,7 +41,10 @@ class DriverDetails extends React.Component {
          }, 0)
          this.setupBeforeUnloadListener();
      }
-
+     handleNewUserMessage = (newMessage) => {
+        console.log(`New message incoming! ${newMessage}`);
+        // Now send the message throught the backend API
+      }
     goToNextPage = () => {
         this.props.quote.lastVisitedPage ="vehicledetails"
         console.log("on clicko f next on driver page "+ JSON.stringify(this.props.quote))        
@@ -67,6 +72,15 @@ class DriverDetails extends React.Component {
         const {didMount} = this.state
         return (
             <div style={{backgroundColor:'#F5F5F5'}}>
+                <Widget
+          handleNewUserMessage={this.handleNewUserMessage}          
+          showCloseButton={true}
+          fullScreenMode={false}
+          badge={0}
+          autofocus={true}
+          title="Ask TARS"
+          subtitle="Hey Jenny! I am Tars Your bot for today! How can i help?"
+        />
             <Paper style={useStyles.root}>
                 <div className={`drivers fade-in ${didMount && 'visible'}`}>
                 <Grid container >

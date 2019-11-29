@@ -1,0 +1,88 @@
+.rcw-conversation-container > .rcw-header {
+    background-color:#041c3d;
+    color:white;
+    height:120px;
+    width:250px;
+    float: right;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    margin-right: 0px;
+    margin-left: 0px;
+    box-shadow: '0px 2px 1px 2px rgba(0,0,0,0.2), 0p;x 1px 1px 0px rgba(0,0,0,0.14), 0px 1px 3px 3px rgba(0,0,0,0.12)';
+}
+
+  .rcw-messages-container {
+    background-color: whitesmoke;
+    height:100px;
+    max-height:150px;
+    overflow: auto;
+    width:250px;
+    float: right;
+    margin: 0px;
+  }
+   
+  .rcw-message > .rcw-response {
+    background-color: black;
+    color: white;
+  }
+  .rcw-widget-container {
+    bottom: 1;
+    display: flex;
+    flex-direction: column;
+    margin: 0 20px 20px 0;
+    max-width: 250px;
+    position: fixed;
+    right: 0;
+    z-index: 9999;
+  }
+  .rcw-close-button, .rcw-launcher{
+    height:30px;
+    width:30px;
+    float:right;
+    border-color:transparent;
+    background-color:transparent;
+  }
+  .rcw-send{
+    height:30px;
+    width:30px;
+    float:right;
+    border-color:#041c3d;
+    background-color:#041c3d;
+  }
+
+  .rcw-close, .rcw-close-launcher, .rcw-send-icon{
+    height:15px;
+    width:15px;
+    float:right;
+    border-color:#041c3d;
+    background-color:#041c3d;
+  }
+  .rcw-launcher{
+    height:60px;
+    width:60px;
+    float:right;
+    border-radius: 100px;
+    border-color:#041c3d;
+    background-color:#041c3d;
+  }
+  .rcw-close-launcher{
+    height:34px;
+    width:32px;
+    float:right;
+  }
+  .rcw-hide-sm {
+    display: none;
+  }
+  .rcw-sender{
+    background-color: #041c3d;
+    width:250px;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    float: right;
+  }
+
+  .rcw-title span {
+    padding-bottom: 5px;
+  }
