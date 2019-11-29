@@ -272,7 +272,7 @@ render(){
                           </ExpansionPanelSummary>    
                         <ExpansionPanelDetails>                                                   
                         <Grid container>
-                            { console.logquote.coverages && quote.coverages.length > 0 ?
+                            { quote.coverages && quote.coverages.length > 0 ?
                         <Table size="small">
                         <TableHead><TableRow><TableCell align='left'>Coverages</TableCell><TableCell align='left'>Premium</TableCell></TableRow></TableHead>
                         <TableBody>
