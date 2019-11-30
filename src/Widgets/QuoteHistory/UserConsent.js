@@ -35,14 +35,13 @@ export default class UserConsent extends React.Component {
 
     constructor(props){
         super(props);
-        this.state = { isChecked: false,
-                isHidden: true
+        this.state = { 
+            isChecked: false,
+                isHidden: true,
+                open:false,
         };
         this.handleAdd = this.handleAdd.bind(this);
       }
-    state = {
-        open:false,
-    };
     handleOpen = () => {
         this.setState({open: true});
       };
@@ -52,13 +51,16 @@ export default class UserConsent extends React.Component {
         console.log(this.context);
       };
 
-      handleAdd= () =>{
+      handleAdd = (e) =>{
+        const checked = e.target.checked;
         this.setState(
             {
-              isChecked: !this.state.isChecked
+              isChecked: !this.state.isChecked,
+              isHidden: this.state.isChecked
               
             }            
           );
+          console.log("Abbinav in userConsole", this.state.isChecked)
           
       }
 
@@ -119,8 +121,8 @@ render(){
                 <div>
                 <Checkbox
          checked={this.state.isChecked}
-         onChange={this.handleAdd}
-         onClick = {this.toggleAgree}
+         onClick={this.handleAdd}
+        //  onClick = {this.toggleAgree}
         inputProps={{
           "aria-label": "primary checkbox"
         }}
@@ -147,5 +149,6 @@ render(){
 }
 }
 
+ReactDOM.render(<UserConsent />, document.getElementById("root"));
 
 
