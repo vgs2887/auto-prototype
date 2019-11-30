@@ -11,7 +11,7 @@ import {Button} from '@material-ui/core';
 import axios from 'axios'
 import "./chatstyle.css"
 import { Widget,addResponseMessage, addLinkSnippet, addUserMessage } from 'react-chat-widget';
-import { setQuoteObject } from "../../actions";
+import { setQuoteObject ,deleteDriverFromQuote} from "../../actions";
 const useStyles = {
     root: {
         width: 'auto',
@@ -34,12 +34,13 @@ class DriverDetails extends React.Component {
         super(props)
         this.state = { 
             didMount: true,
-            showChat:false
+            showChat:false,
+            chatContext:null
         };
     }
     componentDidMount(){
         setTimeout(() => {
-             this.setState({showChat: true,})
+             this.setState({showChat: true,})   
          }, 5000)
          this.setupBeforeUnloadListener();
          addResponseMessage("How can i help with this quote's driver details?");
@@ -55,6 +56,31 @@ class DriverDetails extends React.Component {
             history.push('/adddriver')} , 1500)
 
         }
+        if(newMessage && ((newMessage.toUpperCase().includes("DELETE")||newMessage.toUpperCase().includes("REMOVE")) && newMessage.toUpperCase().includes("DRIVER")))
+        {
+            if(this.props.quote.drivers.length > 1)
+            {
+                addResponseMessage("Sure i can help you remove the driver, enter the driver's name you want to remove...") 
+                this.setState({chatContext:"DELDR"})
+            }
+            else
+            {   
+                addResponseMessage("Sorry... Atleast one driver should be part of this quote. Add another driver to remove the current driver.")
+            }       
+        }
+        if(this.state.chatContext === 'DELDR')
+        {
+            this.props.quote.drivers.map((driver, index) => {
+                if (driver.name.toUpperCase().includes(newMessage.toUpperCase()))
+                {
+                    setTimeout(() => {this.props.quote.drivers.splice(index,1)
+                    console.log("DDsdfhjkshdfkjhD printing inside delete driver click --- "+JSON.stringify(this.props.quote.drivers))
+                    this.props.deleteDriverFromQuote(this.props.quote)
+                    addResponseMessage("Done. Removed!")},1000)
+                }
+            })
+        }
+
       }
     goToNextPage = () => {
         this.props.quote.lastVisitedPage ="vehicledetails"
@@ -123,4 +149,4 @@ const mapStateToProps = (state) => {
         "quote":state.quote
     }
 }
-export default connect(mapStateToProps,{ setQuoteObject })(DriverDetails)
+export default connect(mapStateToProps,{ setQuoteObject , deleteDriverFromQuote})(DriverDetails)
