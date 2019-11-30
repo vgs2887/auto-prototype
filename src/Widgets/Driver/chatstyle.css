@@ -40,22 +40,31 @@ box-shadow: 2px 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     display: flex;
     flex-direction: column;
     margin: 0 20px 20px 0;
-    max-width: 30px;
+    max-width: 35px;
     position: fixed;
     right: 0;
     z-index: 9999;
     background-color:transparent;
-    float: right;
+    float: left;
   }
   
   .rcw-open-launcher {
     height:30px;
     width:30px;
-    padding-right:4px;
     float:right;
   }
-  .rcw-close-button, .rcw-close{
-    display:none;
+  .rcw-close{
+    height:10px;
+    width:10px;
+    background-color:transparent;
+    border: none;
+    float: right;
+  }
+  .rcw-close-button{
+    background-color:transparent;
+    border: none;
+    float: right;
+    padding:5px 5px 5px 5px;
   }
   .rcw-send{
     height:30px;
@@ -83,10 +92,8 @@ box-shadow: 2px 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   width:60%;
 }
   .rcw-close-launcher{
-    height:20px;
-    width:20px;
-    float:right;
-    margin-left: 9px;
+    height:18px;
+    width:18px;
   }
   .rcw-send-icon{
     height:25px;
@@ -105,10 +112,8 @@ box-shadow: 2px 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     background-color:#041c3d;
   }
   .rcw-hide-sm {
-    display: flex;
-    float:right;
-    position: relative;
     border:none;
+    align:middle;
   }
   .rcw-sender{
     background-color: #a2adbd;
