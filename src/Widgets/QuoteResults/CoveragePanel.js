@@ -25,6 +25,7 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
+import { FaInfoCircle } from 'react-icons/fa';
 import 'react-dropdown/style.css'
 import { bool } from 'prop-types';
 
@@ -90,7 +91,13 @@ const options = [
     { value: 'three', label: '100,000/200,000' },
     { value: 'four', label: '200,000/300,000' },
     { value: 'five', label: '300,000/500,000' }]
-const defaultOption = options[0]
+const defaultOption = options[0];
+var coveragesSelections = {
+    bodilyInjury: 5,
+    propertyDamage: 5,
+    comprehensive: 20,
+    collision: 20
+};
 
 class CoveragePanel extends React.Component {
 
@@ -105,28 +112,28 @@ class CoveragePanel extends React.Component {
 
     BIcoverages = [
         { id: "0", covgValue: "$15,000/$30,000", amnt: "5" },
-    { id: "1", covgValue: ["$50,000/$100,000",<small>(Recommended)</small>], amnt: "10" },
+    { id: "1", covgValue: ["$50,000/$100,000",<small style={{ color: "green" }}>(Recommended)</small>], amnt: "10" },
         { id: "2", covgValue: "$100,000/$250,000", amnt: "15" },
         { id: "3", covgValue: "$500,000/$1,000,000", amnt: "20" }
     ];
 
     PDcoverages = [
         { id: "0", covgValue: "$10,000", amnt: "5" },
-        { id: "1", covgValue: ["$25,000", <small>(Recommended)</small>], amnt: "10" },
+        { id: "1", covgValue: ["$25,000", <small style={{ color: "green" }}>(Recommended)</small>], amnt: "10" },
         { id: "2", covgValue: "$50,000", amnt: "15" },
         { id: "3", covgValue: "$100,000", amnt: "20" }
     ];
 
     compCoverages = [
         { id: "0", covgValue: "$0", amnt: "20" },
-        { id: "1", covgValue: ["$250", <small>(Recommended)</small>], amnt: "15" },
+        { id: "1", covgValue: ["$250", <small style={{ color: "green" }}>(Recommended)</small>], amnt: "15" },
         { id: "2", covgValue: "$500", amnt: "10" },
         { id: "3", covgValue: "$1000", amnt: "5" }
     ];
 
     collCoverages = [
         { id: "0", covgValue: "$0", amnt: "20" },
-        { id: "1", covgValue: ["$250", <small>(Recommended)</small>], amnt: "15" },
+        { id: "1", covgValue: ["$250", <small style={{ color: "green" }}>(Recommended)</small>], amnt: "15" },
         { id: "2", covgValue: "$500", amnt: "10" },
         { id: "3", covgValue: "$1000", amnt: "5" }
     ];
@@ -135,16 +142,23 @@ class CoveragePanel extends React.Component {
         { vin: "123", year: "2016", make: "ABC", model: "BBC" },
         { vin: "456", year: "2019", make: "XYZ", model: "420" }
     ]
-
+    
+    
     constructor(props) {
         super(props)
-
+        
         this.quote = this.props.quote;
-        this.biLimit = ["$50,000/$100,000",<small>(Recommended)</small>];
-        this.pdLimit = ["$25,000",<small>(Recommended)</small>];
-        this.compSelect = ["$250",<small>(Recommended)</small>];
-        this.collSelect = ["$250",<small>(Recommended)</small>];
-        this.biCovAmnt = 10;
+        // this.biLimit = ["$50,000/$100,000",<small>(Recommended)</small>];
+        // this.pdLimit = ["$25,000",<small>(Recommended)</small>];
+        // this.compSelect = ["$250",<small>(Recommended)</small>];
+        // this.collSelect = ["$250",<small>(Recommended)</small>];
+
+        this.biLimit = "$15,000/$30,000";
+        this.pdLimit = "$10,000";
+        this.compSelect = "$500";
+        this.collSelect = "$500";
+
+        this.biCovAmnt = 5;
         this.pdCovgAmnt = 5;
 
         this.BICoverageAmntText = "$" + this.biCovAmnt; //Initial display text for the Coverage amount
@@ -184,6 +198,7 @@ class CoveragePanel extends React.Component {
         //2*20 = comp 20 + coll 20
         var premiumConst = 30 + (vehicles.length * (2 * 20));
         //alert('premiumConst = '+premiumConst );        
+        
 
         if (this.quote == null) {
             var coverages = {
@@ -210,16 +225,27 @@ class CoveragePanel extends React.Component {
         this.state = {
             didMount: false,
             premium: premiumConst,
+            isHidden: true,
         };
-
-
     }
     componentDidMount() {
         setTimeout(() => {
             this.setState({ didMount: true })
         }, 0)
     }
+    // calcPremium = (no_of_veh) => {
+    //     var tot_premium = () => 30 + coveragesSelections.bodilyInjury + coveragesSelections.propertyDamage + (no_of_veh * coveragesSelections.comprehensive)+
+    //     (no_of_veh * coveragesSelections.collision);
+    //     return tot_premium();
+        
+    //     };
 
+     calcPremium(no_of_veh) {
+        var tot_premium = 30 + coveragesSelections.bodilyInjury + coveragesSelections.propertyDamage + (no_of_veh * coveragesSelections.comprehensive)+
+        (no_of_veh * coveragesSelections.collision);
+        return tot_premium;
+        }
+       
     onChangeCovForBI = (e) => {
         // console.log("This in BI "+this.state.toString());
         // console.log("Target"+ JSON.stringify(e.target.label));
@@ -227,10 +253,11 @@ class CoveragePanel extends React.Component {
         var premium = this.state.premium;
         var prevSel = this.biCovAmnt;
         var biCoverageAmnt = parseInt(e.target.value);
-        console.log("BI name-" + biCoverageAmnt);
+        this.setState({isHidden:false});
+        
 
         premium = premium - prevSel + biCoverageAmnt;
-
+        console.log("Vignesh Prints The calculated Premium"+this.calcPremium(this.quote.vehicles.length)) ;
         this.biCovAmnt = biCoverageAmnt;
         let biSelected = this.BIcoverages.filter(coverage => coverage.amnt== this.biCovAmnt.toString());
         console.log("Vig Prints : "+JSON.stringify(biSelected[0]))
@@ -249,7 +276,7 @@ class CoveragePanel extends React.Component {
         //this.props.updatepremiumaction(premium);
         this.props.updateCoverages(this.quote);
         console.log(this.biCovAmnt);
-
+        
     }
 
 
@@ -258,7 +285,7 @@ class CoveragePanel extends React.Component {
         var premium = this.state.premium;
         var prevSel = this.pdCovgAmnt; //fix state var
         var pdCoverageAmnt = parseInt(e.target.value);
-
+        this.setState({isHidden:false});
         premium = premium - prevSel + pdCoverageAmnt;
 
         this.pdCovgAmnt = pdCoverageAmnt;
@@ -276,13 +303,13 @@ class CoveragePanel extends React.Component {
         this.props.updateCoverages(this.quote);
 
     }
-
+    
     onChangeCovgForComp = (e) => {
 
         var premium = this.state.premium;
         var inputArr = e.target.value.split(":");
         var compCoverageAmnt = parseInt(inputArr[1]);
-
+        this.setState({isHidden:false});
         var vin = inputArr[0];
         var prevCompCoverageAmnt = 0;
 
@@ -315,7 +342,7 @@ class CoveragePanel extends React.Component {
         var vin = inputArr[0];
         var prevCollCoverageAmnt = 0;
         var collCoverageAmntText = "$" + collCoverageAmnt;
-
+        this.setState({isHidden:false});
         for (var obj1 of this.collVehiCov) {
             console.log('Coll : vin = ' + obj1.vin + ', obj.coverAmnt =' + obj1.coverAmnt);
             if (obj1.vin === vin) {
@@ -347,6 +374,17 @@ class CoveragePanel extends React.Component {
         this.setState({ open: false });
     };
 
+    
+// calcPremium(no_of_veh) => {
+// var tot_premium = () => 30 + coveragesSelections.bodilyInjury + coveragesSelections.propertyDamage + (no_of_veh * coveragesSelections.comprehensive)+
+// (no_of_veh * coveragesSelections.collision);
+// return tot_premium();
+// }
+
+
+  
+  
+
     render() {
 
         const { didMount } = this.state;
@@ -355,7 +393,7 @@ class CoveragePanel extends React.Component {
             <table key={vehicle.vin} style={useStyles.tableStyle}>
                 <tr><p style={useStyles.childCovgText}>{vehicle.year} {vehicle.make} {vehicle.model} {[<small>(VIN: {vehicle.vin})</small>]}</p></tr>
                 <tr>
-                    <td style={{ width: "80%" }}>
+                    <td style={{ width: "85%" }}>
                         <Grid item sm="12" xs="12" >
                             {this.compSelect}
                             <Button style={{color:'#041c3d', padding:'10px'}} color="primary" onClick={this.handleDialogOpen('COMP')}>Edit</Button>
@@ -376,8 +414,8 @@ class CoveragePanel extends React.Component {
                             </FormControl>
                             <FormHelperText style={{ color: "black", marginTop: 0 }}>per occurence</FormHelperText>
                             <br></br>
-                                        <FormHelperText style={{ color: "green", marginTop: 0 }}><sup>*</sup>Recommended based on the most popular selection in your Zipcode.</FormHelperText>
-                                  
+                            <FormHelperText style={{ color: "green", marginTop: 0 }}><sup>***</sup>Recommended based on the most popular selection based on your zipcode, vehicle age and whether you own or lease your vehicle.</FormHelperText>
+                                        
                             </form></DialogContent>
                                 <DialogActions>
                                 <Button onClick={this.handleDialogClose} color="primary">
@@ -387,7 +425,7 @@ class CoveragePanel extends React.Component {
                             </Dialog>
                         </Grid>
                     </td>
-                    <td style={{ width: "20%" }}>
+                    <td style={{ width: "15%" }}>
                         <Grid item sm="12" xs="12" >
                             <div class="ui input" style={{ width: "100%", float: "right" }} >
                                 {/* <input type="text" readOnly value={100} /> */}
@@ -404,8 +442,8 @@ class CoveragePanel extends React.Component {
                  <table key={vehicle.vin} style={useStyles.tableStyle}>
                     <tr><p style={useStyles.childCovgText}>{vehicle.year} {vehicle.make} {vehicle.model} {[<small>(VIN: {vehicle.vin})</small>]}</p></tr>
                     <tr>
-                        <td style={{ width: "80%" }}>
-                            <Grid item sm="12" xs="12" >
+                        <td style={{ width: "85%" }}>
+                            <Grid justify="flex-start" item sm="12" xs="12" >
                             {this.collSelect}
                             <Button style={{color:'#041c3d', padding:'10px'}} color="primary" onClick={this.handleDialogOpen('COLL')}>Edit</Button>
                             <Dialog disableBackdropClick disableEscapeKeyDown open={this.state.open && this.state.covType == 'COLL'}>
@@ -425,7 +463,7 @@ class CoveragePanel extends React.Component {
                                 </FormControl>
                                 <FormHelperText style={{ color: "black", marginTop: 0 }}>per occurence</FormHelperText>
                                 <br></br>
-                                        <FormHelperText style={{ color: "green", marginTop: 0 }}><sup>*</sup>Recommended based on the most popular selection based on your zipcode, vehicle age and whether you own or lease your vehicle.</FormHelperText>
+                                        <FormHelperText style={{ color: "green", marginTop: 0 }}><sup>***</sup>Recommended based on the most popular selection based on your zipcode, vehicle age and whether you own or lease your vehicle.</FormHelperText>
                                         
                                 </form></DialogContent>
                                 <DialogActions>
@@ -436,7 +474,7 @@ class CoveragePanel extends React.Component {
                             </Dialog>
                             </Grid>
                         </td>
-                        <td style={{ width: "20%" }}>
+                        <td style={{ width: "15%" }}>
                             <Grid item sm="12" xs="12" >
                                 <div class="ui input" style={{ width: "100%", float: "right" }} >
                                     {/* <input type="text" readOnly value={100} /> */}
@@ -451,8 +489,12 @@ class CoveragePanel extends React.Component {
 
         return (
             <div>
+                {this.state.isHidden ? <h3 style={{ color: "green" }}> <FaInfoCircle color="green"/> These are your coverage selections based on your Prior Insurance, you can edit them and choose the selection that best caters your needs. </h3>
+                   : ""}
                 <Paper square="true" >
-                    <Grid container justify="flex-start" alignItems="flex-start" style={{ marginLeft: "0px !important" }}>
+
+                
+                     <Grid container justify="flex-start" alignItems="flex-start" style={{ marginLeft: "0px !important" }}>
 
                         <Grid item xs={12} sm={12} style={{textAlign: "center"}}>
                             <div className="coveragetext" style={useStyles.covgText}> Bodily Injury Liability Coverage</div>
@@ -462,8 +504,8 @@ class CoveragePanel extends React.Component {
                         </Grid>
                         <table style={useStyles.tableStyle}>
                             <tr>
-                                <td style={{ width: "80%" }}>
-                                    <Grid item sm="12" xs="12" >
+                                <td style={{ width: "85%" }}>
+                                    <Grid justify="flex-start" item sm="12" xs="12" >
                                         {this.biLimit}
                                     <Button style={{color:'#041c3d', padding:'10px'}} color="primary" onClick={this.handleDialogOpen('BI')}>Edit</Button>
                                     <Dialog disableBackdropClick disableEscapeKeyDown open={this.state.open && this.state.covType == 'BI'}>
@@ -483,7 +525,7 @@ class CoveragePanel extends React.Component {
                                         </FormControl>
                                         <FormHelperText style={{ color: "black", marginTop: 0 }}>per person/per accident</FormHelperText>
                                         <br></br>
-                                        <FormHelperText style={{ color: "green", marginTop: 0 }}>Recommended based on Your prior insurance.</FormHelperText>
+                                        <FormHelperText style={{ color: "green", marginTop: 0 }}><sup>***</sup>Recommended based on the most popular selection based on your zipcode, vehicle age and whether you own or lease your vehicle.</FormHelperText>
                                         </form></DialogContent>
                                     <DialogActions>
                                     <Button onClick={this.handleDialogClose} color="primary">
@@ -493,7 +535,7 @@ class CoveragePanel extends React.Component {
                                 </Dialog>
                                     </Grid>
                                 </td>
-                                <td style={{ width: "20%" }}>
+                                <td style={{ width: "15%" }}>
                                     <Grid item sm="12" xs="12" >
                                         <div class="ui input" style={{ width: "100%", float: "right" }} >
                                             {/* <input type="text" readOnly value={100} /> */}
@@ -517,8 +559,8 @@ class CoveragePanel extends React.Component {
                         </Grid>
                         <table style={useStyles.tableStyle}>
                             <tr>
-                                <td style={{ width: "80%" }}>
-                                    <Grid item sm="12" xs="12" >
+                                <td style={{ width: "85%" }}>
+                                    <Grid justify="flex-start" item sm="12" xs="12" >
                                     {this.pdLimit}
                                     <Button style={{color:'#041c3d', padding:'10px'}} color="primary" onClick={this.handleDialogOpen('PD')}>Edit</Button>
                                  
@@ -538,8 +580,8 @@ class CoveragePanel extends React.Component {
                                         </FormControl>
                                         <FormHelperText style={{ color: "black", marginTop: 0 }}>per accident</FormHelperText>
                                         <br></br>
-                                        <FormHelperText style={{ color: "green", marginTop: 0 }}>Recommended based on Your prior insurance.</FormHelperText>
-                                        </form></DialogContent>
+                                        <FormHelperText style={{ color: "green", marginTop: 0 }}><sup>***</sup>Recommended based on the most popular selection based on your zipcode, vehicle age and whether you own or lease your vehicle.</FormHelperText>
+                                         </form></DialogContent>
                                         <DialogActions>
                                     <Button onClick={this.handleDialogClose} color="primary">
                                         Ok
@@ -548,7 +590,7 @@ class CoveragePanel extends React.Component {
                                 </Dialog>
                                     </Grid>
                                 </td>
-                                <td style={{ width: "20%" }}>
+                                <td style={{ width: "15%" }}>
                                     <Grid item sm="12" xs="12" >
                                         <div class="ui input" style={{ width: "100%", float: "right" }} >
                                             {/* <input type="text" readOnly value={100} /> */}
