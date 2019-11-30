@@ -1,4 +1,5 @@
 import React from 'react'
+import ReactDOM from "react-dom";
 import history from '../../utils/history'
 import DisplayDriver from './DisplayDriver'
 import './stylequoteresults.css'
@@ -49,7 +50,10 @@ class DriverDetails extends React.Component {
         if(newMessage && (newMessage.toUpperCase().includes("ADD") && newMessage.toUpperCase().includes("DRIVER")))
         {
             addResponseMessage("Sure i will show you add a driver page where you can enter driver's details...");
-            setTimeout(() => {history.push('/adddriver')}, 1500)
+            setTimeout(() => {
+            ReactDOM.findDOMNode(this).querySelector('.rcw-widget-container .rcw-launcher .rcw-close-launcher').click() 
+            history.push('/adddriver')} , 1500)
+
         }
       }
     goToNextPage = () => {
