@@ -10,6 +10,7 @@ import axios from 'axios'
 import { setQuoteObject } from "../../actions";
 import history from "../../utils/history";
 import {determineStateCodes} from "./DetState"
+import UserConsent from "./UserConsent";
 const useStyles = {
     root: {
         width: 'auto', 
@@ -290,10 +291,13 @@ render(){
             </div>}
 <br />
 <br/> 
-{this.state.canDisplayGetStarted && !this.state.togglePolicy ? <Link align="left" to='/getstarted' onClick={()=>this.props.setQuoteObject(emptyObject)}><Button variant="contained" style={{backgroundColor:'#041c3d',color:'white'}}>
+{this.state.canDisplayGetStarted && !this.state.togglePolicy ? <Link align="left"  onClick={(e)=>{this.props.setQuoteObject(emptyObject); e.preventDefault();}}><UserConsent variant="contained" style={{backgroundColor:'#041c3d',color:'white'}}/></Link> :"" }
+                        {/* <Button variant="contained" style={{backgroundColor:'#041c3d',color:'white'}} onClick = {<UserConsent/>}>
                                 Get A New Quote
-                        </Button></Link> :"" }
+                        </Button>                         */}
+                        
 <br/><br/><br/><br/></div>
+
   );
 }
 }
