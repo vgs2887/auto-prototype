@@ -25,6 +25,7 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import 'react-dropdown/style.css'
+import { bool } from 'prop-types';
 
 const useStyles = {
     root: {
@@ -110,21 +111,21 @@ class CoveragePanel extends React.Component {
 
     PDcoverages = [
         { id: "0", covgValue: "$10,000", amnt: "5" },
-        { id: "1", covgValue: "$25,000", amnt: "10" },
+        { id: "1", covgValue: ["$25,000", <small>(Recommended)</small>], amnt: "10" },
         { id: "2", covgValue: "$50,000", amnt: "15" },
         { id: "3", covgValue: "$100,000", amnt: "20" }
     ];
 
     compCoverages = [
         { id: "0", covgValue: "$0", amnt: "20" },
-        { id: "1", covgValue: "$250", amnt: "15" },
+        { id: "1", covgValue: ["$250", <small>(Recommended)</small>], amnt: "15" },
         { id: "2", covgValue: "$500", amnt: "10" },
         { id: "3", covgValue: "$1000", amnt: "5" }
     ];
 
     collCoverages = [
         { id: "0", covgValue: "$0", amnt: "20" },
-        { id: "1", covgValue: "$250", amnt: "15" },
+        { id: "1", covgValue: ["$250", <small>(Recommended)</small>], amnt: "15" },
         { id: "2", covgValue: "$500", amnt: "10" },
         { id: "3", covgValue: "$1000", amnt: "5" }
     ];
@@ -139,6 +140,9 @@ class CoveragePanel extends React.Component {
 
         this.quote = this.props.quote;
         this.biLimit = ["$50,000/$100,000",<small>(Recommended)</small>];
+        this.pdLimit = ["$25,000",<small>(Recommended)</small>];
+        this.compSelect = ["$250",<small>(Recommended)</small>];
+        this.collSelect = ["$250",<small>(Recommended)</small>];
         this.biCovAmnt = 10;
         this.pdCovgAmnt = 5;
 
@@ -202,7 +206,6 @@ class CoveragePanel extends React.Component {
 
         //this.props.setQuoteObject(this.quote);
         this.props.updateCoverages(this.quote);
-
         this.state = {
             didMount: false,
             premium: premiumConst,
@@ -258,6 +261,10 @@ class CoveragePanel extends React.Component {
         premium = premium - prevSel + pdCoverageAmnt;
 
         this.pdCovgAmnt = pdCoverageAmnt;
+
+        let pdSelected = this.PDcoverages.filter(coverage => coverage.amnt== this.pdCovgAmnt.toString());
+        this.pdLimit = pdSelected[0].covgValue;
+
         this.PDCoverageAmntText = "$" + pdCoverageAmnt;
 
         this.quote.coverages.propertyDamage = pdCoverageAmnt;
@@ -289,6 +296,7 @@ class CoveragePanel extends React.Component {
         }
 
         premium = premium - prevCompCoverageAmnt + compCoverageAmnt;
+        
 
         this.quote.coverages.comprehensive = compCoverageAmnt;
         this.quote.premium = premium;
@@ -306,7 +314,6 @@ class CoveragePanel extends React.Component {
         var vin = inputArr[0];
         var prevCollCoverageAmnt = 0;
         var collCoverageAmntText = "$" + collCoverageAmnt;
-
 
         for (var obj1 of this.collVehiCov) {
             console.log('Coll : vin = ' + obj1.vin + ', obj.coverAmnt =' + obj1.coverAmnt);
@@ -330,14 +337,14 @@ class CoveragePanel extends React.Component {
 
     }
 
-    handleDialogOpen = () => {
+    handleDialogOpen = covType => () => {
         this.setState({ open: true });
+        this.setState({ covType: covType });
      };
 
     handleDialogClose = () => {
         this.setState({ open: false });
     };
-
 
     render() {
 
@@ -349,20 +356,31 @@ class CoveragePanel extends React.Component {
                 <tr>
                     <td style={{ width: "80%" }}>
                         <Grid item sm="12" xs="12" >
+                            {this.compSelect}
+                            <Button style={{color:'#041c3d', padding:'10px'}} color="primary" onClick={this.handleDialogOpen('COMP')}>Edit</Button>
+                            <Dialog disableBackdropClick disableEscapeKeyDown open={this.state.open && this.state.covType == 'COMP'}>
+                            <DialogTitle>Select the limit</DialogTitle>
+                            <DialogContent><form>
                             <FormControl className={useStyles.formControl} style={{ width: "100%" }}>
-                                <Select
+                                <RadioGroup
                                     value={vehicle.value}
                                     onChange={this.onChangeCovgForComp}
                                 >
                                     {this.compCoverages.map((coverage, key) => {
                                         var compCovKey = vehicle.vin + ":" + coverage.amnt;
-                                        return <MenuItem key={coverage.id}
-                                            value={compCovKey}>{coverage.covgValue}</MenuItem>
+                                        return <FormControlLabel control={<Radio color="default"/>} label={coverage.covgValue} value={coverage.amnt}></FormControlLabel>
                                     })}
 
-                                </Select>
+                                </RadioGroup>
                             </FormControl>
                             <FormHelperText style={{ color: "black", marginTop: 0 }}>per occurence</FormHelperText>
+                            </form></DialogContent>
+                                <DialogActions>
+                                <Button onClick={this.handleDialogClose} color="primary">
+                                    Ok
+                                </Button>
+                                </DialogActions>
+                            </Dialog>
                         </Grid>
                     </td>
                     <td style={{ width: "20%" }}>
@@ -383,20 +401,31 @@ class CoveragePanel extends React.Component {
                     <tr>
                         <td style={{ width: "80%" }}>
                             <Grid item sm="12" xs="12" >
+                            {this.collSelect}
+                            <Button style={{color:'#041c3d', padding:'10px'}} color="primary" onClick={this.handleDialogOpen('COLL')}>Edit</Button>
+                            <Dialog disableBackdropClick disableEscapeKeyDown open={this.state.open && this.state.covType == 'COLL'}>
+                            <DialogTitle>Select the limit</DialogTitle>
+                            <DialogContent><form>
                                 <FormControl className={useStyles.formControl} style={{ width: "100%" }}>
-                                    <Select
+                                    <RadioGroup
                                         value={vehicle.value}
                                         onChange={this.onChangeCovgForColl}
                                     >
                                         {this.collCoverages.map((coverage, key) => {
                                             var collCovKey = vehicle.vin + ":" + coverage.amnt;
-                                            return <MenuItem key={coverage.id}
-                                                value={collCovKey}>{coverage.covgValue}</MenuItem>
+                                            return <FormControlLabel control={<Radio color="default"/>} label={coverage.covgValue} value={coverage.amnt}></FormControlLabel>
                                         })}
 
-                                    </Select>
+                                    </RadioGroup>
                                 </FormControl>
                                 <FormHelperText style={{ color: "black", marginTop: 0 }}>per occurence</FormHelperText>
+                                </form></DialogContent>
+                                <DialogActions>
+                                <Button onClick={this.handleDialogClose} color="primary">
+                                    Ok
+                                </Button>
+                                </DialogActions>
+                            </Dialog>
                             </Grid>
                         </td>
                         <td style={{ width: "20%" }}>
@@ -427,15 +456,11 @@ class CoveragePanel extends React.Component {
                                 <td style={{ width: "80%" }}>
                                     <Grid item sm="12" xs="12" >
                                         {this.biLimit}
-                                    <Button onClick={this.handleDialogOpen}>Edit</Button>
-                                    <Dialog disableBackdropClick disableEscapeKeyDown open={this.state.open}>
+                                    <Button style={{color:'#041c3d', padding:'10px'}} color="primary" onClick={this.handleDialogOpen('BI')}>Edit</Button>
+                                    <Dialog disableBackdropClick disableEscapeKeyDown open={this.state.open && this.state.covType == 'BI'}>
                                         <DialogTitle>Select the limit</DialogTitle>
                                         <DialogContent><form>
                                         <FormControl className={useStyles.formControl} style={{ width: "100%" }}>
-                                            {
-                                            console.log("Vignesh Prints this.biCovAmnt to string"+this.biCovAmnt.toString())}
-                                            
-                                            
                                             <RadioGroup
                                                 value={this.biCovAmnt.toString()}
                                                 onChange={this.onChangeCovForBI}
@@ -484,18 +509,31 @@ class CoveragePanel extends React.Component {
                             <tr>
                                 <td style={{ width: "80%" }}>
                                     <Grid item sm="12" xs="12" >
+                                    {this.pdLimit}
+                                    <Button style={{color:'#041c3d', padding:'10px'}} color="primary" onClick={this.handleDialogOpen('PD')}>Edit</Button>
+                                 
+                                    <Dialog disableBackdropClick disableEscapeKeyDown open={this.state.open && this.state.covType == 'PD'}>
+                                        <DialogTitle>Select the limit</DialogTitle>
+                                        <DialogContent><form>
                                         <FormControl className={useStyles.formControl} style={{ width: "100%" }}>
-                                            <Select
-                                                value={this.pdCovgAmnt}
+                                            <RadioGroup
+                                                value={this.pdCovgAmnt.toString()}
                                                 onChange={this.onChangeCovgForPD}
                                             >
                                                 {this.PDcoverages.map(coverage => {
-                                                    return <MenuItem value={coverage.amnt}>{coverage.covgValue}</MenuItem>
+                                                    return <FormControlLabel control={<Radio color="default"/>} label={coverage.covgValue} value={coverage.amnt}></FormControlLabel>
                                                 })}
 
-                                            </Select>
+                                            </RadioGroup>
                                         </FormControl>
                                         <FormHelperText style={{ color: "black", marginTop: 0 }}>per accident</FormHelperText>
+                                        </form></DialogContent>
+                                        <DialogActions>
+                                    <Button onClick={this.handleDialogClose} color="primary">
+                                        Ok
+                                    </Button>
+                                    </DialogActions>
+                                </Dialog>
                                     </Grid>
                                 </td>
                                 <td style={{ width: "20%" }}>
