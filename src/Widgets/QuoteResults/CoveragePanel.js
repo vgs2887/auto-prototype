@@ -5,7 +5,6 @@ import { updateCoverages } from '../../actions'
 import { setQuoteObject } from "../../actions";
 import { Divider, Paper, Grid } from '@material-ui/core';
 import './CoveragePanel.css';
-
 //import Select from 'react-select';
 
 
@@ -21,8 +20,11 @@ import InputLabel from '@material-ui/core/InputLabel';
 import Select from '@material-ui/core/Select';
 import Button from '@material-ui/core/Button';
 import MenuItem from '@material-ui/core/MenuItem';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogTitle from '@material-ui/core/DialogTitle';
 import 'react-dropdown/style.css'
-import BiLimits from "./BiLimits";
 
 const useStyles = {
     root: {
@@ -97,11 +99,11 @@ class CoveragePanel extends React.Component {
     compVehiCov = [];
     collVehiCov = [];
     quote = [];
-
+    
 
     BIcoverages = [
         { id: "0", covgValue: "$15,000/$30,000", amnt: "5" },
-        { id: "1", covgValue: "$50,000/$100,000", amnt: "10" },
+    { id: "1", covgValue: ["$50,000/$100,000",<small>(Recommended)</small>], amnt: "10" },
         { id: "2", covgValue: "$100,000/$250,000", amnt: "15" },
         { id: "3", covgValue: "$500,000/$1,000,000", amnt: "20" }
     ];
@@ -136,8 +138,8 @@ class CoveragePanel extends React.Component {
         super(props)
 
         this.quote = this.props.quote;
-
-        this.biCovAmnt = 5;
+        this.biLimit = ["$50,000/$100,000",<small>(Recommended)</small>];
+        this.biCovAmnt = 10;
         this.pdCovgAmnt = 5;
 
         this.BICoverageAmntText = "$" + this.biCovAmnt; //Initial display text for the Coverage amount
@@ -178,8 +180,6 @@ class CoveragePanel extends React.Component {
         var premiumConst = 30 + (vehicles.length * (2 * 20));
         //alert('premiumConst = '+premiumConst );        
 
-
-
         if (this.quote == null) {
             var coverages = {
                 bodilyInjury: 5,
@@ -217,15 +217,22 @@ class CoveragePanel extends React.Component {
     }
 
     onChangeCovForBI = (e) => {
-
+        // console.log("This in BI "+this.state.toString());
+        // console.log("Target"+ JSON.stringify(e.target.label));
+        //this.biLimit = this.BIcoverages.filter(coverage => coverage.amnt== e.target.value.toString);
         var premium = this.state.premium;
         var prevSel = this.biCovAmnt;
         var biCoverageAmnt = parseInt(e.target.value);
-        console.log("BI value-" + biCoverageAmnt);
+        console.log("BI name-" + biCoverageAmnt);
 
         premium = premium - prevSel + biCoverageAmnt;
 
         this.biCovAmnt = biCoverageAmnt;
+        let biSelected = this.BIcoverages.filter(coverage => coverage.amnt== this.biCovAmnt.toString());
+        console.log("Vig Prints : "+JSON.stringify(biSelected[0]))
+        this.biLimit = biSelected[0].covgValue;
+        console.log("Vigi : this.biLimit "+this.biLimit);
+
         this.BICoverageAmntText = "$" + biCoverageAmnt;
 
         console.log("BI 2 value-" + biCoverageAmnt);
@@ -237,7 +244,7 @@ class CoveragePanel extends React.Component {
         //this.props.setQuoteObject(this.quote);
         //this.props.updatepremiumaction(premium);
         this.props.updateCoverages(this.quote);
-        console.log(this.quote.coverages.bodilyInjury);
+        console.log(this.biCovAmnt);
 
     }
 
@@ -323,6 +330,13 @@ class CoveragePanel extends React.Component {
 
     }
 
+    handleDialogOpen = () => {
+        this.setState({ open: true });
+     };
+
+    handleDialogClose = () => {
+        this.setState({ open: false });
+    };
 
 
     render() {
@@ -399,8 +413,6 @@ class CoveragePanel extends React.Component {
 
         return (
             <div>
-
-
                 <Paper square="true" >
                     <Grid container justify="flex-start" alignItems="flex-start" style={{ marginLeft: "0px !important" }}>
 
@@ -414,20 +426,37 @@ class CoveragePanel extends React.Component {
                             <tr>
                                 <td style={{ width: "80%" }}>
                                     <Grid item sm="12" xs="12" >
+                                        {this.biLimit}
+                                    <Button onClick={this.handleDialogOpen}>Edit</Button>
+                                    <Dialog disableBackdropClick disableEscapeKeyDown open={this.state.open}>
+                                        <DialogTitle>Select the limit</DialogTitle>
+                                        <DialogContent><form>
                                         <FormControl className={useStyles.formControl} style={{ width: "100%" }}>
-                                            <Select
-                                                value={this.biCovAmnt}
+                                            {
+                                            console.log("Vignesh Prints this.biCovAmnt to string"+this.biCovAmnt.toString())}
+                                            
+                                            
+                                            <RadioGroup
+                                                value={this.biCovAmnt.toString()}
                                                 onChange={this.onChangeCovForBI}
                                             >
                                                 {this.BIcoverages.map(coverage => {
-                                                    return <MenuItem value={coverage.amnt}>{coverage.covgValue}</MenuItem>
+                                                    console.log("Vignesh Prints COverage.amnt2"+coverage.amnt);
+                                                    return <FormControlLabel control={<Radio color="default"/>} label={coverage.covgValue} value={coverage.amnt}></FormControlLabel>
                                                 })}
 
-                                            </Select>
-                                           
+                                            </RadioGroup>
                                         </FormControl>
                                         <FormHelperText style={{ color: "black", marginTop: 0 }}>per person/per accident</FormHelperText>
-                                        <BiLimits/>
+                                        <br></br>
+                                        <FormHelperText style={{ color: "green", marginTop: 0 }}>Recommended based on the most popular selection in your Zipcode</FormHelperText>
+                                        </form></DialogContent>
+                                    <DialogActions>
+                                    <Button onClick={this.handleDialogClose} color="primary">
+                                        Ok
+                                    </Button>
+                                    </DialogActions>
+                                </Dialog>
                                     </Grid>
                                 </td>
                                 <td style={{ width: "20%" }}>
