@@ -1,0 +1,50 @@
+.row {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .top-column{
+    text-align: left;    
+    
+    white-space: nowrap;
+}
+
+.bottom-column{
+    text-align: left;
+    margin-left: -15%;
+    margin-top: 3% !important;
+    white-space: nowrap;
+}
+
+.top-row{
+    display: grid;
+    grid-auto-flow: column;
+    
+    
+}
+
+.bottom-row{
+    display: grid;
+    grid-auto-flow: column;
+}
+
+.avatar-container {
+    flex-basis: 200px;
+    margin-top: 5%;
+     margin-left: 0; 
+}
+
+.select-text{
+    margin-top:10%;
+}
+
+.item{
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.quote-button{
+    display: flex;
+  align-items: center;
+  justify-content: center;
+}
