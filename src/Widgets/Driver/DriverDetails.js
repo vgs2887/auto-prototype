@@ -32,18 +32,25 @@ class DriverDetails extends React.Component {
     constructor(props) {
         super(props)
         this.state = { 
-            didMount: false
+            didMount: true,
+            showChat:false
         };
     }
     componentDidMount(){
         setTimeout(() => {
-             this.setState({didMount: true})
-         }, 0)
+             this.setState({showChat: true,})
+         }, 5000)
          this.setupBeforeUnloadListener();
+         addResponseMessage("How can i help with this quote's driver details?");
      }
      handleNewUserMessage = (newMessage) => {
         console.log(`New message incoming! ${newMessage}`);
         // Now send the message throught the backend API
+        if(newMessage && (newMessage.toUpperCase().includes("ADD") && newMessage.toUpperCase().includes("DRIVER")))
+        {
+            addResponseMessage("Sure i will show you add a driver page where you can enter driver's details...");
+            setTimeout(() => {history.push('/adddriver')}, 1500)
+        }
       }
     goToNextPage = () => {
         this.props.quote.lastVisitedPage ="vehicledetails"
@@ -69,18 +76,18 @@ class DriverDetails extends React.Component {
         });
     };
     render() {
-        const {didMount} = this.state
+        const {didMount,showChat} = this.state
         return (
             <div style={{backgroundColor:'#F5F5F5'}}>
-                <Widget
+              { showChat?  <Widget
           handleNewUserMessage={this.handleNewUserMessage}          
           showCloseButton={true}
           fullScreenMode={false}
           badge={0}
           autofocus={true}
           title="Ask TARS"
-          subtitle="Hey Jenny! I am Tars Your bot for today! How can i help?"
-        />
+          subtitle="Hey Jenny! I am Tars Your bot for today!"
+        />:""}
             <Paper style={useStyles.root}>
                 <div className={`drivers fade-in ${didMount && 'visible'}`}>
                 <Grid container >

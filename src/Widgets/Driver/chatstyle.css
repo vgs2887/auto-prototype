@@ -1,8 +1,8 @@
 .rcw-conversation-container > .rcw-header {
     background-color:#041c3d;
     color:white;
-    height:120px;
-    width:250px;
+    height:95px;
+    width:290px;
     float: right;
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
@@ -10,15 +10,23 @@
     margin-bottom: 0px;
     margin-right: 0px;
     margin-left: 0px;
-    box-shadow: '0px 2px 1px 2px rgba(0,0,0,0.2), 0p;x 1px 1px 0px rgba(0,0,0,0.14), 0px 1px 3px 3px rgba(0,0,0,0.12)';
 }
 
+.rcw-conversation-container{
+box-shadow: 2px 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+.rcw-new-message {
+  margin-top: 10px;
+  background-color:#a2adbd;
+  border:none;
+  height:50px;
+}
   .rcw-messages-container {
     background-color: whitesmoke;
-    height:100px;
+    height:130px;
     max-height:150px;
     overflow: auto;
-    width:250px;
+    width:290px;
     float: right;
     margin: 0px;
   }
@@ -28,61 +36,93 @@
     color: white;
   }
   .rcw-widget-container {
-    bottom: 1;
+    bottom: 20%;
     display: flex;
     flex-direction: column;
     margin: 0 20px 20px 0;
-    max-width: 250px;
+    max-width: 30px;
     position: fixed;
     right: 0;
     z-index: 9999;
+    background-color:transparent;
+    float: right;
   }
-  .rcw-close-button, .rcw-launcher{
+  
+  .rcw-open-launcher {
     height:30px;
     width:30px;
+    padding-right:4px;
     float:right;
-    border-color:transparent;
-    background-color:transparent;
+  }
+  .rcw-close-button, .rcw-close{
+    display:none;
   }
   .rcw-send{
     height:30px;
     width:30px;
     float:right;
-    border-color:#041c3d;
-    background-color:#041c3d;
+    margin-top:10px;
+    margin-right: 15px;
+    background-color:#a2adbd;
+    border:none;
+  }
+.rcw-message .rcw-response .rcw-message-text {
+  float : left;
+  border-radius:5px 5px 5px 0px;
+  background: gray;
+  border:1px solid  white ;
+  color:white;
+  width:60%;
+}
+.rcw-message .rcw-client .rcw-message-text {
+  float : right;
+  border-radius:5px 5px 0px 5px;
+  background: #a2adbd;
+  border:1px s black;
+  color:black;
+  width:60%;
+}
+  .rcw-close-launcher{
+    height:20px;
+    width:20px;
+    float:right;
+    margin-left: 9px;
+  }
+  .rcw-send-icon{
+    height:25px;
+    width:25px;
+    float:right;
+    border-color:#a2adbd;
+    background-color:#a2adbd;
   }
 
-  .rcw-close, .rcw-close-launcher, .rcw-send-icon{
-    height:15px;
-    width:15px;
-    float:right;
-    border-color:#041c3d;
-    background-color:#041c3d;
-  }
   .rcw-launcher{
-    height:60px;
-    width:60px;
+    height:50px;
+    width:50px;
     float:right;
     border-radius: 100px;
-    border-color:#041c3d;
+    border-color:transparent;
     background-color:#041c3d;
   }
-  .rcw-close-launcher{
-    height:34px;
-    width:32px;
-    float:right;
-  }
   .rcw-hide-sm {
-    display: none;
+    display: flex;
+    float:right;
+    position: relative;
+    border:none;
   }
   .rcw-sender{
-    background-color: #041c3d;
-    width:250px;
+    background-color: #a2adbd;
+    border:none;
+    width:290px;
+    height:80px;
     border-bottom-left-radius: 5px;
     border-bottom-right-radius: 5px;
     float: right;
   }
 
   .rcw-title span {
-    padding-bottom: 5px;
+    padding-bottom: 5px;    
+  }
+  .rcw-title{
+    margin-top: 10px;
   }
