@@ -12,6 +12,7 @@ import Checkbox from '@material-ui/core/Checkbox';
 import Slide from '@material-ui/core/Slide';
 import ReactDOM from "react-dom";
 import "./UserConsent.css";
+import CloseIcon from '@material-ui/icons/Close';
 
 
 const useStyles = {
@@ -32,11 +33,12 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 
 export default class UserConsent extends React.Component {
 
-    constructor(){
-        super();
+    constructor(props){
+        super(props);
         this.state = { isChecked: false,
                 isHidden: true
         };
+        this.handleAdd = this.handleAdd.bind(this);
       }
     state = {
         open:false,
@@ -85,6 +87,7 @@ render(){
         aria-describedby="alert-dialog-slide-description"
       >
         <DialogTitle id="alert-dialog-slide-title">{"Start a family tradition of saving with Auto Insurance."}</DialogTitle>
+        <CloseIcon className = "close-button" onClick = {this.handleClose}></CloseIcon>
         <DialogContent>        
           <DialogContentText id="alert-dialog-slide-description">    
           <div class="row">      
