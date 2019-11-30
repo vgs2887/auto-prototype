@@ -30,30 +30,6 @@ const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-//   const [open,setOpen] = React.useState(false);
-//   const [state, setState] = React.useState({
-//     checkedA: true,
-//   });
-
-
-
-//   const handleChange = name => event => {
-//     setState({ ...state, [name]:event.target.checked });
-//     console.log("Abbinav in handleChange", event.target.checked);
-//   };
-//   const handleChange = name => event => {
-//     this.setState({ ...state, [name]: event.target.checked });
-//   };
-
-
-
-//   const handleClickOpen = () => {
-//     setOpen(true);
-//   };
-
-//   const handleClose = () => {
-//     setOpen(false);
-//   };
 export default class UserConsent extends React.Component {
 
     constructor(){
@@ -81,7 +57,6 @@ export default class UserConsent extends React.Component {
               
             }            
           );
-          console.log("Abbinav in userConsentHandleAdd", this.state.isChecked);
           
       }
 
@@ -91,7 +66,7 @@ export default class UserConsent extends React.Component {
             this.setState({
                 isHidden: false
               })
-            console.log("Abbinav in userConsent", this.state.isHidden);
+            
                 }
       }
 render(){
@@ -109,7 +84,7 @@ render(){
         aria-labelledby="alert-dialog-slide-title"
         aria-describedby="alert-dialog-slide-description"
       >
-        <DialogTitle id="alert-dialog-slide-title">{"Start a family tradition of saving with USAA Auto Insurance."}</DialogTitle>
+        <DialogTitle id="alert-dialog-slide-title">{"Start a family tradition of saving with Auto Insurance."}</DialogTitle>
         <DialogContent>        
           <DialogContentText id="alert-dialog-slide-description">    
           <div class="row">      
