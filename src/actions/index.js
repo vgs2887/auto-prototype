@@ -96,3 +96,9 @@ export const deleteVehicleFromQuote=(quote) => async dispatch => {
         payload:quote
     })
 }
+export const updatePremiumAndCoveragesAction = (userEnteredPremium) => async dispatch => {
+    dispatch({
+        type:"UPDATEPREMIUMANDCOVERAGES",
+        userEnteredPremium 
+    })
+} 
