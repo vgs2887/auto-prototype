@@ -103,6 +103,8 @@ class CoveragePanel extends React.Component {
 
     biCovAmnt = null;
     pdCovgAmnt = null;
+    compCovgAmnt = null;
+    collCovgAmnt = null;
     BICoverageAmntText = null;
     PDCoverageAmntText = null;
     compVehiCov = [];
@@ -160,6 +162,8 @@ class CoveragePanel extends React.Component {
 
         this.biCovAmnt = 5;
         this.pdCovgAmnt = 5;
+        this.compCovgAmnt = 5;
+
 
         this.BICoverageAmntText = "$" + this.biCovAmnt; //Initial display text for the Coverage amount
         this.PDCoverageAmntText = "$" + this.pdCovgAmnt;
@@ -177,18 +181,20 @@ class CoveragePanel extends React.Component {
                 year: vehicle.year,
                 make: vehicle.make,
                 model: vehicle.model,
-                coverAmnt: 20,
-                coverAmntText: "$" + 20,
-                value: vehicle.vin + ":" + 20
+                coverAmnt: 10,
+                coverAmntText: "$" + 10,
+                value: vehicle.vin + ":" + 10,
+                label: this.compSelect
             };
             collVehicles = {
                 vin: vehicle.vin,
                 year: vehicle.year,
                 make: vehicle.make,
                 model: vehicle.model,
-                coverAmnt: 20,
-                coverAmntText: "$" + 20,
-                value: vehicle.vin + ":" + 20
+                coverAmnt: 10,
+                coverAmntText: "$" + 10,
+                value: vehicle.vin + ":" + 10,
+                label: this.collSelect
             };
             this.compVehiCov.push(compVehicles);
             this.collVehiCov.push(collVehicles);
@@ -308,10 +314,17 @@ class CoveragePanel extends React.Component {
 
         var premium = this.state.premium;
         var inputArr = e.target.value.split(":");
+        console.log("#####COMP inputArr0-" + inputArr[0]);
+        console.log("#####COMP inputArr1-" + inputArr[1]);
         var compCoverageAmnt = parseInt(inputArr[1]);
+        console.log("#####COMP compCoverageAmnt-" + compCoverageAmnt);
         this.setState({isHidden:false});
         var vin = inputArr[0];
         var prevCompCoverageAmnt = 0;
+
+        this.compCovgAmnt = compCoverageAmnt;
+        let compSelected = this.compCoverages.filter(coverage => coverage.amnt== this.compCovgAmnt.toString());
+        this.compSelect = compSelected[0].covgValue;
 
         for (var obj of this.compVehiCov) {
 
@@ -320,6 +333,7 @@ class CoveragePanel extends React.Component {
                 obj.coverAmnt = compCoverageAmnt;
                 obj.coverAmntText = "$" + compCoverageAmnt;
                 obj.value = obj.vin + ":" + compCoverageAmnt;
+                obj.label = this.compSelect;
             }
         }
 
@@ -343,6 +357,13 @@ class CoveragePanel extends React.Component {
         var prevCollCoverageAmnt = 0;
         var collCoverageAmntText = "$" + collCoverageAmnt;
         this.setState({isHidden:false});
+
+        this.collCovgAmnt = collCoverageAmnt;
+    
+        let collSelected = this.collCoverages.filter(coverage => coverage.amnt== this.collCovgAmnt.toString());
+        console.log("#####compSelected Prints : "+JSON.stringify(collSelected[0]))
+        this.collSelect = collSelected[0].covgValue;
+        
         for (var obj1 of this.collVehiCov) {
             console.log('Coll : vin = ' + obj1.vin + ', obj.coverAmnt =' + obj1.coverAmnt);
             if (obj1.vin === vin) {
@@ -350,6 +371,7 @@ class CoveragePanel extends React.Component {
                 obj1.coverAmnt = collCoverageAmnt;
                 obj1.coverAmntText = collCoverageAmntText;
                 obj1.value = obj1.vin + ":" + collCoverageAmnt;
+                obj1.label = this.collSelect;
             }
         }
 
@@ -395,9 +417,9 @@ class CoveragePanel extends React.Component {
                 <tr>
                     <td style={{ width: "85%" }}>
                         <Grid item sm="12" xs="12" >
-                            {this.compSelect}
-                            <Button style={{color:'#041c3d', padding:'10px'}} color="primary" onClick={this.handleDialogOpen('COMP')}>Edit</Button>
-                            <Dialog disableBackdropClick disableEscapeKeyDown open={this.state.open && this.state.covType == 'COMP'}>
+                            {vehicle.label}
+                            <Button style={{color:'#041c3d', padding:'10px'}} color="primary" onClick={this.handleDialogOpen(vehicle.vin+':COMP')}>Edit</Button>
+                            <Dialog disableBackdropClick disableEscapeKeyDown open={this.state.open && this.state.covType == vehicle.vin+':COMP'}>
                             <DialogTitle>Select the limit</DialogTitle>
                             <DialogContent><form>
                             <FormControl className={useStyles.formControl} style={{ width: "100%" }}>
@@ -407,7 +429,7 @@ class CoveragePanel extends React.Component {
                                 >
                                     {this.compCoverages.map((coverage, key) => {
                                         var compCovKey = vehicle.vin + ":" + coverage.amnt;
-                                        return <FormControlLabel control={<Radio color="default"/>} label={coverage.covgValue} value={coverage.amnt}></FormControlLabel>
+                                        return <FormControlLabel control={<Radio color="default"/>} label={coverage.covgValue} value={compCovKey}></FormControlLabel>
                                     })}
 
                                 </RadioGroup>
@@ -444,9 +466,9 @@ class CoveragePanel extends React.Component {
                     <tr>
                         <td style={{ width: "85%" }}>
                             <Grid justify="flex-start" item sm="12" xs="12" >
-                            {this.collSelect}
-                            <Button style={{color:'#041c3d', padding:'10px'}} color="primary" onClick={this.handleDialogOpen('COLL')}>Edit</Button>
-                            <Dialog disableBackdropClick disableEscapeKeyDown open={this.state.open && this.state.covType == 'COLL'}>
+                            {vehicle.label}
+                            <Button style={{color:'#041c3d', padding:'10px'}} color="primary" onClick={this.handleDialogOpen(vehicle.vin+':COLL')}>Edit</Button>
+                            <Dialog disableBackdropClick disableEscapeKeyDown open={this.state.open && this.state.covType == vehicle.vin+':COLL'}>
                             <DialogTitle>Select the limit</DialogTitle>
                             <DialogContent><form>
                                 <FormControl className={useStyles.formControl} style={{ width: "100%" }}>
@@ -456,7 +478,7 @@ class CoveragePanel extends React.Component {
                                     >
                                         {this.collCoverages.map((coverage, key) => {
                                             var collCovKey = vehicle.vin + ":" + coverage.amnt;
-                                            return <FormControlLabel control={<Radio color="default"/>} label={coverage.covgValue} value={coverage.amnt}></FormControlLabel>
+                                            return <FormControlLabel control={<Radio color="default"/>} label={coverage.covgValue} value={collCovKey}></FormControlLabel>
                                         })}
 
                                     </RadioGroup>
