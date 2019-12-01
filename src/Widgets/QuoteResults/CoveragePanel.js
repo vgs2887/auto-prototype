@@ -489,7 +489,7 @@ class CoveragePanel extends React.Component {
 
         return (
             <div>
-                {this.state.isHidden ? <h3 style={{ color: "green" }}> <FaInfoCircle color="green"/> These are your coverage selections based on your Prior Insurance, you can edit them and choose the selection that best caters your needs. </h3>
+                {this.state.isHidden ? <h5 className = "info-message" style={{ color: "#1A3258" }}> <FaInfoCircle color="green" /> These are your coverage selections based on your Prior Insurance, you can edit them and choose the selection that best caters your needs. </h5>
                    : ""}
                 <Paper square="true" >
 

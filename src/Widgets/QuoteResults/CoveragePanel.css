@@ -10,3 +10,10 @@ border-radius: 2px !important;
 .MuiGrid-container {
 margin-left:0 px !important;
 }
+
+.info-message{
+    
+    padding: 10px;
+    background-color: #FEEFB3;
+    border-radius: 10px;
+}
