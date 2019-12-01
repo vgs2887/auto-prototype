@@ -13,7 +13,9 @@ import { setPageNameAction } from "../../actions";
 import { Link } from 'react-router-dom'
 import axios from 'axios'
 import { Button } from '@material-ui/core';
-
+import "./chatstyle.css"
+import { Widget,addResponseMessage, addLinkSnippet, addUserMessage } from 'react-chat-widget';
+import ReactDOM from "react-dom";
 const useStyles = {
     root: {
         flexGrow: 1,
@@ -39,7 +41,7 @@ class QuoteResultsPage extends React.Component {
 
     constructor(props) {
         super(props)
-        this.state = { premium: this.props.premium, pageName: '' };
+        this.state = { premium: this.props.premium, pageName: '',showChat:null,chatContext:null };
     }
 
 
@@ -85,7 +87,32 @@ class QuoteResultsPage extends React.Component {
     //     }
     //     return null;
     // }
+    handleNewUserMessage = (newMessage) => {
+        console.log(`New message incoming! ${newMessage}`);
+        // Now send the message throught the backend API
+        if(newMessage && ((newMessage.toUpperCase().includes("LOW") || newMessage.toUpperCase().includes("REDUCE") || newMessage.toUpperCase().includes("BETTER") )&&
+        (newMessage.toUpperCase().includes("RATE") ||
+        newMessage.toUpperCase().includes("COST") ||
+        newMessage.toUpperCase().includes("COVERAGE") ||
+        newMessage.toUpperCase().includes("PREMIUM"))))
+        {
+            addResponseMessage("Sure i can help you with better premium... can you tell the price range you are expecting?");
+            this.setState({chatContext:"LOWPREM"})
+        }
+        
+        if(this.state.chatContext === 'LOWPREM')
+        {
+            if(!isNaN(newMessage))
+            {
+                this.setState({chatContext:null})
+            }
+            else
+            {
+                addResponseMessage("Enter a valid range from the recommendation.")
+            }
+        }
 
+      }
     setComponent = (pageName) => {
 
         this.props.setPageNameAction(pageName);
@@ -124,6 +151,9 @@ getComponent = () => {
 //     history.push("/payment");
 //   };
 componentDidMount(){
+    setTimeout(() => {
+        this.setState({showChat: true,})   
+    }, 5000)
     this.setupBeforeUnloadListener();
 }
 doSomethingBeforeUnload = (ev) => {
@@ -144,6 +174,15 @@ render() {
     var premium = this.props.premium ;
     return (
         <div style={useStyles.root}>
+            { this.state.showChat?  <Widget
+          handleNewUserMessage={this.handleNewUserMessage}          
+          showCloseButton={true}
+          fullScreenMode={false}
+          badge={0}
+          autofocus={true}
+          title="Ask TARS"
+          subtitle="Hey Jenny! I am Tars Your bot for today! Any help needed with coverage/premium?"
+        />:""}
             <Grid container spacing={3} style={useStyles.CommonDivWidth}>              
                 <Grid item id="circualrgrid" style={{marginLeft:'0px !importatnt'}} xs={12}>
                   <CircularDiv premium={premium} />
