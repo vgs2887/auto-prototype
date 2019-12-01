@@ -43,7 +43,6 @@ class DriverDetails extends React.Component {
              this.setState({showChat: true,})   
          }, 5000)
          this.setupBeforeUnloadListener();
-         addResponseMessage("How can i help with this quote's driver details?");
      }
      handleNewUserMessage = (newMessage) => {
         console.log(`New message incoming! ${newMessage}`);
@@ -60,8 +59,13 @@ class DriverDetails extends React.Component {
         {
             if(this.props.quote.drivers.length > 1)
             {
-                addResponseMessage("Sure i can help you remove the driver, enter the driver's name you want to remove...") 
+                addResponseMessage("Sure i can help you remove the driver, Enter the driver's id you want to remove...") 
                 this.setState({chatContext:"DELDR"})
+                var count =1
+                this.props.quote.drivers.map((driver,index) => {
+                    addResponseMessage("Driverid - " + count + " - "+ driver.name)
+                    count = count + 1
+                })
             }
             else
             {   
@@ -70,15 +74,31 @@ class DriverDetails extends React.Component {
         }
         if(this.state.chatContext === 'DELDR')
         {
-            this.props.quote.drivers.map((driver, index) => {
-                if (driver.name.toUpperCase().includes(newMessage.toUpperCase()))
-                {
-                    setTimeout(() => {this.props.quote.drivers.splice(index,1)
-                    console.log("DDsdfhjkshdfkjhD printing inside delete driver click --- "+JSON.stringify(this.props.quote.drivers))
-                    this.props.deleteDriverFromQuote(this.props.quote)
-                    addResponseMessage("Done. Removed!")},1000)
+            if(!isNaN(newMessage))
+            {
+                if (parseInt(newMessage) <= this.props.quote.drivers.length)
+                {       var count = 1     
+                        this.props.quote.drivers.map((driver, index) => {
+                        if (count === parseInt(newMessage))
+                        {
+                            setTimeout(() => {this.props.quote.drivers.splice(index,1)
+                            console.log("DDsdfhjkshdfkjhD printing inside delete driver click --- "+JSON.stringify(this.props.quote.drivers))
+                            this.props.deleteDriverFromQuote(this.props.quote)
+                            addResponseMessage("Done. Removed!")},1000)
+                            this.setState({chatContext:null})
+                        }
+                        count = count + 1
+                    
+                    })
                 }
-            })
+                else{
+                    addResponseMessage("Enter a valid driver id.")
+                }
+            }
+            else
+            {
+                addResponseMessage("Enter a valid driver id.")
+            }
         }
 
       }
@@ -116,7 +136,7 @@ class DriverDetails extends React.Component {
           badge={0}
           autofocus={true}
           title="Ask TARS"
-          subtitle="Hey Jenny! I am Tars Your bot for today!"
+          subtitle="Hey Jenny! I am Tars Your bot for today! Any help needed with drivers?"
         />:""}
             <Paper style={useStyles.root}>
                 <div className={`drivers fade-in ${didMount && 'visible'}`}>

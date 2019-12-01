@@ -7,7 +7,9 @@ import path from '../../assets/car.png'
 import { connect } from 'react-redux';
 import Header from '../../Widgets/Header/Header'
 import {Button} from '@material-ui/core';
-import { setQuoteObject } from "../../actions";
+import { setQuoteObject ,deleteVehicleFromQuote} from "../../actions";
+import { Widget,addResponseMessage, addLinkSnippet, addUserMessage ,renderCustomComponent} from 'react-chat-widget';
+import ReactDOM from "react-dom";
 import axios from 'axios'
 
 const useStyles = {
@@ -28,6 +30,14 @@ const useStyles = {
 var quote;
 class VehicleDetails  extends React.Component {
     
+    constructor(props)
+    {
+        super(props)
+        this.state = {
+            showChat : false,
+            chatContext:null
+        }
+    }
     goToNextPage = () => {
         quote={...this.props.quote};
         // console.log("Arun Testing ",quote);
@@ -48,8 +58,87 @@ class VehicleDetails  extends React.Component {
         history.push('/addvehicle')
     }
     componentDidMount(){
-         this.setupBeforeUnloadListener();
+        setTimeout(() => {
+            this.setState({showChat: true,})   
+        }, 5000)
+        this.setupBeforeUnloadListener();        
+        // renderCustomComponent(<VehicleAsButton/>,null,false)
      }
+     handleNewUserMessage = (newMessage) => {
+        console.log(`New message incoming! ${newMessage}`);
+        // Now send the message throught the backend API
+        if(newMessage && (newMessage.toUpperCase().includes("ADD") && newMessage.toUpperCase().includes("VEH")))
+        {
+            addResponseMessage("Sure i will show you add a vehicle page where you can enter vehicle's details...");
+            setTimeout(() => {
+            ReactDOM.findDOMNode(this).querySelector('.rcw-widget-container .rcw-launcher .rcw-close-launcher').click() 
+            history.push('/addvehicle')} , 1500)
+
+        }
+        if(newMessage && ((newMessage.toUpperCase().includes("DELETE")||newMessage.toUpperCase().includes("REMOVE")) && newMessage.toUpperCase().includes("VEH")))
+        {
+            if(this.props.quote.vehicles.length > 1)
+            {
+                // renderCustomComponent(<VehicleAsButton />,this.props,false)
+                addResponseMessage("Sure i can help you remove the vehicle, Enter the vehicle's id you want to remove...") 
+                this.setState({chatContext:"DELVEH"})                
+                // ReactDOM.findDOMNode(this).querySelector('.rcw-widget-container .rcw-conversation-container .rcw-messages-container')
+                // .append(this.buildDynamicChatButtons())
+                var count =1
+                this.props.quote.vehicles.map((vehicle,index) => {
+                    addResponseMessage("Vehicleid - " + count + " - "+ vehicle.year + " " + vehicle.make + " "+vehicle.model)
+                    count = count + 1
+                })
+
+            }
+            else
+            {   
+                addResponseMessage("Sorry... Atleast one vehicle should be part of this quote. Add another vehicle to remove the current vehicle.")
+            }       
+        }
+        if(this.state.chatContext === 'DELVEH')
+        {
+            if(!isNaN(newMessage))
+            {
+                if(parseInt(newMessage) <= this.props.quote.vehicles.length)
+                { 
+                    var count = 1
+                    this.props.quote.vehicles.map((veh, index) => {
+                        console.log(JSON.stringify(veh))                        
+                        if(count === parseInt(newMessage))
+                        {
+                            setTimeout(() => {this.props.quote.vehicles.splice(index,1)
+                            console.log("DDsdfhjkshdfkjhD printing inside delete vehicle click --- "+JSON.stringify(this.props.quote.vehicles))
+                            this.props.deleteVehicleFromQuote(this.props.quote)
+                            addResponseMessage("Done. Removed!")},1000)
+                            this.setState({chatContext:null})
+                        }
+                        count= count +1
+                    })
+                }
+                else{
+                    addResponseMessage("Enter a valid vehicle id.")
+                }
+            }
+            else
+            {
+                addResponseMessage("Enter a valid vehicle id.")
+            }
+        }
+
+      }
+    //   buildDynamicChatButtons = () => {
+    //       var htmlElement = "&lt;div class=&quot;rcw-message&quot;&gt;&lt;div class=&quot;rcw-response&quot;&gt;&lt;div class=&quot;rcw-message-text&quot;&gt;"
+    //       this.props.quote.vehicles.map((vehicle,index) => {
+    //         htmlElement = htmlElement + "&lt;p&gt;"
+    //         htmlElement = htmlElement + vehicle.year.toString()
+    //         htmlElement = htmlElement + vehicle.make
+    //         htmlElement = htmlElement + vehicle.model
+    //         htmlElement = htmlElement + "&lt;/p&gt;"
+    //       })
+    //       htmlElement = htmlElement + "&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;"
+    //       return htmlElement.toString();
+    //   }
      doSomethingBeforeUnload = (ev) => {
         console.log("SEE YOU SOON WITH A NEW quote"+ JSON.stringify(this.props.quote))        
         axios.post("https://1nbs6supkj.execute-api.us-east-1.amazonaws.com/v1/pc/auto/policyexpapi/"+this.props.quote.policyId, this.props.quote)
@@ -66,7 +155,18 @@ class VehicleDetails  extends React.Component {
     };
     render() {
         return (
-            <div style={{backgroundColor:'#F5F5F5'}}>   <Paper style={useStyles.root}>
+            <div style={{backgroundColor:'#F5F5F5'}}>   
+            
+            { this.state.showChat?  <Widget
+                        handleNewUserMessage={this.handleNewUserMessage}          
+                        showCloseButton={true}
+                        fullScreenMode={false}
+                        badge={0}
+                        autofocus={true}
+                        title="Ask TARS"
+                        subtitle="Hey Jenny! I am Tars Your bot for today! Any help needed with vehicles? "
+                        />:""}
+            <Paper style={useStyles.root}>
                 <div className="drivers">
                 <Grid container >
                 <Grid item xs={1} style={useStyles.alignCenter}><img  style={useStyles.img} src={path} alt="icon"/></Grid>
@@ -100,4 +200,4 @@ const mapStateToProps = state => {
       "quote": state.quote,
         };
   };
-export default connect(mapStateToProps,{ setQuoteObject })(VehicleDetails)
+export default connect(mapStateToProps,{ setQuoteObject,deleteVehicleFromQuote })(VehicleDetails)
