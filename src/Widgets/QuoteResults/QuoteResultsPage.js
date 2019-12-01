@@ -14,7 +14,7 @@ import { Link } from 'react-router-dom'
 import axios from 'axios'
 import { Button } from '@material-ui/core';
 import "./chatstyle.css"
-import { Widget,addResponseMessage, addLinkSnippet, addUserMessage } from 'react-chat-widget';
+import { Widget,addResponseMessage, addLinkSnippet, addUserMessage,dropMessages } from 'react-chat-widget';
 import ReactDOM from "react-dom";
 const useStyles = {
     root: {
@@ -50,6 +50,7 @@ class QuoteResultsPage extends React.Component {
         axios.post('https://1nbs6supkj.execute-api.us-east-1.amazonaws.com/v1/pc/auto/policyexpapi/'+this.props.quote.policyId, this.props.quote)
             .then(response => { console.log("Save on QR Response" + JSON.stringify(response.data)) })
             .catch(error => { console.log("ERROR" + error) })
+            dropMessages()
     }
 
     // componentDidMount() {
@@ -164,6 +165,7 @@ doSomethingBeforeUnload = (ev) => {
    return ev.returnValue="Are you sure want to exit?"
 }
  setupBeforeUnloadListener = () => {
+    dropMessages()
    window.addEventListener("beforeunload", (ev) => {
        ev.preventDefault();
        console.log("GOOD BYE")

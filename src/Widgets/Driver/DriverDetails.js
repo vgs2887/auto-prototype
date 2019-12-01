@@ -10,7 +10,7 @@ import Header from '../../Widgets/Header/Header'
 import {Button} from '@material-ui/core';
 import axios from 'axios'
 import "./chatstyle.css"
-import { Widget,addResponseMessage, addLinkSnippet, addUserMessage } from 'react-chat-widget';
+import { Widget,addResponseMessage, dropMessages,addLinkSnippet, addUserMessage } from 'react-chat-widget';
 import { setQuoteObject ,deleteDriverFromQuote} from "../../actions";
 const useStyles = {
     root: {
@@ -103,6 +103,7 @@ class DriverDetails extends React.Component {
 
       }
     goToNextPage = () => {
+        dropMessages()
         this.props.quote.lastVisitedPage ="vehicledetails"
         console.log("on clicko f next on driver page "+ JSON.stringify(this.props.quote))        
         axios.post("https://1nbs6supkj.execute-api.us-east-1.amazonaws.com/v1/pc/auto/policyexpapi/"+this.props.quote.policyId, this.props.quote)

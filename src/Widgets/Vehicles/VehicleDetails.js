@@ -8,7 +8,7 @@ import { connect } from 'react-redux';
 import Header from '../../Widgets/Header/Header'
 import {Button} from '@material-ui/core';
 import { setQuoteObject ,deleteVehicleFromQuote} from "../../actions";
-import { Widget,addResponseMessage, addLinkSnippet, addUserMessage ,renderCustomComponent} from 'react-chat-widget';
+import { Widget,addResponseMessage,dropMessages, addLinkSnippet, addUserMessage ,renderCustomComponent} from 'react-chat-widget';
 import ReactDOM from "react-dom";
 import axios from 'axios'
 
@@ -39,6 +39,7 @@ class VehicleDetails  extends React.Component {
         }
     }
     goToNextPage = () => {
+        dropMessages()
         quote={...this.props.quote};
         // console.log("Arun Testing ",quote);
         quote.lastVisitedPage="quoteresults";
