@@ -453,7 +453,8 @@ class CoveragePanel extends React.Component {
                             <div class="ui input" style={{ width: "100%", float: "right" }} >
                                 {/* <input type="text" readOnly value={100} /> */}
                                 {/* <input type="text" style={{ width: "100%" }} readOnly value={vehicle.coverAmntText} /> */}
-                                <Box component="span" display="block">{vehicle.coverAmntText}</Box>
+                                <Box component="span" display="block">{((typeof this.props.quote.premiums != "undefined" ) && this.props.quote.premiums.comprehensivePremium)? "$" + this.props.quote.premiums.comprehensivePremium : vehicle.coverAmntText}</Box>
+                                
                             </div>
                         </Grid>
                     </td>
@@ -502,7 +503,7 @@ class CoveragePanel extends React.Component {
                                 <div class="ui input" style={{ width: "100%", float: "right" }} >
                                     {/* <input type="text" readOnly value={100} /> */}
                                     {/* <input type="text" style={{ width: "100%" }} readOnly value={vehicle.coverAmntText} /> */}
-                                    <Box component="span" display="block">{vehicle.coverAmntText}</Box>
+                                    <Box component="span" display="block">{((typeof this.props.quote.premiums != "undefined" ) && this.props.quote.premiums.collisionPremium)? "$" + this.props.quote.premiums.collisionPremium : vehicle.coverAmntText}</Box>
                                 </div>
                             </Grid>
                         </td>
@@ -562,7 +563,7 @@ class CoveragePanel extends React.Component {
                                     <Grid item sm="12" xs="12" >
                                         <div class="ui input" style={{ width: "100%", float: "right" }} >
                                             {/* <input type="text" readOnly value={100} /> */}
-                                            <Box component="span" display="block">{this.BICoverageAmntText}</Box>
+                                            <Box component="span" display="block">{((typeof this.props.quote.premiums != "undefined" ) && this.props.quote.premiums.bodilyInjuryPremium)? "$" + this.props.quote.premiums.bodilyInjuryPremium : this.BICoverageAmntText}</Box>
                                             {/* <input type="text" style={{ width: "100%" }} readOnly value={this.BICoverageAmntText} /> */}
                                         </div>
                                     </Grid>
@@ -617,7 +618,7 @@ class CoveragePanel extends React.Component {
                                     <Grid item sm="12" xs="12" >
                                         <div class="ui input" style={{ width: "100%", float: "right" }} >
                                             {/* <input type="text" readOnly value={100} /> */}
-                                            <Box component="span" display="block">{this.PDCoverageAmntText}</Box>
+                                            <Box component="span" display="block">{((typeof this.props.quote.premiums != "undefined" ) && this.props.quote.premiums.propertyDamagePremium)? "$" + this.props.quote.premiums.propertyDamagePremium : this.PDCoverageAmntText}</Box>
                                             {/* <input type="text" style={{ width: "100%" }} readOnly value={} /> */}
                                         </div>
                                     </Grid>

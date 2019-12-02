@@ -2,7 +2,7 @@ import React from 'react';
 import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
-import { isNumber } from 'util';
+import { isNumber, isString } from 'util';
 /*import imgIcon from '../public/icons/piggy-bank.svg';*/
 
 const defaultProps = {
@@ -61,8 +61,15 @@ const useStyles = makeStyles(theme => ({
 //<img src='../public/icons/piggy-bank.svg'/>
 export default function CicularDiv(props) {
   const classes = useStyles();
+  if(props.quote.premiums)
+  {
+    console.log("Vignesh Prints the bodily Injury coverage premium from circular DIV : "+JSON.stringify(props.quote.premiums.bodilyInjuryPremium));
+    console.log("Vignesh Prints the bodily Injury coverage premium from circular DIV: " +JSON.stringify(props.quote.premiums.propertyDamagePremium));
+    console.log("Vignesh Prints the bodily Injury coverage premium from circular DIV: " +JSON.stringify(props.quote.premiums.comprehensivePremium));
+    console.log("Vignesh Prints the bodily Injury coverage premium from circular DIV: " +JSON.stringify(props.quote.closestMonthlyPremium));
+  }
   
-  var preamt=String(props.quote && props.quote.userEnteredPremium  && props.quote.userEnteredPremium > 0 && isNumber(props.quote.coverages.bodilyInjurySuggested) ? props.quote.userEnteredPremium : props.premium).split(".");
+  var preamt=String(props.quote && props.quote.userEnteredPremium  && props.quote.userEnteredPremium > 0 ? props.quote.closestMonthlyPremium : props.premium).split(".");
 
   var premiumwithoutdecimal=preamt[0];
   var premdec="00";

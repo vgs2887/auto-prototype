@@ -97,6 +97,7 @@ export const deleteVehicleFromQuote=(quote) => async dispatch => {
     })
 }
 export const updatePremiumAndCoveragesAction = (userEnteredPremium) => async dispatch => {
+    console.log("Vignesh About to Dispatch"+userEnteredPremium);
     dispatch({
         type:"UPDATEPREMIUMANDCOVERAGES",
         userEnteredPremium 

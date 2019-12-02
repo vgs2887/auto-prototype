@@ -46,6 +46,7 @@ class QuoteResultsPage extends React.Component {
      }
     
   updatePremiumAndCoverages(ev){
+      console.log("Vignesh Prints Event : "+ev)
     this.props.updatePremiumAndCoveragesAction(ev.target.value);
   }
 
