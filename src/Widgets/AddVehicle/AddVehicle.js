@@ -230,10 +230,10 @@ class AddVehicle extends React.Component {
               <span>Add New Vehicle</span>
             </div>
           </Grid>
-          <Grid sm={2} />
+          {/* <Grid sm={2} /> */}
         </Grid>
         <Grid container>
-          <Grid sm={2} />
+          {/* <Grid sm={2} /> */}
           <Grid xs={12} sm={12}>
             <div style={useStyles.InputWidth_}>
               <Box display="flex" justifyContent="center">
@@ -258,7 +258,7 @@ class AddVehicle extends React.Component {
               </Box>
             </div>
           </Grid>
-          <Grid sm={2} />
+          {/* <Grid sm={2} /> */}
         </Grid>
         {/* <div>
           <h1>Add New Driver</h1>
@@ -270,21 +270,21 @@ class AddVehicle extends React.Component {
           />
           <div>  */}
         <Grid container style={useStyles.grid}>
-          <Grid sm={2} />
-          <Grid xs={12} sm={12} style={useStyles.AlignCenterWidth}>
+          {/* <Grid sm={2} /> */}
+          <Grid xs={12} sm={8} style={useStyles.InputWidth}>
             {/* {JSON.stringify(this.props.quote.drivers)} */}
               <AddPrimaryOwnerDD drivers={this.props.quote.drivers} primarydriver={this.primarydriver}/> 
           </Grid>
-          <Grid sm={2} />
-          <Grid xs={12} sm={8} style={useStyles.AlignCenter}>
+          {/* <Grid sm={2} /> */}
+          <Grid xs={12} sm={8} style={useStyles.InputWidth}>
               <AddressAutoComplete></AddressAutoComplete>
           </Grid>
-          <Grid sm={2} />
+          {/* <Grid sm={2} /> */}
         </Grid> 
 
         <Grid container style={useStyles.grid}>
-          <Grid sm={2} />
-          <Grid xs={12} sm={8} style={useStyles.AlignCenter}>
+          {/* <Grid sm={2} /> */}
+          <Grid xs={12} sm={8} style={useStyles.InputWidth}>
             <Input
               style={useStyles.InputWidth}
               placeholder="Vehicle Identification Number(VIN)"
@@ -295,12 +295,12 @@ class AddVehicle extends React.Component {
               {this.state.vinError}
             </div>
           </Grid>
-          <Grid sm={2} />
+          {/* <Grid sm={2} /> */}
         </Grid>
         
         <Grid container style={useStyles.grid}>
-          <Grid sm={2} />
-          <Grid xs={12} sm={8} style={useStyles.AlignCenter}>
+          {/* <Grid sm={2} /> */}
+          <Grid xs={12} sm={8}  style={useStyles.InputWidth} >
             <Input
               style={useStyles.InputWidth}
               placeholder="Year"
@@ -311,11 +311,11 @@ class AddVehicle extends React.Component {
               {this.state.yearError}
             </div>
           </Grid>
-          <Grid sm={2} />
+          {/* <Grid sm={2} /> */}
         </Grid>
         <Grid container style={useStyles.grid}>
-          <Grid sm={2} />
-          <Grid xs={12} sm={8} style={useStyles.AlignCenter}>
+          {/* <Grid sm={2} /> */}
+          <Grid xs={12} sm={8} style={useStyles.InputWidth} >
             <Input
               style={useStyles.InputWidth}
               placeholder="Make"
@@ -326,11 +326,11 @@ class AddVehicle extends React.Component {
               {this.state.makeError}
             </div>
           </Grid>
-          <Grid sm={2} />
+          {/* <Grid sm={2} /> */}
         </Grid>
         <Grid container style={useStyles.grid}>
-          <Grid sm={2} />
-          <Grid xs={12} sm={8} style={useStyles.AlignCenter}>
+          {/* <Grid sm={2} /> */}
+          <Grid xs={12} sm={8} style={useStyles.InputWidth}>
             <Input
               style={useStyles.InputWidth}
               placeholder="Model"
@@ -341,18 +341,18 @@ class AddVehicle extends React.Component {
               {this.state.genderError}
             </div>
           </Grid>
-          <Grid sm={2} />
+          {/* <Grid sm={2} /> */}
         </Grid>
         <Grid container>
-          <Grid sm={2} />
-          <Grid xs={12} sm={8} style={useStyles.AlignCenter}> 
+          {/* <Grid sm={2} /> */}
+          <Grid xs={12} sm={8}> 
           <Link to="/vehicledetails"><Button variant="contained" style={{backgroundColor:'#041c3d',color:'white'}} onClick={this.submitHandler}>
               Add
             </Button></Link>
             {/* // </div>
         //</div> */}
           </Grid>
-          <Grid sm={2} />
+          {/* <Grid sm={2} /> */}
         </Grid>
       </form>
 <br/><br/><br/><br/></div>

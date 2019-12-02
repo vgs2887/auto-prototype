@@ -36,7 +36,7 @@ const useStyles = {
     width: "100%"
   },
   InputWidth: {
-    width: "60%",
+    width: "50%",
     margin: "0 auto"
   },
   InputWidth_: {
@@ -223,7 +223,7 @@ class AddDriver extends React.Component {
           <div>  */}
         <Grid container style={useStyles.grid}>
           <Grid sm={2} />
-          <Grid xs={12} sm={8} style={useStyles.AlignCenter}>
+          <Grid xs={12} sm={8} style={useStyles.InputWidth}>
             <Input
               style={useStyles.InputWidth}
               placeholder="Driver Name"
@@ -238,7 +238,7 @@ class AddDriver extends React.Component {
         </Grid>
         <Grid container style={useStyles.grid}>
           <Grid sm={2} />
-          <Grid xs={12} sm={8} style={useStyles.AlignCenter}>
+          <Grid xs={12} sm={8} style={useStyles.InputWidth} >
             <Input
               style={useStyles.InputWidth}
               placeholder="Age"
@@ -254,7 +254,7 @@ class AddDriver extends React.Component {
         </Grid>
         <Grid container style={useStyles.grid}>
           <Grid sm={2} />
-          <Grid xs={12} sm={8} style={useStyles.AlignCenter}>
+          <Grid xs={12} sm={8} style={useStyles.InputWidth} >
             <Input
               style={useStyles.InputWidth}
               placeholder="Relationship"
@@ -269,7 +269,7 @@ class AddDriver extends React.Component {
         </Grid>
         <Grid container style={useStyles.grid}>
           <Grid sm={2} />
-          <Grid xs={12} sm={8} style={useStyles.AlignCenter}>
+          <Grid xs={12} sm={8} style={useStyles.InputWidth} >
             <Input
               style={useStyles.InputWidth}
               placeholder="Gender"
@@ -284,7 +284,7 @@ class AddDriver extends React.Component {
         </Grid>
         <Grid container>
           <Grid sm={2} />
-          <Grid xs={12} sm={8} style={useStyles.AlignCenter}>
+          <Grid xs={12} sm={8} >
             <Button variant="contained" style={{backgroundColor:'#041c3d',color:'white'}} type="submit">
               Add
             </Button>
