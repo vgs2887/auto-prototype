@@ -232,7 +232,7 @@ class CoveragePanel extends React.Component {
         this.state = {
             didMount: false,
             premium: premiumConst,
-            isHidden: true,
+            isPriorInsMatch: true,
         };
     }
     componentDidMount() {
@@ -260,7 +260,7 @@ class CoveragePanel extends React.Component {
         var premium = this.state.premium;
         var prevSel = this.biCovAmnt;
         var biCoverageAmnt = parseInt(e.target.value);
-        this.setState({isHidden:false});
+        this.setState({isPriorInsMatch:false});
         
 
         premium = premium - prevSel + biCoverageAmnt;
@@ -292,7 +292,7 @@ class CoveragePanel extends React.Component {
         var premium = this.state.premium;
         var prevSel = this.pdCovgAmnt; //fix state var
         var pdCoverageAmnt = parseInt(e.target.value);
-        this.setState({isHidden:false});
+        this.setState({isPriorInsMatch:false});
         premium = premium - prevSel + pdCoverageAmnt;
 
         this.pdCovgAmnt = pdCoverageAmnt;
@@ -319,7 +319,7 @@ class CoveragePanel extends React.Component {
         console.log("#####COMP inputArr1-" + inputArr[1]);
         var compCoverageAmnt = parseInt(inputArr[1]);
         console.log("#####COMP compCoverageAmnt-" + compCoverageAmnt);
-        this.setState({isHidden:false});
+        this.setState({isPriorInsMatch:false});
         var vin = inputArr[0];
         var prevCompCoverageAmnt = 0;
 
@@ -357,7 +357,7 @@ class CoveragePanel extends React.Component {
         var vin = inputArr[0];
         var prevCollCoverageAmnt = 0;
         var collCoverageAmntText = "$" + collCoverageAmnt;
-        this.setState({isHidden:false});
+        this.setState({isPriorInsMatch:false});
 
         this.collCovgAmnt = collCoverageAmnt;
     
@@ -513,8 +513,9 @@ class CoveragePanel extends React.Component {
 
         return (
             <div>
-                {this.state.isHidden ? <h5 className = "info-message" style={{ color: "#1A3258" }}> <FaInfoCircle color="green" /> These are your coverage selections based on your Prior Insurance, you can edit them and choose the selection that best caters your needs. </h5>
-                   : ""}
+                {((typeof this.props.quote.userEnteredPremium != "undefined" && !this.props.quote.userEnteredPremium)&&this.state.isPriorInsMatch) ? <h5 className = "info-message" style={{ color: "#1A3258" }}> <FaInfoCircle color="#1A3258" /> These are your coverage selections based on your Prior Insurance, you can edit them and choose the selection that best caters your needs. </h5>
+                   : <h5 className = "info-message" style={{ color: "#1A3258" }}> <FaInfoCircle color="#1A3258" /> These are your coverage selections for a price that you wanted.</h5>
+                }
                 <Paper square="true" >
 
                 
