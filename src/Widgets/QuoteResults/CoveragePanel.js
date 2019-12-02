@@ -28,6 +28,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import { FaInfoCircle } from 'react-icons/fa';
 import 'react-dropdown/style.css'
 import { bool } from 'prop-types';
+import { isNumber } from 'util';
 
 const useStyles = {
     root: {
@@ -417,7 +418,7 @@ class CoveragePanel extends React.Component {
                 <tr>
                     <td style={{ width: "85%" }}>
                         <Grid item sm="12" xs="12" >
-                            {vehicle.label}
+                            {this.props.quote.coverages.comprehensiveSuggested ? "$" + this.props.quote.coverages.comprehensiveSuggested : vehicle.label}
                             <Button style={{color:'#041c3d', padding:'10px'}} color="primary" onClick={this.handleDialogOpen(vehicle.vin+':COMP')}>Edit</Button>
                             <Dialog disableBackdropClick disableEscapeKeyDown open={this.state.open && this.state.covType == vehicle.vin+':COMP'}>
                             <DialogTitle>Select the limit</DialogTitle>
@@ -466,7 +467,7 @@ class CoveragePanel extends React.Component {
                     <tr>
                         <td style={{ width: "85%" }}>
                             <Grid justify="flex-start" item sm="12" xs="12" >
-                            {vehicle.label}
+                            {this.props.quote.coverages.collisionSuggested ? "$" + this.props.quote.coverages.collisionSuggested : vehicle.label}
                             <Button style={{color:'#041c3d', padding:'10px'}} color="primary" onClick={this.handleDialogOpen(vehicle.vin+':COLL')}>Edit</Button>
                             <Dialog disableBackdropClick disableEscapeKeyDown open={this.state.open && this.state.covType == vehicle.vin+':COLL'}>
                             <DialogTitle>Select the limit</DialogTitle>
@@ -528,7 +529,7 @@ class CoveragePanel extends React.Component {
                             <tr>
                                 <td style={{ width: "85%" }}>
                                     <Grid justify="flex-start" item sm="12" xs="12" >
-                                        {this.biLimit}
+                                    {this.props.quote.coverages.bodilyInjurySuggested ? "$" + this.props.quote.coverages.bodilyInjurySuggested : this.biLimit}
                                     <Button style={{color:'#041c3d', padding:'10px'}} color="primary" onClick={this.handleDialogOpen('BI')}>Edit</Button>
                                     <Dialog disableBackdropClick disableEscapeKeyDown open={this.state.open && this.state.covType == 'BI'}>
                                         <DialogTitle>Select the limit</DialogTitle>
@@ -583,7 +584,7 @@ class CoveragePanel extends React.Component {
                             <tr>
                                 <td style={{ width: "85%" }}>
                                     <Grid justify="flex-start" item sm="12" xs="12" >
-                                    {this.pdLimit}
+                                     {this.props.quote.coverages.propertyDamageSuggested ? "$" + this.props.quote.coverages.propertyDamageSuggested : this.pdLimit}
                                     <Button style={{color:'#041c3d', padding:'10px'}} color="primary" onClick={this.handleDialogOpen('PD')}>Edit</Button>
                                  
                                     <Dialog disableBackdropClick disableEscapeKeyDown open={this.state.open && this.state.covType == 'PD'}>

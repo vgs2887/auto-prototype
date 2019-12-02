@@ -1,11 +1,14 @@
 import _ from 'lodash'
-import { updateObject } from './utility';
+import { updateObject, calculateCoveragesbasedOnEnteredPremium} from './utility';
 
-export default (state=null, action)=>{
-    console.log("inside setEmptyObject reducer quote"+action)
+let defaultObject = {
+    userEnteredPremium : 0
+};
+
+export default (state=defaultObject, action)=>{
     switch(action.type){        
-        case "PUSHEMPTYOBJECT":  return action.payload
-        case "PUSHQUOTEOBJECT" : return action.payload
+        case "PUSHEMPTYOBJECT":  return {...state, ...action.payload}
+        case "PUSHQUOTEOBJECT" : return {...state, ...action.payload}
         case "UPDATECOVERAGES" :
             return updateObject (state,{
                 coverages:{
@@ -24,6 +27,7 @@ export default (state=null, action)=>{
         return updateObject (state,{
             vehicles:action.payload.vehicles
         })
+        case "UPDATEPREMIUMANDCOVERAGES": return calculateCoveragesbasedOnEnteredPremium(state, action.userEnteredPremium);
         default:return state
     }
 }

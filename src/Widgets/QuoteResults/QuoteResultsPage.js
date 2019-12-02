@@ -9,12 +9,12 @@ import VehicleDetails from './VehicleDetails';
 import PropertyDetails from './PropertyDetails';
 import { Grid } from '@material-ui/core';
 import CircularDiv from './CircularDiv';
-import { setPageNameAction } from "../../actions";
+import { setPageNameAction,updatePremiumAndCoveragesAction } from "../../actions";
 import { Link } from 'react-router-dom'
 import axios from 'axios'
 import { Button } from '@material-ui/core';
 import "./chatstyle.css"
-import { Widget,addResponseMessage, addLinkSnippet, addUserMessage,dropMessages } from 'react-chat-widget';
+import { Widget,addResponseMessage, addLinkSnippet, addUserMessage } from 'react-chat-widget';
 import ReactDOM from "react-dom";
 const useStyles = {
     root: {
@@ -41,16 +41,19 @@ class QuoteResultsPage extends React.Component {
 
     constructor(props) {
         super(props)
-        this.state = { premium: this.props.premium, pageName: '',showChat:null,chatContext:null };
-    }
-
+        this.state = { premium: this.props.premium, pageName: '' };
+        this.updatePremiumAndCoverages = this.updatePremiumAndCoverages.bind(this);
+     }
+    
+  updatePremiumAndCoverages(ev){
+    this.props.updatePremiumAndCoveragesAction(ev.target.value);
+  }
 
     submitHandler = e => {
         console.log("postRequest:  " + JSON.stringify(this.props.quote))
         axios.post('https://1nbs6supkj.execute-api.us-east-1.amazonaws.com/v1/pc/auto/policyexpapi/'+this.props.quote.policyId, this.props.quote)
             .then(response => { console.log("Save on QR Response" + JSON.stringify(response.data)) })
             .catch(error => { console.log("ERROR" + error) })
-            dropMessages()
     }
 
     // componentDidMount() {
@@ -165,7 +168,6 @@ doSomethingBeforeUnload = (ev) => {
    return ev.returnValue="Are you sure want to exit?"
 }
  setupBeforeUnloadListener = () => {
-    dropMessages()
    window.addEventListener("beforeunload", (ev) => {
        ev.preventDefault();
        console.log("GOOD BYE")
@@ -187,13 +189,15 @@ render() {
         />:""}
             <Grid container spacing={3} style={useStyles.CommonDivWidth}>              
                 <Grid item id="circualrgrid" style={{marginLeft:'0px !importatnt'}} xs={12}>
-                  <CircularDiv premium={premium} />
+                  <CircularDiv premium={premium} quote={this.props.quote}/>
                 </Grid>
 
                 <Grid item xs={12}>
                 <Link to={{pathname:'/payment'}}><Button variant="contained" style={{backgroundColor:'#041c3d',color:'white'}} onClick={this.submitHandler}> Proceed to Checkout </Button></Link>
                 </Grid>
-
+                <Grid item xs={12}>
+                    <input type='number' name='userEnteredPremium' className="user-entered-premium" onChange={this.updatePremiumAndCoverages} min='0'></input>
+                </Grid>       
                 <Grid item xs={12} sm={12}>
                 <div class="scroll">
                 <ul className="corousal" >
@@ -234,8 +238,10 @@ const mapStateToProps = (state) => {
         "driverNo": state.drivers.length,
         "vehiclesNo": state.vehicles.length,
         "pageName": state.pagename,
-        "quote": state.quote
+        "quote": state.quote,
+        userEnteredPremium : state.quote.userEnteredPremium
 
     }
 }
-export default connect(mapStateToProps, { setPageNameAction })(QuoteResultsPage)
+
+export default connect(mapStateToProps, { setPageNameAction, updatePremiumAndCoveragesAction})(QuoteResultsPage)

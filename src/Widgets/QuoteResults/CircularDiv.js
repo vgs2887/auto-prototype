@@ -2,6 +2,7 @@ import React from 'react';
 import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
+import { isNumber } from 'util';
 /*import imgIcon from '../public/icons/piggy-bank.svg';*/
 
 const defaultProps = {
@@ -60,7 +61,9 @@ const useStyles = makeStyles(theme => ({
 //<img src='../public/icons/piggy-bank.svg'/>
 export default function CicularDiv(props) {
   const classes = useStyles();
-  var preamt=String(props.premium).split(".");
+  
+  var preamt=String(props.quote && props.quote.userEnteredPremium  && props.quote.userEnteredPremium > 0 && isNumber(props.quote.coverages.bodilyInjurySuggested) ? props.quote.userEnteredPremium : props.premium).split(".");
+
   var premiumwithoutdecimal=preamt[0];
   var premdec="00";
   if((Math.abs(Number(preamt[1]).toFixed(1)))){
