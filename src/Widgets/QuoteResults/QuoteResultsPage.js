@@ -108,6 +108,7 @@ class QuoteResultsPage extends React.Component {
         {
             if(!isNaN(newMessage))
             {
+                this.props.updatePremiumAndCoveragesAction(newMessage)
                 this.setState({chatContext:null})
             }
             else
