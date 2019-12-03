@@ -205,13 +205,13 @@ render() {
                 <div class="scroll">
                 <ul className="corousal" >
                             <li className="courosal-indicator">
-                            <a  className={`${this.state.pageName === 'driver' && 'active'}`} style={{width:"200px"}} onClick={() => this.setComponent('driver')} href="#">
+                            <a  className={`${this.state.pageName === 'driver' && 'active'}`} style={{width:"200px"}} onClick={() => this.setComponent('driver')} >
                             <img src={require("../../assets/car-driver.png")}  width="15px"/>Drivers</a></li>
                             <li className="courosal-indicator">
-                            <a   className={`${this.state.pageName === 'vechicle' && 'active'}`}  onClick={() => this.setComponent('vechicle')} href="#">
+                            <a   className={`${this.state.pageName === 'vechicle' && 'active'}`}  onClick={() => this.setComponent('vechicle')} >
                             <img src={require("../../assets/car.png")}  width="15px"/>Vehicles</a></li>
                             <li className="courosal-indicator">
-                                <a className={`${this.state.pageName === 'coverage' && 'active'}`} onClick={() => this.setComponent('coverage')} href="#">
+                                <a className={`${this.state.pageName === 'coverage' && 'active'}`} onClick={() => this.setComponent('coverage')} >
                                 <img src={require("../../assets/car.png")} width="20px"/>Coverage</a>
                             </li>
                         </ul>

@@ -125,9 +125,11 @@ class Home extends React.Component {
         <Link className = "startedButton" align="left" to='/driverdetails' >
         <Button variant="contained" style={{backgroundColor:'#041c3d',color:'white'}}onClick={this.setDataOnState}> 
             Get Started
-        </Button>
-        </Link>
+        </Button>  
+        </Link>       
       </Grid>
+      <br/>
+        <br/>
       </div>
     );
   }
