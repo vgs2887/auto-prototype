@@ -8,7 +8,7 @@ import PlacesAutocomplete, {
   geocodeByAddress,
   getLatLng
 } from "react-places-autocomplete";
-import { FaCheckCircle } from 'react-icons/fa';
+import { FaCheckCircle,FaTimesCircle } from 'react-icons/fa';
 
 const useStyles = makeStyles(theme => ({
   button: {
@@ -33,14 +33,33 @@ const addressValidation =
 export default function App() {
   const classes = useStyles();
   const [address, setAddress] = React.useState("");
-  const [hidden,setHidden] = React.useState(false);
+  const [code1,setCode1] = React.useState("");
+  const [isEmpty,setIsEmpty] = React.useState("");
+  // function isEmpty() {
 
+  // }
+  const resetAddress = (isValidAddress) =>{
+    setCode1(isValidAddress);
+      if(isValidAddress)
+      {
+        console.log("Vignesh Prints Address is Valid yay !!");
+      }
+      else{
+        console.log("Vignesh Prints Address is not Valid Nah !!");
 
-  
+      }
+    
+    };
+
   const handleSelect = async value => {
+    
     const results = await geocodeByAddress(value);
     setAddress(value);
-    console.log("Address Is "+JSON.stringify(setAddress));
+    if(address == "")
+    {
+      console.log("Vignesh Prints Address is empty");
+    }
+    console.log("Address Is "+JSON.stringify(address));
     console.log("results Are "+JSON.stringify(results[0].formatted_address));
     const formattedAddress = results[0].formatted_address ;
     console.log("results Are "+JSON.stringify(formattedAddress));
@@ -63,7 +82,7 @@ export default function App() {
     console.log("addressValidation : "+JSON.stringify(addressValidation));
 
     axios.post('https://8q1rdb7vif.execute-api.us-east-1.amazonaws.com/v1/pc/auto/addressvalidationexpapi', addressValidation)
-    .then(response => {setHidden(response.data.isValid)})
+    .then(response => {resetAddress(response.data.isValid)})
     .catch(error =>{console.log("Address Validation"+error)});
   };
 
@@ -79,9 +98,23 @@ export default function App() {
              <InputLabel id="demo-controlled-open-select-label" style={{textAlign:"left", paddingLeft:'0px'}}> Enter your location</InputLabel>
              
              <Input {...getInputProps({ placeholder: "Type address" })} style={useStyles.InputWidth}></Input>
-             {console.log("hidden is"+hidden)}
-             {hidden ? <p><FaCheckCircle color="green"/> Address is Valid. </p> : null}
-
+             {console.log("code1 is : "+code1)}
+             {/* {code1 ? <p><FaCheckCircle color="green"/> Address is Valid. </p> : (code1==null) ? null : <p><FaTimesCircle color="red"/> Address is InValid. </p> } */}
+             {(() => {
+        switch(code1) {
+          case true:
+            {
+              console.log("Inside the switch Case true ");
+              return <p><FaCheckCircle color="green"/> Address is Valid. </p>;
+            }
+            case false:
+            {
+            console.log("Inside the switch Case false ");
+            return <p><FaTimesCircle color="red"/> Address is InValid. </p>;}
+            default:
+            return null;
+        }
+      })()}
             <div>
               {loading ? <div>...loading</div> : null}
 
