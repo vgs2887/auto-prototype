@@ -215,7 +215,7 @@ render(){
                           }}>Drivers</Typography>
                           </ExpansionPanelSummary>    
                         <ExpansionPanelDetails>                                                   
-                        <Grid container>
+                        <Grid container >
                             {quote.drivers.map((driver,index) =>{return(
                                     <Grid>
                                     <SimpleCard
@@ -243,9 +243,9 @@ render(){
                           }}>Vehicles</Typography>
                           </ExpansionPanelSummary>    
                         <ExpansionPanelDetails>                                                   
-                        <Grid container>
+                        <Grid container >
                             {quote.vehicles.map((vehicle,index) =>{return(
-                                        <Grid>
+                                        <Grid direction="row">
                                         <SimpleCard                                        
                                         key={vehicleid+1}
                                         type="vehicle"
@@ -273,7 +273,7 @@ render(){
                           </ExpansionPanelSummary>    
                         <ExpansionPanelDetails>                                                   
                         <Grid container>
-                            { quote.coverages && quote.coverages.length > 0 ?
+                            { quote.coverages ?
                         <Table size="small">
                         <TableHead><TableRow><TableCell align='left'>Coverages</TableCell><TableCell align='left'>Premium</TableCell></TableRow></TableHead>
                         <TableBody>
