@@ -141,6 +141,35 @@ class CoveragePanel extends React.Component {
         { id: "3", covgValue: "$1000", amnt: "5" }
     ];
 
+    //Premium match
+    BIcoverageValues = [
+        { id: "0", covgValue: "$15,000/$30,000", amnt: "5" },
+        { id: "1", covgValue: "$50,000/$100,000", amnt: "10" },
+        { id: "2", covgValue: "$100,000/$250,000", amnt: "15" },
+        { id: "3", covgValue: "$500,000/$1,000,000", amnt: "20" }
+    ];
+
+    PDcoverageValues = [
+        { id: "0", covgValue: "$10,000", amnt: "5" },
+        { id: "1", covgValue: "$25,000", amnt: "10" },
+        { id: "2", covgValue: "$50,000", amnt: "15" },
+        { id: "3", covgValue: "$100,000", amnt: "20" }
+    ];
+
+    compCoverageValues = [
+        { id: "0", covgValue: "$0", amnt: "20" },
+        { id: "1", covgValue: "$250", amnt: "15" },
+        { id: "2", covgValue: "$500", amnt: "10" },
+        { id: "3", covgValue: "$1000", amnt: "5" }
+    ];
+
+    collCoverageValues = [
+        { id: "0", covgValue: "$0", amnt: "20" },
+        { id: "1", covgValue: "$250", amnt: "15" },
+        { id: "2", covgValue: "$500", amnt: "10" },
+        { id: "3", covgValue: "$1000", amnt: "5" }
+    ];
+
     vehicles_hardcoded = [
         { vin: "123", year: "2016", make: "ABC", model: "BBC" },
         { vin: "456", year: "2019", make: "XYZ", model: "420" }
@@ -149,7 +178,7 @@ class CoveragePanel extends React.Component {
     
     constructor(props) {
         super(props)
-        
+        console.log("RAJMOHAN printing.......");
         this.quote = this.props.quote;
         // this.biLimit = ["$50,000/$100,000",<small>(Recommended)</small>];
         // this.pdLimit = ["$25,000",<small>(Recommended)</small>];
@@ -258,12 +287,14 @@ class CoveragePanel extends React.Component {
         // console.log("Target"+ JSON.stringify(e.target.label));
         //this.biLimit = this.BIcoverages.filter(coverage => coverage.amnt== e.target.value.toString);
         var premium = this.state.premium;
+        console.log("RAJ BI1-  Premium-",premium);
         var prevSel = this.biCovAmnt;
         var biCoverageAmnt = parseInt(e.target.value);
         this.setState({isPriorInsMatch:false});
         
 
         premium = premium - prevSel + biCoverageAmnt;
+        console.log("RAJ BI2-  Premium-",premium);
         console.log("Vignesh Prints The calculated Premium"+this.calcPremium(this.quote.vehicles.length)) ;
         this.biCovAmnt = biCoverageAmnt;
         let biSelected = this.BIcoverages.filter(coverage => coverage.amnt== this.biCovAmnt.toString());
@@ -277,7 +308,7 @@ class CoveragePanel extends React.Component {
         this.quote.coverages.bodilyInjury = biCoverageAmnt;
 
         this.quote.premium = premium;
-
+        
         this.setState({ premium: premium });
         //this.props.setQuoteObject(this.quote);
         //this.props.updatepremiumaction(premium);
@@ -380,6 +411,7 @@ class CoveragePanel extends React.Component {
 
         //this.quote.coverages.collision = vin+":"+collCovAmt;
         this.quote.coverages.collision = collCoverageAmnt;
+        
         this.quote.premium = premium;
 
         this.setState({ premium: premium });
@@ -389,6 +421,8 @@ class CoveragePanel extends React.Component {
     }
 
     handleDialogOpen = covType => () => {
+        this.props.quote.closestMonthlyPremium = "";
+        this.props.quote.userEnteredPremium = "";
         this.setState({ open: true });
         this.setState({ covType: covType });
      };
@@ -397,6 +431,75 @@ class CoveragePanel extends React.Component {
         this.setState({ open: false });
     };
 
+    handleOnRender = () => {
+        console.log("RAJ printing inside handleOnRender.... ");
+                
+        if(this.props.quote.coverages.bodilyInjurySuggested !=undefined && this.props.quote.coverages.bodilyInjurySuggested != "" && this.props.quote.coverages.bodilyInjurySuggested !="Please enter monthly premium over 30 USD" && this.props.quote.coverages.bodilyInjurySuggested !="Please contact help desk for your coverage needs"
+        && this.props.quote.coverages.propertyDamageSuggested !=undefined && this.props.quote.coverages.propertyDamageSuggested != "" && this.props.quote.coverages.propertyDamageSuggested !="Please enter monthly premium over 30 USD" && this.props.quote.coverages.propertyDamageSuggested !="Please contact help desk for your coverage needs")
+        {
+            console.log("RAJ printing inside handleOnRender.... ",this.props.quote.coverages.comprehensiveSuggested);
+            this.biLimit =  "$" + this.props.quote.coverages.bodilyInjurySuggested;
+            this.pdLimit =  "$" + this.props.quote.coverages.propertyDamageSuggested;
+            this.compSelect = "$" + this.props.quote.coverages.comprehensiveSuggested;
+            this.collSelect = "$" + this.props.quote.coverages.collisionSuggested;
+
+            let biSelected = this.BIcoverageValues.filter(coverage => coverage.covgValue== this.biLimit.toString());
+            let pdSelected = this.PDcoverageValues.filter(coverage => coverage.covgValue== this.pdLimit.toString());
+            console.log("RAJ printing inside handleOnRender:  : "+JSON.stringify(pdSelected[0]))
+            var biCoverageAmnt = biSelected[0].amnt;
+            var pdCoverageAmnt = pdSelected[0].amnt;
+
+            let collSelected = this.collCoverageValues.filter(coverage => coverage.covgValue== this.collSelect.toString());
+            let compSelected = this.compCoverageValues.filter(coverage => coverage.covgValue== this.compSelect.toString());
+            var collCoverageAmnt = collSelected[0].amnt;
+            var compCoverageAmnt = compSelected[0].amnt;
+
+            console.log("RAJ printing inside handleOnRender: this.biLimit "+this.biLimit);
+            console.log("BI 2 value-" + biCoverageAmnt);
+            this.BICoverageAmntText = "$" + this.props.quote.premiums.bodilyInjuryPremium;
+            this.PDCoverageAmntText = "$" + this.props.quote.premiums.propertyDamagePremium;
+            var compCoverageAmntText = "$" + this.props.quote.premiums.comprehensivePremium;
+            var collCoverageAmntText = "$" + this.props.quote.premiums.collisionPremium;
+            this.biCovAmnt = biCoverageAmnt;
+            this.pdCovgAmnt = pdCoverageAmnt;
+
+            for (var obj1 of this.collVehiCov) {
+                console.log('Coll : vin = ' + obj1.vin + ', obj.coverAmnt =' + obj1.coverAmnt);
+                obj1.coverAmnt = collCoverageAmnt;
+                obj1.coverAmntText = collCoverageAmntText;
+                obj1.value = obj1.vin + ":" + collCoverageAmnt;
+                obj1.label = this.collSelect;
+            }
+
+            for (var obj of this.compVehiCov) {
+                obj.coverAmnt = compCoverageAmnt;
+                obj.coverAmntText = compCoverageAmntText;
+                obj.value = obj.vin + ":" + compCoverageAmnt;
+                obj.label = this.compSelect;            
+            }
+
+            console.log("RAJ printing inside handleOnRender: this.biLimit "+this.biLimit);
+            console.log("BI 2 value-" + biCoverageAmnt);
+            this.BICoverageAmntText = "$" + this.props.quote.premiums.bodilyInjuryPremium;
+            this.PDCoverageAmntText = "$" + this.props.quote.premiums.propertyDamagePremium;
+            this.compCoverageAmntText = "$" + this.props.quote.premiums.comprehensivePremium;
+            this.collCoverageAmntText = "$" + this.props.quote.premiums.collisionPremium;
+            this.biCovAmnt = biCoverageAmnt;
+            this.pdCovgAmnt = pdCoverageAmnt;
+
+            this.quote.coverages.bodilyInjury = biCoverageAmnt;
+            this.quote.coverages.propertyDamage = pdCoverageAmnt;
+            this.quote.coverages.collision = collCoverageAmnt;
+            this.quote.coverages.comprehensive = compCoverageAmnt;
+
+            var premium = this.props.quote.closestMonthlyPremium;
+            console.log("RAJ on render premium-",premium);
+            
+            this.setState({ premium: premium });
+            this.props.updateCoverages(this.quote);
+        }
+        
+     };
     
 // calcPremium(no_of_veh) => {
 // var tot_premium = () => 30 + coveragesSelections.bodilyInjury + coveragesSelections.propertyDamage + (no_of_veh * coveragesSelections.comprehensive)+
@@ -418,7 +521,7 @@ class CoveragePanel extends React.Component {
                 <tr>
                     <td style={{ width: "85%" }}>
                         <Grid item sm="12" xs="12" >
-                            {this.props.quote.coverages.comprehensiveSuggested ? "$" + this.props.quote.coverages.comprehensiveSuggested : vehicle.label}
+                            {vehicle.label}
                             <Button style={{color:'#041c3d', padding:'10px'}} color="primary" onClick={this.handleDialogOpen(vehicle.vin+':COMP')}>Edit</Button>
                             <Dialog disableBackdropClick disableEscapeKeyDown open={this.state.open && this.state.covType == vehicle.vin+':COMP'}>
                             <DialogTitle>Select the limit</DialogTitle>
@@ -453,7 +556,7 @@ class CoveragePanel extends React.Component {
                             <div class="ui input" style={{ width: "100%", float: "right" }} >
                                 {/* <input type="text" readOnly value={100} /> */}
                                 {/* <input type="text" style={{ width: "100%" }} readOnly value={vehicle.coverAmntText} /> */}
-                                <Box component="span" display="block">{((typeof this.props.quote.premiums != "undefined" ) && this.props.quote.premiums.comprehensivePremium)? "$" + this.props.quote.premiums.comprehensivePremium : vehicle.coverAmntText}</Box>
+                                <Box component="span" display="block">{vehicle.coverAmntText}</Box>
                                 
                             </div>
                         </Grid>
@@ -468,7 +571,7 @@ class CoveragePanel extends React.Component {
                     <tr>
                         <td style={{ width: "85%" }}>
                             <Grid justify="flex-start" item sm="12" xs="12" >
-                            {this.props.quote.coverages.collisionSuggested ? "$" + this.props.quote.coverages.collisionSuggested : vehicle.label}
+                            {vehicle.label}
                             <Button style={{color:'#041c3d', padding:'10px'}} color="primary" onClick={this.handleDialogOpen(vehicle.vin+':COLL')}>Edit</Button>
                             <Dialog disableBackdropClick disableEscapeKeyDown open={this.state.open && this.state.covType == vehicle.vin+':COLL'}>
                             <DialogTitle>Select the limit</DialogTitle>
@@ -503,7 +606,7 @@ class CoveragePanel extends React.Component {
                                 <div class="ui input" style={{ width: "100%", float: "right" }} >
                                     {/* <input type="text" readOnly value={100} /> */}
                                     {/* <input type="text" style={{ width: "100%" }} readOnly value={vehicle.coverAmntText} /> */}
-                                    <Box component="span" display="block">{((typeof this.props.quote.premiums != "undefined" ) && this.props.quote.premiums.collisionPremium)? "$" + this.props.quote.premiums.collisionPremium : vehicle.coverAmntText}</Box>
+                                    <Box component="span" display="block">{vehicle.coverAmntText}</Box>
                                 </div>
                             </Grid>
                         </td>
@@ -531,7 +634,7 @@ class CoveragePanel extends React.Component {
                             <tr>
                                 <td style={{ width: "85%" }}>
                                     <Grid justify="flex-start" item sm="12" xs="12" >
-                                    {this.props.quote.coverages.bodilyInjurySuggested ? "$" + this.props.quote.coverages.bodilyInjurySuggested : this.biLimit}
+                                    {this.handleOnRender()}{this.biLimit}
                                     <Button style={{color:'#041c3d', padding:'10px'}} color="primary" onClick={this.handleDialogOpen('BI')}>Edit</Button>
                                     <Dialog disableBackdropClick disableEscapeKeyDown open={this.state.open && this.state.covType == 'BI'}>
                                         <DialogTitle>Select the limit</DialogTitle>
@@ -564,7 +667,7 @@ class CoveragePanel extends React.Component {
                                     <Grid item sm="12" xs="12" >
                                         <div class="ui input" style={{ width: "100%", float: "right" }} >
                                             {/* <input type="text" readOnly value={100} /> */}
-                                            <Box component="span" display="block">{((typeof this.props.quote.premiums != "undefined" ) && this.props.quote.premiums.bodilyInjuryPremium)? "$" + this.props.quote.premiums.bodilyInjuryPremium : this.BICoverageAmntText}</Box>
+                                            <Box component="span" display="block">{this.BICoverageAmntText}</Box>
                                             {/* <input type="text" style={{ width: "100%" }} readOnly value={this.BICoverageAmntText} /> */}
                                         </div>
                                     </Grid>
@@ -586,7 +689,7 @@ class CoveragePanel extends React.Component {
                             <tr>
                                 <td style={{ width: "85%" }}>
                                     <Grid justify="flex-start" item sm="12" xs="12" >
-                                     {this.props.quote.coverages.propertyDamageSuggested ? "$" + this.props.quote.coverages.propertyDamageSuggested : this.pdLimit}
+                                     {this.pdLimit}
                                     <Button style={{color:'#041c3d', padding:'10px'}} color="primary" onClick={this.handleDialogOpen('PD')}>Edit</Button>
                                  
                                     <Dialog disableBackdropClick disableEscapeKeyDown open={this.state.open && this.state.covType == 'PD'}>
@@ -619,7 +722,7 @@ class CoveragePanel extends React.Component {
                                     <Grid item sm="12" xs="12" >
                                         <div class="ui input" style={{ width: "100%", float: "right" }} >
                                             {/* <input type="text" readOnly value={100} /> */}
-                                            <Box component="span" display="block">{((typeof this.props.quote.premiums != "undefined" ) && this.props.quote.premiums.propertyDamagePremium)? "$" + this.props.quote.premiums.propertyDamagePremium : this.PDCoverageAmntText}</Box>
+                                            <Box component="span" display="block">{this.PDCoverageAmntText}</Box>
                                             {/* <input type="text" style={{ width: "100%" }} readOnly value={} /> */}
                                         </div>
                                     </Grid>
