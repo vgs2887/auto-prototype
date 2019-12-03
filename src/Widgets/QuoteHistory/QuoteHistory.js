@@ -215,9 +215,11 @@ render(){
                           }}>Drivers</Typography>
                           </ExpansionPanelSummary>    
                         <ExpansionPanelDetails>                                                   
-                        <Grid container >
+                        <Grid container direction="row" spacing={2} alignItems='flex-start' alignContent='flex-start'>
                             {quote.drivers.map((driver,index) =>{return(
-                                    <Grid>
+                                <Grid item xs={12}>
+                                <Grid container direction="row">
+                                    <Grid item>
                                     <SimpleCard
                                     type="driver"
                                     showDeleteButton={false}
@@ -229,7 +231,10 @@ render(){
                                     data={driver.age}
                                     />
                                 </Grid>
+                                </Grid>
+                        </Grid>
                             )})}
+                        
                         </Grid>
                         </ExpansionPanelDetails>
                         </ExpansionPanel >
@@ -243,9 +248,11 @@ render(){
                           }}>Vehicles</Typography>
                           </ExpansionPanelSummary>    
                         <ExpansionPanelDetails>                                                   
-                        <Grid container >
+                        <Grid container direction="row" spacing={2} alignItems='flex-start' alignContent='flex-start'>
                             {quote.vehicles.map((vehicle,index) =>{return(
-                                        <Grid direction="row">
+                                        <Grid item xs={12}>
+                                        <Grid container direction="row">
+                                            <Grid item>
                                         <SimpleCard                                        
                                         key={vehicleid+1}
                                         type="vehicle"
@@ -257,6 +264,8 @@ render(){
                                         milteryStatus={vehicle.year+vehicle.make+vehicle.model}
                                         data={vehicle.vin}
                                         />
+                                    </Grid>
+                                    </Grid>
                                     </Grid>
                                 )})}                            
                         </Grid>
