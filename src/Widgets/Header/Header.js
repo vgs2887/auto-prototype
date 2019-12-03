@@ -12,6 +12,9 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
 import MailIcon from '@material-ui/icons/Mail';
+import AccountBalanceIcon from '@material-ui/icons/AccountBalance';
+import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import { withRouter } from "react-router-dom";
 const theme = null
 class Header extends React.Component {
@@ -60,9 +63,10 @@ class Header extends React.Component {
         </div>
         <Divider />
         <List>
-          {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
+          {['My Accounts', 'Sign Out'].map((text, index) => (
             <ListItem button key={text}>
-              <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
+              <ListItemIcon>{index%2 === 0 ? <AccountCircleIcon /> : <ExitToAppIcon />  }</ListItemIcon>
+             
               <ListItemText primary={text} />
             </ListItem>
           ))}

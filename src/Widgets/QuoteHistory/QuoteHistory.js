@@ -181,7 +181,7 @@ render(){
                     <TableRow>
                         <TableCell align='left' style={{paddingLeft:'5px',paddingRight:'5px'}}>{quote.lastVisitedPage?"Quote Saved on "+quote.lastVisitedPage : "Auto Insurance Quote"}</TableCell>
                         <TableCell align='left' style={{paddingLeft:'5px',paddingRight:'5px'}}>{determineStateCodes(quote.baseLocation)}</TableCell>
-                        <TableCell align='left' style={{paddingLeft:'5px',paddingRight:'5px'}}>{quote.premium}</TableCell>
+                        <TableCell align='left' style={{paddingLeft:'5px',paddingRight:'5px'}}>${quote.premium}</TableCell>
                         <TableCell align="left" style={{paddingLeft:'5px',paddingRight:'5px'}}>                    
                             <Link key={quote.policyNumber} to={"/"+quote.lastVisitedPage} onClick={()=> this.setQuoteDataInState(quote)}><Button variant="contained" style={{backgroundColor:'#041c3d',color:'white'}}>Continue</Button></Link>
                         </TableCell>
@@ -286,10 +286,10 @@ render(){
                         <Table size="small">
                         <TableHead><TableRow><TableCell align='left'>Coverages</TableCell><TableCell align='left'>Premium</TableCell></TableRow></TableHead>
                         <TableBody>
-                            {quote.coverages.bodilyInjury ? <TableRow><TableCell align='left'>Bodily Injury</TableCell><TableCell align='left'>{quote.coverages.bodilyInjury}</TableCell></TableRow> : <span></span>}
-                            {quote.coverages.propertyDamage ? <TableRow><TableCell align='left'>Property Damage</TableCell><TableCell align='left'>{quote.coverages.propertyDamage}</TableCell></TableRow> : <span></span>}
-                            {quote.coverages.comprehensive ? <TableRow><TableCell align='left'>Comprehensive</TableCell><TableCell align='left'>{quote.coverages.comprehensive}</TableCell></TableRow> : <span></span>}
-                            {quote.coverages.collision ? <TableRow><TableCell align='left'>Collision</TableCell><TableCell align='left'>{quote.coverages.collision}</TableCell></TableRow> : <span></span>}
+                            {quote.coverages.bodilyInjury ? <TableRow><TableCell align='left'>Bodily Injury</TableCell><TableCell align='left'>${quote.coverages.bodilyInjury}</TableCell></TableRow> : <span></span>}
+                            {quote.coverages.propertyDamage ? <TableRow><TableCell align='left'>Property Damage</TableCell><TableCell align='left'>${quote.coverages.propertyDamage}</TableCell></TableRow> : <span></span>}
+                            {quote.coverages.comprehensive ? <TableRow><TableCell align='left'>Comprehensive</TableCell><TableCell align='left'>${quote.coverages.comprehensive}</TableCell></TableRow> : <span></span>}
+                            {quote.coverages.collision ? <TableRow><TableCell align='left'>Collision</TableCell><TableCell align='left'>${quote.coverages.collision}</TableCell></TableRow> : <span></span>}
                         </TableBody>
                         </Table> :""}
                         </Grid>
