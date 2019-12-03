@@ -42,7 +42,7 @@ box-shadow: 2px 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     margin: 0 20px 20px 0;
     max-width: 35px;
     position: fixed;
-    right: 0;
+    right: 2%;
     z-index: 9999;
     background-color:transparent;
     float: left;
@@ -104,8 +104,8 @@ box-shadow: 2px 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   }
 
   .rcw-launcher{
-    height:50px;
-    width:50px;
+    height:55px;
+    width:55px;
     float:right;
     border-radius: 100px;
     border-color:transparent;
