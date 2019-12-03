@@ -107,14 +107,15 @@ class QuoteResultsPage extends React.Component {
         
         if(this.state.chatContext === 'LOWPREM')
         {
-            if(!isNaN(newMessage))
+            if(!isNaN(newMessage) && newMessage >30 &&newMessage<200)
             {
                 this.props.updatePremiumAndCoveragesAction(newMessage)
                 this.setState({chatContext:null})
+                addResponseMessage("Done. Updated your limits accordingly!")
             }
             else
             {
-                addResponseMessage("Enter a valid range from the recommendation.")
+                addResponseMessage("Enter a range between 30 to 200 and only numbers without any symbols or commas.")
             }
         }
 
