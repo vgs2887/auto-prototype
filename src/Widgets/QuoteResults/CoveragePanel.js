@@ -194,6 +194,10 @@ class CoveragePanel extends React.Component {
         this.pdCovgAmnt = 5;
         this.compCovgAmnt = 5;
 
+        this.biLimitPrev = "";
+        this.pdLimitPrev = "";
+        this.compSelectPrev = "";
+        this.collSelectPrev = "";
 
         this.BICoverageAmntText = "$" + this.biCovAmnt; //Initial display text for the Coverage amount
         this.PDCoverageAmntText = "$" + this.pdCovgAmnt;
@@ -283,6 +287,7 @@ class CoveragePanel extends React.Component {
         }
        
     onChangeCovForBI = (e) => {
+        this.resetPrevSelection();
         // console.log("This in BI "+this.state.toString());
         // console.log("Target"+ JSON.stringify(e.target.label));
         //this.biLimit = this.BIcoverages.filter(coverage => coverage.amnt== e.target.value.toString);
@@ -290,7 +295,7 @@ class CoveragePanel extends React.Component {
         console.log("RAJ BI1-  Premium-",premium);
         var prevSel = this.biCovAmnt;
         var biCoverageAmnt = parseInt(e.target.value);
-        this.setState({isPriorInsMatch:false});
+        this.setState({isPriorInsMatch:""});
         
 
         premium = premium - prevSel + biCoverageAmnt;
@@ -319,11 +324,11 @@ class CoveragePanel extends React.Component {
 
 
     onChangeCovgForPD = (e) => {
-
+        this.resetPrevSelection();
         var premium = this.state.premium;
         var prevSel = this.pdCovgAmnt; //fix state var
         var pdCoverageAmnt = parseInt(e.target.value);
-        this.setState({isPriorInsMatch:false});
+        this.setState({isPriorInsMatch:""});
         premium = premium - prevSel + pdCoverageAmnt;
 
         this.pdCovgAmnt = pdCoverageAmnt;
@@ -344,13 +349,14 @@ class CoveragePanel extends React.Component {
     
     onChangeCovgForComp = (e) => {
 
+        this.resetPrevSelection();
         var premium = this.state.premium;
         var inputArr = e.target.value.split(":");
         console.log("#####COMP inputArr0-" + inputArr[0]);
         console.log("#####COMP inputArr1-" + inputArr[1]);
         var compCoverageAmnt = parseInt(inputArr[1]);
         console.log("#####COMP compCoverageAmnt-" + compCoverageAmnt);
-        this.setState({isPriorInsMatch:false});
+        this.setState({isPriorInsMatch:""});
         var vin = inputArr[0];
         var prevCompCoverageAmnt = 0;
 
@@ -382,13 +388,14 @@ class CoveragePanel extends React.Component {
 
     onChangeCovgForColl = (e) => {
 
+        this.resetPrevSelection();
         var premium = this.state.premium;
         var inputArr = e.target.value.split(":");
         var collCoverageAmnt = parseInt(inputArr[1]);
         var vin = inputArr[0];
         var prevCollCoverageAmnt = 0;
         var collCoverageAmntText = "$" + collCoverageAmnt;
-        this.setState({isPriorInsMatch:false});
+        this.setState({isPriorInsMatch:""});
 
         this.collCovgAmnt = collCoverageAmnt;
     
@@ -431,13 +438,31 @@ class CoveragePanel extends React.Component {
         this.setState({ open: false });
     };
 
+    resetPrevSelection = () => {
+        this.biLimitPrev = "";
+        this.pdLimitPrev = "";
+        this.compSelectPrev = "";
+        this.collSelectPrev = "";
+    };
     handleOnRender = () => {
         console.log("RAJ printing inside handleOnRender.... ");
-                
+            
         if(this.props.quote.coverages.bodilyInjurySuggested !=undefined && this.props.quote.coverages.bodilyInjurySuggested != "" && this.props.quote.coverages.bodilyInjurySuggested !="Please enter monthly premium over 30 USD" && this.props.quote.coverages.bodilyInjurySuggested !="Please contact help desk for your coverage needs"
         && this.props.quote.coverages.propertyDamageSuggested !=undefined && this.props.quote.coverages.propertyDamageSuggested != "" && this.props.quote.coverages.propertyDamageSuggested !="Please enter monthly premium over 30 USD" && this.props.quote.coverages.propertyDamageSuggested !="Please contact help desk for your coverage needs")
         {
-            console.log("RAJ printing inside handleOnRender.... ",this.props.quote.coverages.comprehensiveSuggested);
+            this.setState({isPriorInsMatch:false});
+            
+            console.log("RAJ printing inside biLimitP:  : "+this.biLimit)
+            if(this.biLimitPrev == "")
+            {
+                this.biLimitPrev = this.biLimit;
+                this.pdLimitPrev = this.pdLimit;
+                this.compSelectPrev = this.compSelect;
+                this.collSelectPrev = this.collSelect;
+            }
+
+            console.log("RAJ printing inside biLimitPrev:  : "+this.biLimitPrev)
+
             this.biLimit =  "$" + this.props.quote.coverages.bodilyInjurySuggested;
             this.pdLimit =  "$" + this.props.quote.coverages.propertyDamageSuggested;
             this.compSelect = "$" + this.props.quote.coverages.comprehensiveSuggested;
@@ -514,7 +539,7 @@ class CoveragePanel extends React.Component {
     render() {
 
         const { didMount } = this.state;
-
+        {this.handleOnRender()}
         var compVehiCovItems = this.compVehiCov.map((vehicle, key) =>
             <table key={vehicle.vin} style={useStyles.tableStyle}>
                 <tr><p style={useStyles.childCovgText}>{vehicle.year} {vehicle.make} {vehicle.model} {[<small>(VIN: {vehicle.vin})</small>]}</p></tr>
@@ -561,6 +586,13 @@ class CoveragePanel extends React.Component {
                             </div>
                         </Grid>
                     </td>
+                </tr>
+                <tr>
+                    <td style={{ width: "85%" }}>
+                    <Grid justify="flex-start" item sm="12" xs="12" >
+                        <Box component="span" style={{color: "#FF5500"}} display={this.compSelectPrev === "" ? "none": "block"}>Prior selection - {this.compSelectPrev}</Box>
+                    </Grid>
+                    </td>                                        
                 </tr>
             </table>
         );
@@ -611,16 +643,40 @@ class CoveragePanel extends React.Component {
                             </Grid>
                         </td>
                     </tr>
+                    <tr>
+                        <td style={{ width: "85%" }}>
+                        <Grid justify="flex-start" item sm="12" xs="12" >
+                            <Box component="span" style={{color: "#FF5500"}} display={this.collSelectPrev === "" ? "none": "block"}>Prior selection - {this.collSelectPrev}</Box>
+                        </Grid>
+                        </td>                                        
+                     </tr>
                 </table>
         );
 
         return (
             <div>
-                {((typeof this.props.quote.userEnteredPremium != "undefined" && !this.props.quote.userEnteredPremium)&&this.state.isPriorInsMatch) ? <h5 className = "info-message" style={{ color: "#1A3258" }}> <FaInfoCircle color="#1A3258" /> These are your coverage selections based on your Prior Insurance, you can edit them and choose the selection that best caters your needs. </h5>
-                   : <h5 className = "info-message" style={{ color: "#1A3258" }}> <FaInfoCircle color="#1A3258" /> These are your coverage selections for a price that you wanted.</h5>
+                 {/* {((typeof this.props.quote.userEnteredPremium != "undefined" && !this.props.quote.userEnteredPremium)&&this.state.isPriorInsMatch==null) ? <h5 className = "info-message" style={{ color: "#1A3258" }}> <FaInfoCircle color="#1A3258" /> These are your coverage selections based on your Prior Insurance, you can edit them and choose the selection that best caters your needs. </h5>)
+                if()
+                { <h5 className = "info-message" style={{ color: "#1A3258" }}> <FaInfoCircle color="#1A3258" /> These are your coverage selections for a price that you wanted.</h5>}
+                } */}
+                {(() => {
+                switch(this.state.isPriorInsMatch) {
+                case true:
+                {
+                    console.log("Inside the switch Case true ");
+                    return <h5 className = "info-message" style={{ color: "#1A3258" }}> <FaInfoCircle color="#1A3258" /> These are your coverage selections based on your Prior Insurance, you can edit them and choose the selection that best caters your needs. </h5>;
                 }
-                <Paper square="true" >
+                case false:
+                {
+                    console.log("Inside the switch Case false ");
+                    return <h5 className = "info-message" style={{ color: "#1A3258" }}> <FaInfoCircle color="#1A3258" /> These are your coverage selections for a price that you wanted.</h5>
+                }
+                default:
+                    return null;
+                }
+                })()}
 
+                <Paper square="true" >
                 
                      <Grid container justify="flex-start" alignItems="flex-start" style={{ marginLeft: "0px !important" }}>
 
@@ -634,7 +690,7 @@ class CoveragePanel extends React.Component {
                             <tr>
                                 <td style={{ width: "85%" }}>
                                     <Grid justify="flex-start" item sm="12" xs="12" >
-                                    {this.handleOnRender()}{this.biLimit}
+                                    {this.biLimit}
                                     <Button style={{color:'#041c3d', padding:'10px'}} color="primary" onClick={this.handleDialogOpen('BI')}>Edit</Button>
                                     <Dialog disableBackdropClick disableEscapeKeyDown open={this.state.open && this.state.covType == 'BI'}>
                                         <DialogTitle>Select the limit</DialogTitle>
@@ -672,6 +728,13 @@ class CoveragePanel extends React.Component {
                                         </div>
                                     </Grid>
                                 </td>
+                            </tr>
+                            <tr>
+                                 <td style={{ width: "85%" }}>
+                                    <Grid justify="flex-start" item sm="12" xs="12" >
+                                        <Box component="span" style={{color: "#FF5500"}} display={this.biLimitPrev === "" ? "none": "block"}>Prior selection - {this.biLimitPrev}</Box>
+                                    </Grid>
+                                </td>                                        
                             </tr>
                         </table>
                     </Grid>
@@ -727,6 +790,13 @@ class CoveragePanel extends React.Component {
                                         </div>
                                     </Grid>
                                 </td>
+                            </tr>
+                            <tr>
+                                 <td style={{ width: "85%" }}>
+                                    <Grid justify="flex-start" item sm="12" xs="12" >
+                                        <Box component="span" style={{color: "#FF5500"}} display={this.pdLimitPrev === "" ? "none": "block"}>Prior selection - {this.pdLimitPrev}</Box>
+                                    </Grid>
+                                </td>                                        
                             </tr>
                         </table>
                     </Grid>
