@@ -96,7 +96,7 @@ const useStyles = {
                         <div className = "top-row">
                         <div className = "item">
                         <ul className = "top-column">Expiration Date</ul>
-                        <ul className = "bottom-column">{this.props.quote.policyExpDate ? this.props.quote.policyExpDate : 2020-10-22 }</ul>
+                        <ul className = "bottom-column"> 2020-06-03 </ul>
                           </div>
                         <div className = "item">
                         <ul className = "top-column">Vehicle</ul>

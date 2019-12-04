@@ -30,7 +30,7 @@ class PaymentPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {value: 'none',
-                  pay: 'full',
+                  pay: 'monthly',
                   
                   };
 
@@ -110,7 +110,7 @@ setupBeforeUnloadListener = () => {
 
                 <div>
                   <FormControl component="fieldset" name="method-of-payment">
-                    <RadioGroup onChange={this.handleChange3} value={this.state.pay}>
+                    <RadioGroup onChange={this.handleChange3} value={this.state.pay} color="primary">
                       <FormControlLabel value="full" control={<Radio />} label="Pay Full Premium"/>
                       <FormControlLabel value="monthly" control={<Radio />} label="Pay Monthly Installments" />
                     </RadioGroup>

@@ -12,3 +12,6 @@
     vertical-align: middle;
 }
 
+.MuiRadio-colorSecondary.Mui-checked{
+    color: rgb(4, 28, 61) !important;
+}

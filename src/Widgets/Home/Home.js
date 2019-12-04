@@ -95,7 +95,7 @@ class Home extends React.Component {
         <Grid style={styles.tag1} item  direction="column" alignContent="flex-start">
           <p>Good Morning,<br/>
 
-            <b>Major Alex</b>          
+            <b>Major {this.props.quote.drivers[0].name}</b>          
             
             </p>
             <p >Enhance your protection with an Auto Insurance for greater peace of mind. Go ahead, click on get started to create a quote.</p>
