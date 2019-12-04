@@ -198,9 +198,9 @@ render() {
                 <Grid item xs={12}>
                 <Link to={{pathname:'/payment'}}><Button variant="contained" style={{backgroundColor:'#041c3d',color:'white'}} onClick={this.submitHandler}> Proceed to Checkout </Button></Link>
                 </Grid>
-                <Grid item xs={12}>
+                {/* <Grid item xs={12}>
                     <input type="tel" maxlength="3" name='userEnteredPremium' className="user-entered-premium" onChange={this.updatePremiumAndCoverages} min='0'></input>
-                </Grid>       
+                </Grid>        */}
                 <Grid item xs={12} sm={12}>
                 <div class="scroll">
                 <ul className="corousal" >
