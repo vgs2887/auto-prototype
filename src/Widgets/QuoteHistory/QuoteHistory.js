@@ -98,8 +98,8 @@ class QuoteHistory extends React.Component
             this.setState({
             isLoaded: true,
             aggregate:response.data,
-            quotes: response.data.filter(quote => quote.isQuote),
-            basePolicies: response.data.filter(quote => !quote.isQuote)
+            quotes: response.data.filter(quote => quote.isQuote && quote.policyId && quote.policyId.length > 0),
+            basePolicies: response.data.filter(quote => !quote.isQuote && quote.policyId && quote.policyId.length > 0)
             })            
             this.setState({textToDisplay:"Click the below button to get started!"})
             this.setState({canDisplayGetStarted:true})
@@ -111,12 +111,15 @@ class QuoteHistory extends React.Component
                         this.setState({
                             policies: this.state.policies
                         })
+                        this.setState({policyAvaialble:true})
+                        this.setState({isEmpty:false})
+                        this.setState({togglePolicy:true}) 
                     })
+                    .catch(error =>{console.log("ERROR"+error) 
+                    this.setState({canDisplayGetStarted:true})})
                 })
                 console.log("POLICIES ---------- "+JSON.stringify(this.state.policies))
-                this.setState({policyAvaialble:true})
-                this.setState({isEmpty:false})
-                this.setState({togglePolicy:true})                                
+                                               
                 if(this.state.policies.length > 1)
                 {
                    this.setState({textToDisplayPolicy:" Your Active Policies"})
@@ -138,7 +141,8 @@ class QuoteHistory extends React.Component
                 }             
             }           
           })    
-      .catch(error =>{console.log("ERROR"+error)})
+          .catch(error =>{console.log("ERROR"+error) 
+          this.setState({canDisplayGetStarted:true})})
   }
   setQuoteDataInState = quote => {
     this.props.setQuoteObject(emptyObject) 
@@ -147,7 +151,9 @@ class QuoteHistory extends React.Component
     .then(qte => {    
         console.log("Original quote Data in session--- "+JSON.stringify(qte.data))                                                
                     this.props.setQuoteObject(qte.data) 
-                    })                          
+                    })
+    .catch(error =>{console.log("ERROR"+error) 
+    })                          
   };
 
 render(){    
